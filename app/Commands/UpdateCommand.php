@@ -27,6 +27,7 @@ class UpdateCommand extends Command
         {--latest-version= : The version the CHANGELOG should be updated too}
         {--release-date= : Date when latest version has been released}
         {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated}
+        {-w\--write : Write changes to file}
     ';
 
     protected $description = 'Update Changelog with the given release notes';
@@ -38,6 +39,7 @@ class UpdateCommand extends Command
         $latestVersion = $this->option('latest-version');
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
+        $shouldWriteToFile = $this->option('write');
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
@@ -71,9 +73,13 @@ class UpdateCommand extends Command
 
         $htmlContent->insertAfter($parsedReleaseNotes);
 
-        $markdown = $markdownRenderer->renderDocument($originalChangelog);
+        $updatedMarkdown = $markdownRenderer->renderDocument($originalChangelog);
 
-        $this->info($markdown->getContent());
+        $this->info($updatedMarkdown->getContent());
+
+        if ($shouldWriteToFile) {
+            file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
+        }
     }
 
     /**

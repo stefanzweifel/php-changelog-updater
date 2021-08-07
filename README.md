@@ -28,11 +28,11 @@ php changelog-updater update \
 --latest-version="v1.0.0" \
 --path-to-changelog="CHANGELOG.md" \
 --release-date="2021-08-07"
+--write
 ```
 
 ### `--release-notes`
 The release notes you want to add to your CHANGELOG. Should be markdown.
-
 
 ### `--repository`
 The URL which points to your repository. The URL will be used to update the "Unreleased" heading in your CHANGELOG.
@@ -46,9 +46,10 @@ Example: `v1.0.0`
 Path to your CHANGELOG.md file. Defaults to `CHANGELOG.md`.
 
 ### `--release-date`
-
 The date the latest version has been released. The value will be used in the release heading.
 
+### `--write`
+Option to write the changed CHANGELOG to `CHANGELOG.md`.
 
 ## Testing
 
