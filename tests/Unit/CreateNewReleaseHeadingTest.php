@@ -39,5 +39,5 @@ test('creates new release heading ast', function () {
 
 
     $renderedMarkdown = $markdownRenderer->renderDocument($document);
-    $this->assertEquals('## [v1.0.0](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-02-01', $renderedMarkdown->getContent());
+    $this->assertEquals('## [v1.0.0](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-02-01', trim($renderedMarkdown->getContent()));
 });
