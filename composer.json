@@ -41,6 +41,7 @@
         "optimize-autoloader": true
     },
     "scripts": {
+        "build": "php changelog-updater app:build",
         "psalm": "vendor/bin/psalm",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
