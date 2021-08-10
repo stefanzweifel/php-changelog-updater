@@ -33,6 +33,28 @@ php changelog-updater update \
 --write
 ```
 
+Note that the CHANGELOG MUST to follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. In detail, the CLI looks for a second level "Unreleased"-heading with a link. The link MUST to point to the compare view of the latest version and `HEAD`.
+The CLI also looks for a second level heading with the name of the previous version. (If you release `v1.1.0` now, the previous version might be `v1.0.0`.) 
+Here is an example Markdown file.
+
+
+```
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [Unreleased](https://github.com/org/repo/compare/v0.1.0...HEAD)
+
+*Please do not manually update this file. We've automated the process.*
+
+## v0.1.0 - 2021-01-01
+
+### Added
+- Initial Release
+```
+
 ### `--release-notes`
 The release notes you want to add to your CHANGELOG. Should be markdown.
 
