@@ -38,7 +38,7 @@ The CLI also looks for a second level heading with the name of the previous vers
 Here is an example Markdown file.
 
 
-```
+```md
 # Changelog
 All notable changes to this project will be documented in this file.
 
@@ -55,25 +55,28 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial Release
 ```
 
+### CLI Options
+
 ### `--release-notes`
-The release notes you want to add to your CHANGELOG. Should be markdown.
+**Required**. The release notes you want to add to your CHANGELOG. Should be markdown.
 
 ### `--repository`
-The URL which points to your repository. The URL will be used to update the "Unreleased" heading in your CHANGELOG.
+**Required**. The URL which points to your repository. The URL will be used to update the "Unreleased" heading in your CHANGELOG.
 
 ### `--latest-version`
-Semantic version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
+**Required**. Semantic version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
 
 Example: `v1.0.0`
 
-### `--path-to-changelog`
-Path to your CHANGELOG.md file. Defaults to `CHANGELOG.md`.
-
 ### `--release-date`
-The date the latest version has been released. The value will be used in the release heading.
+**Required.** The date the latest version has been released. The value will be used in the release heading.
+
+
+### `--path-to-changelog`
+Default `CHANGELOG.md`. Path to CHANGELOG.md file.
 
 ### `--write`
-Option to write the changed CHANGELOG to `CHANGELOG.md`.
+Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
 
 ## Testing
 
