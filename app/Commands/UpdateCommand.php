@@ -6,6 +6,8 @@ namespace App\Commands;
 
 use App\Actions\AddReleaseNotesToChangelog;
 use LaravelZero\Framework\Commands\Command;
+use League\CommonMark\Output\RenderedContentInterface;
+use Throwable;
 
 class UpdateCommand extends Command
 {
@@ -18,8 +20,11 @@ class UpdateCommand extends Command
         {-w\--write : Write changes to file}
     ';
 
-    protected $description = 'Update Changelog with the given release notes';
+    protected $description = 'Update Changelog with the given release notes.';
 
+    /**
+     * @throws Throwable
+     */
     public function handle(AddReleaseNotesToChangelog $addReleaseNotesToChangelog)
     {
         $releaseNotes = $this->option('release-notes');
@@ -31,23 +36,28 @@ class UpdateCommand extends Command
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
-        $updatedMarkdown = $addReleaseNotesToChangelog->execute(
-            changelog: $changelog,
+        $updatedChangelog = $addReleaseNotesToChangelog->execute(
+            originalChangelog: $changelog,
             releaseNotes: $releaseNotes,
             latestVersion: $latestVersion,
             releaseDate: $releaseDate,
             repositoryUrl: $repositoryUrl
         );
 
-        $this->info($updatedMarkdown->getContent());
+        $this->info($updatedChangelog->getContent());
 
-        if ($shouldWriteToFile) {
-            file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
-        }
+        $this->writeChangelogToFile($shouldWriteToFile, $pathToChangelog, $updatedChangelog);
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool|string
     {
         return file_get_contents($pathToChangelog);
+    }
+
+    protected function writeChangelogToFile(bool $shouldWriteToFile, string $pathToChangelog, RenderedContentInterface $updatedMarkdown): void
+    {
+        if ($shouldWriteToFile) {
+            file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
+        }
     }
 }

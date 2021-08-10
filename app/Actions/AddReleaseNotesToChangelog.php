@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
@@ -41,14 +40,23 @@ class AddReleaseNotesToChangelog
         $this->createNewReleaseHeading = $createNewReleaseHeading;
     }
 
-    public function execute(string $changelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $repositoryUrl): RenderedContentInterface
+    /**
+     * @param string $originalChangelog
+     * @param string $releaseNotes
+     * @param string $latestVersion
+     * @param string $releaseDate
+     * @param string $repositoryUrl
+     * @return RenderedContentInterface
+     * @throws \Throwable
+     */
+    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $repositoryUrl): RenderedContentInterface
     {
-        $originalChangelog = $this->parser->parse($changelog);
-        $parsedReleaseNotes = $this->parser->parse($releaseNotes);
+        $changelog = $this->parser->parse($originalChangelog);
 
+        $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
-        $unreleasedHeading = $this->findUnreleasedHeading->find($originalChangelog);
         $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($unreleasedHeading);
+
         $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $latestVersion, 'HEAD');
 
         $this->updateUrlOnUnreleasedHeading($unreleasedHeading, $updatedUrl);
@@ -58,26 +66,20 @@ class AddReleaseNotesToChangelog
         $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $releaseDate);
 
         // Prepend the new Release Heading to the Release Notes
+        $parsedReleaseNotes = $this->parser->parse($releaseNotes);
         $parsedReleaseNotes->prependChild($newReleaseHeading);
 
 
         // Find the Heading of the previous Version
-        $previousVersionHeading = $this->findPreviousVersionHeading->find($originalChangelog, $previousVersion);
+        $previousVersionHeading = $this->findPreviousVersionHeading->find($changelog, $previousVersion);
 
         // Insert the newest Release Notes before the previous Release Heading
-        $previousVersionHeading->insertBefore($parsedReleaseNotes);
+        $previousVersionHeading?->insertBefore($parsedReleaseNotes);
 
-
-        // Render Document to Markdown
-        $updatedMarkdown = $this->renderer->renderDocument($originalChangelog);
-
-        return $updatedMarkdown;
+        return $this->renderer->renderDocument($changelog);
     }
 
-    /**
-     * @param Node|null $matchingNodes
-     */
-    private function updateUrlOnUnreleasedHeading(?Node $matchingNodes, string $url): void
+    private function updateUrlOnUnreleasedHeading(Node $matchingNodes, string $url): void
     {
         /** @var Link $link */
         $link = $matchingNodes->firstChild();
