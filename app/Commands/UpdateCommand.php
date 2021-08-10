@@ -49,7 +49,7 @@ class UpdateCommand extends Command
         $this->writeChangelogToFile($shouldWriteToFile, $pathToChangelog, $updatedChangelog);
     }
 
-    protected function getChangelogContent(string $pathToChangelog): bool|string
+    protected function getChangelogContent(string $pathToChangelog): bool | string
     {
         return file_get_contents($pathToChangelog);
     }
