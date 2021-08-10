@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased](https://github.com/org/repo/compare/v0.1.0...HEAD)
 
+Please do not update the unreleased notes.
+
 <!-- Content should be placed here -->
 
 ## v0.1.0 - 2021-01-01
