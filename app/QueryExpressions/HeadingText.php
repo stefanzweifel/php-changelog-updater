@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\QueryExpressions;
 
+use Illuminate\Support\Str;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
 
@@ -22,20 +23,25 @@ class HeadingText implements \League\CommonMark\Node\Query\ExpressionInterface
             return false;
         }
 
-        if ($node->firstChild()->hasChildren() === false) {
+        $textNode = $this->getTextNode($node);
+
+        if ($textNode === null) {
             return false;
         }
 
-        $textNode = $node->firstChild()->firstChild();
+        return Str::startsWith($textNode->getLiteral(), $this->text);
+    }
 
-        if (! $textNode instanceof Text) {
-            return false;
+    private function getTextNode(Node $node): ?Text
+    {
+        if ($node instanceof Text) {
+            return $node;
         }
 
-        if ($textNode->getLiteral() !== $this->text) {
-            return false;
+        if ($node->hasChildren() === false) {
+            return null;
         }
 
-        return true;
+        return $this->getTextNode($node->firstChild());
     }
 }
