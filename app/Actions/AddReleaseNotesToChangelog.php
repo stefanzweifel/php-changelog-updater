@@ -45,17 +45,18 @@ class AddReleaseNotesToChangelog
      * @param string $releaseNotes
      * @param string $latestVersion
      * @param string $releaseDate
-     * @param string $repositoryUrl
      * @return RenderedContentInterface
      * @throws \Throwable
      */
-    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $repositoryUrl): RenderedContentInterface
+    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate): RenderedContentInterface
     {
         $changelog = $this->parser->parse($originalChangelog);
 
         $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
         $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($unreleasedHeading);
+
+        $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($unreleasedHeading);
 
         $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $latestVersion, 'HEAD');
 
@@ -102,5 +103,16 @@ class AddReleaseNotesToChangelog
             ->afterLast('/')
             ->explode('...')
             ->first();
+    }
+
+    private function getRepositoryUrlFromUnreleasedHeading(Heading $unreleasedHeading): string
+    {
+        /** @var Link $linkNode */
+        $linkNode = $unreleasedHeading->firstChild();
+
+        throw_if($linkNode === null, new \LogicException("Can not find link node in unreleased heading."));
+
+        return (string) Str::of($linkNode->getUrl())
+            ->before('/compare');
     }
 }
