@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Output\RenderedContentInterface;
 use League\CommonMark\Parser\MarkdownParser;
 use Wnx\CommonmarkMarkdownRenderer\MarkdownRendererExtension;
@@ -45,22 +44,21 @@ class AddReleaseNotesToChangelog
      * @param string $releaseNotes
      * @param string $latestVersion
      * @param string $releaseDate
-     * @param string $repositoryUrl
      * @return RenderedContentInterface
      * @throws \Throwable
      */
-    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $repositoryUrl): RenderedContentInterface
+    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate): RenderedContentInterface
     {
         $changelog = $this->parser->parse($originalChangelog);
 
         $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
         $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($unreleasedHeading);
-
+        $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($unreleasedHeading);
         $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $latestVersion, 'HEAD');
 
-        $this->updateUrlOnUnreleasedHeading($unreleasedHeading, $updatedUrl);
-
+        $link = $this->getLinkNodeFromHeading($unreleasedHeading);
+        $link->setUrl($updatedUrl);
 
         // Create new Heading containing the new version number
         $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $releaseDate);
@@ -68,7 +66,6 @@ class AddReleaseNotesToChangelog
         // Prepend the new Release Heading to the Release Notes
         $parsedReleaseNotes = $this->parser->parse($releaseNotes);
         $parsedReleaseNotes->prependChild($newReleaseHeading);
-
 
         // Find the Heading of the previous Version
         $previousVersionHeading = $this->findPreviousVersionHeading->find($changelog, $previousVersion);
@@ -79,13 +76,6 @@ class AddReleaseNotesToChangelog
         return $this->renderer->renderDocument($changelog);
     }
 
-    private function updateUrlOnUnreleasedHeading(Node $matchingNodes, string $url): void
-    {
-        /** @var Link $link */
-        $link = $matchingNodes->firstChild();
-        $link->setUrl($url);
-    }
-
     /**
      * @param Heading $unreleasedHeading
      * @return string
@@ -93,14 +83,40 @@ class AddReleaseNotesToChangelog
      */
     private function getPreviousVersionFromUnreleasedHeading(Heading $unreleasedHeading): string
     {
-        /** @var Link $linkNode */
-        $linkNode = $unreleasedHeading->firstChild();
-
-        throw_if($linkNode === null, new \LogicException("Can not find link node in unreleased heading."));
+        $linkNode = $this->getLinkNodeFromHeading($unreleasedHeading);
 
         return Str::of($linkNode->getUrl())
             ->afterLast('/')
             ->explode('...')
             ->first();
+    }
+
+    /**
+     * @param Heading $unreleasedHeading
+     * @return string
+     * @throws \Throwable
+     */
+    private function getRepositoryUrlFromUnreleasedHeading(Heading $unreleasedHeading): string
+    {
+        $linkNode = $this->getLinkNodeFromHeading($unreleasedHeading);
+
+        return Str::of($linkNode->getUrl())
+            ->before('/compare')
+            ->__toString();
+    }
+
+    /**
+     * @param Heading $unreleasedHeading
+     * @return Link
+     * @throws \Throwable
+     */
+    private function getLinkNodeFromHeading(Heading $unreleasedHeading): Link
+    {
+        /** @var Link $linkNode */
+        $linkNode = $unreleasedHeading->firstChild();
+
+        throw_if($linkNode === null, new \LogicException("Can not find link node in unreleased heading."));
+
+        return $linkNode;
     }
 }
