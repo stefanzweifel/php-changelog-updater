@@ -25,11 +25,19 @@ You can use `changelog-updater` by running the `update` command with the followi
 
 ```php
 php changelog-updater update \
---release-notes="# Added" \
+--release-notes="### Added
+- New Feature A
+- New Feature B
+
+### Changed
+- Update Feature C
+
+### Removes
+- Remove Feature D" \
 --latest-version="v1.0.0" \
 --release-date="2021-08-07" \
---write \ 
---path-to-changelog="CHANGELOG.md"
+--path-to-changelog="CHANGELOG.md" \
+-- write
 ```
 
 Note that the CHANGELOG MUST to follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. In detail, the CLI looks for a second level "Unreleased"-heading with a link. The link MUST to point to the compare view of the latest version and `HEAD`.
