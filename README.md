@@ -26,11 +26,10 @@ You can use `changelog-updater` by running the `update` command with the followi
 ```php
 php changelog-updater update \
 --release-notes="# Added" \
---repository="https://github.com/stefanzweifel/php-changelog-updater" \
 --latest-version="v1.0.0" \
---path-to-changelog="CHANGELOG.md" \
---release-date="2021-08-07"
---write
+--release-date="2021-08-07" \
+--write \ 
+--path-to-changelog="CHANGELOG.md"
 ```
 
 Note that the CHANGELOG MUST to follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. In detail, the CLI looks for a second level "Unreleased"-heading with a link. The link MUST to point to the compare view of the latest version and `HEAD`.
@@ -60,9 +59,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### `--release-notes`
 **Required**. The release notes you want to add to your CHANGELOG. Should be markdown.
 
-### `--repository`
-**Required**. The URL which points to your repository. The URL will be used to update the "Unreleased" heading in your CHANGELOG.
-
 ### `--latest-version`
 **Required**. Semantic version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
 
@@ -71,9 +67,8 @@ Example: `v1.0.0`
 ### `--release-date`
 **Required.** The date the latest version has been released. The value will be used in the release heading.
 
-
 ### `--path-to-changelog`
-Default `CHANGELOG.md`. Path to CHANGELOG.md file.
+Defaults to `CHANGELOG.md`. Path to CHANGELOG.md file.
 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.

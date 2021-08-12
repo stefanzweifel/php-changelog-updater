@@ -15,7 +15,6 @@ it('places given release notes in correct position in given markdown changelog',
         ### Removes
         - Remove Feature D
         MD,
-        '--repository' => 'https://github.com/org/repo',
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
         '--release-date' => '2021-02-01',
