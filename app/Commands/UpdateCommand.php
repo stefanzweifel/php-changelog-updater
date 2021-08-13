@@ -28,9 +28,13 @@ class UpdateCommand extends Command
     {
         $releaseNotes = $this->option('release-notes');
         $latestVersion = $this->option('latest-version');
-        $releaseDate = $this->option('release-date');
+        $releaseDate = $this->option('release-date'); // TODO: Fallback to current date in Y-m-d
         $pathToChangelog = $this->option('path-to-changelog');
         $shouldWriteToFile = $this->option('write');
+
+        if (is_null($releaseDate)) {
+            $releaseDate = now()->format('Y-m-d');
+        }
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
