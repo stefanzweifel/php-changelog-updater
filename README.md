@@ -73,10 +73,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 Example: `v1.0.0`
 
 ### `--release-date`
-**Required.** The date the latest version has been released. The value will be used in the release heading.
+Optional (Defaults to current date). The date the latest version has been released. The value will be used in the release heading.
 
 ### `--path-to-changelog`
-Defaults to `CHANGELOG.md`. Path to CHANGELOG.md file.
+Optional (Defaults to `CHANGELOG.md`). Path to CHANGELOG.md file.
 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
