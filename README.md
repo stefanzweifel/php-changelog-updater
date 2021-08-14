@@ -13,7 +13,7 @@ Want to automate the process of updating your Changelog with GitHub Actions? Che
 
 ## Installation
 
-You can install the changelog-updater CLI as a global composer dependency:
+You can install the changelog-updater CLI as a global composer dependency. It requires PHP 8.0 or higher.
 
 ```bash
 composer global require wnx/changelog-updater
