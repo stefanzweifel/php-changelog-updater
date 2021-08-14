@@ -32,7 +32,7 @@ class UpdateCommand extends Command
         $pathToChangelog = $this->option('path-to-changelog');
         $shouldWriteToFile = $this->option('write');
 
-        if (is_null($releaseDate)) {
+        if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
         }
 
