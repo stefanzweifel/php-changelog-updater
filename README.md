@@ -1,8 +1,6 @@
 # changelog-updater
 
-A PHP CLI to update a CHANGELOG following the "Keep a Changelog" format with the latest release notes.
-
-> ⚠️ This package/CLI is still in active development. Breaking changes might occur until v1 is tagged.
+A PHP CLI to update a CHANGELOG following the ["Keep a Changelog"](https://keepachangelog.com/) format with the latest release notes.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 [![Tests](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml)
@@ -10,6 +8,8 @@ A PHP CLI to update a CHANGELOG following the "Keep a Changelog" format with the
 [![Psalm](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 
+
+Want to automate the process of updating your Changelog withs GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
 
 ## Installation
 
@@ -37,12 +37,19 @@ php changelog-updater update \
 --latest-version="v1.0.0" \
 --release-date="2021-08-07" \
 --path-to-changelog="CHANGELOG.md" \
--- write
+--write
 ```
 
-Note that the CHANGELOG MUST to follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. In detail, the CLI looks for a second level "Unreleased"-heading with a link. The link MUST to point to the compare view of the latest version and `HEAD`.
+`--release-date`, `--path-to-changelog` and `--write` are optional. Learn more about the options by running `php changelog-updater update --help`.
+
+
+### Important
+
+Note that the Changelog MUST follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. 
+The CLI looks for a second level "Unreleased"-heading with a link. The link MUST point to the compare view of the latest version and `HEAD`.
 The CLI also looks for a second level heading with the name of the previous version. (If you release `v1.1.0` now, the previous version might be `v1.0.0`.) 
-Here is an example Markdown file.
+
+Here is an example Markdown file, that will work fine with the CLI.
 
 
 ```md
@@ -61,6 +68,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Initial Release
 ```
+
+The content between the "Unreleased"-heading the the latest version will remain untouched by the CLI.
 
 ### CLI Options
 
