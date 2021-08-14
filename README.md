@@ -9,7 +9,7 @@ A PHP CLI to update a CHANGELOG following the ["Keep a Changelog"](https://keepa
 [![Total Downloads](https://img.shields.io/packagist/dt/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 
 
-Want to automate the process of updating your Changelog withs GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
+Want to automate the process of updating your Changelog with GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
 
 ## Installation
 
@@ -52,7 +52,7 @@ The CLI also looks for a second level heading with the name of the previous vers
 Here is an example Markdown file, that will work fine with the CLI.
 
 
-```md
+```
 # Changelog
 All notable changes to this project will be documented in this file.
 
@@ -69,7 +69,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial Release
 ```
 
-The content between the "Unreleased"-heading the the latest version will remain untouched by the CLI.
+The content between the "Unreleased"-heading and the latest version will remain untouched by the CLI.
 
 ### CLI Options
 
@@ -77,7 +77,7 @@ The content between the "Unreleased"-heading the the latest version will remain 
 **Required**. The release notes you want to add to your CHANGELOG. Should be markdown.
 
 ### `--latest-version`
-**Required**. Semantic version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
+**Required**. Version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
 
 Example: `v1.0.0`
 
