@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Queries;
 
 use App\QueryExpressions\HeadingLevel;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
