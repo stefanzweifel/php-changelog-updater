@@ -33,8 +33,12 @@ class PasteReleaseNotesAtTheTop
         // Find the Heading of the previous Version
         $previousVersionHeading = $this->findFirstSecondLevelHeading->find($changelog);
 
-        // Insert the newest Release Notes before the previous Release Heading
-        $previousVersionHeading?->insertBefore($parsedReleaseNotes);
+        if ($previousVersionHeading === null) {
+            $changelog->lastChild()?->insertAfter($parsedReleaseNotes);
+        } else {
+            // Insert the newest Release Notes before the previous Release Heading
+            $previousVersionHeading?->insertBefore($parsedReleaseNotes);
+        }
 
         return $changelog;
     }
