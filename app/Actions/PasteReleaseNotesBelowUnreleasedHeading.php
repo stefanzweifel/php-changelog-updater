@@ -35,12 +35,6 @@ class PasteReleaseNotesBelowUnreleasedHeading
     }
 
     /**
-     * @param Heading $unreleasedHeading
-     * @param string $latestVersion
-     * @param string $releaseDate
-     * @param string $releaseNotes
-     * @param Document $changelog
-     * @return Document
      * @throws Throwable
      */
     public function execute(Heading $unreleasedHeading, string $latestVersion, string $releaseDate, string $releaseNotes, Document $changelog): Document
@@ -69,8 +63,6 @@ class PasteReleaseNotesBelowUnreleasedHeading
     }
 
     /**
-     * @param Heading $unreleasedHeading
-     * @return string
      * @throws Throwable
      */
     private function getPreviousVersionFromUnreleasedHeading(Heading $unreleasedHeading): string
@@ -84,8 +76,6 @@ class PasteReleaseNotesBelowUnreleasedHeading
     }
 
     /**
-     * @param Heading $unreleasedHeading
-     * @return string
      * @throws Throwable
      */
     private function getRepositoryUrlFromUnreleasedHeading(Heading $unreleasedHeading): string
@@ -98,8 +88,6 @@ class PasteReleaseNotesBelowUnreleasedHeading
     }
 
     /**
-     * @param Heading $unreleasedHeading
-     * @return Link
      * @throws Throwable
      */
     private function getLinkNodeFromHeading(Heading $unreleasedHeading): Link

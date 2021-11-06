@@ -24,7 +24,7 @@ class UpdateCommand extends Command
     /**
      * @throws Throwable
      */
-    public function handle(AddReleaseNotesToChangelog $addReleaseNotesToChangelog)
+    public function handle(AddReleaseNotesToChangelog $addReleaseNotesToChangelog): void
     {
         $releaseNotes = $this->option('release-notes');
         $latestVersion = $this->option('latest-version');

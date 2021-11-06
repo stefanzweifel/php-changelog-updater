@@ -12,10 +12,6 @@ use League\CommonMark\Node\Query;
 
 class FindFirstSecondLevelHeading
 {
-    /**
-     * @param Document $document
-     * @return Node|null
-     */
     public function find(Document $document): ?Node
     {
         return (new Query())

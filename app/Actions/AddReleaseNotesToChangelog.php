@@ -33,11 +33,6 @@ class AddReleaseNotesToChangelog
     }
 
     /**
-     * @param string $originalChangelog
-     * @param string $releaseNotes
-     * @param string $latestVersion
-     * @param string $releaseDate
-     * @return RenderedContentInterface
      * @throws Throwable
      */
     public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate): RenderedContentInterface

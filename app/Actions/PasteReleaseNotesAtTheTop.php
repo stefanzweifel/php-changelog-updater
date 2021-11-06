@@ -21,13 +21,6 @@ class PasteReleaseNotesAtTheTop
         $this->parser = $markdownParser;
     }
 
-    /**
-     * @param string $latestVersion
-     * @param string $releaseNotes
-     * @param string $releaseDate
-     * @param Document $changelog
-     * @return Document
-     */
     public function execute(string $latestVersion, string $releaseNotes, string $releaseDate, Document $changelog): Document
     {
         // Create new Heading containing the new version and date
@@ -46,11 +39,6 @@ class PasteReleaseNotesAtTheTop
         return $changelog;
     }
 
-    /**
-     * @param string $latestVersion
-     * @param string $releaseDate
-     * @return Heading
-     */
     protected function createNewReleaseHeading(string $latestVersion, string $releaseDate): Heading
     {
         return tap(new Heading(2), function ($heading) use ($latestVersion, $releaseDate) {

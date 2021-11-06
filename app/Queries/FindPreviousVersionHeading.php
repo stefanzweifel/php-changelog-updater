@@ -13,10 +13,6 @@ use League\CommonMark\Node\Query;
 
 class FindPreviousVersionHeading
 {
-    /**
-     * @param Document $document
-     * @return Node|null
-     */
     public function find(Document $document, string $previousVersion): ?Node
     {
         return (new Query())
