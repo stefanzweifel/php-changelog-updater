@@ -78,7 +78,6 @@ it('uses current date for release date if option is empty', function () {
 });
 
 it('places given release notes in correct position in given markdown changelog when no unreleased heading is available', function () {
-
     $this->artisan('update', [
         '--release-notes' => <<<MD
         ### Added

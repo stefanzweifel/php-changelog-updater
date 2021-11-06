@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use App\QueryExpressions\HeadingLevel;
-use App\QueryExpressions\HeadingText;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
