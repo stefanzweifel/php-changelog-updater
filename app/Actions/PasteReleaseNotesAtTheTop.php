@@ -41,7 +41,7 @@ class PasteReleaseNotesAtTheTop
 
     protected function createNewReleaseHeading(string $latestVersion, string $releaseDate): Heading
     {
-        return tap(new Heading(2), function ($heading) use ($latestVersion, $releaseDate) {
+        return tap(new Heading(2), function (Heading $heading) use ($latestVersion, $releaseDate) {
             $heading->appendChild(new Text($latestVersion));
             $heading->appendChild(new Text(" - {$releaseDate}"));
         });
