@@ -21,7 +21,7 @@ class CreateNewReleaseHeading
     {
         $url = $this->generateCompareUrl->generate($repositoryUrl, $previousVersion, $latestVersion);
 
-        return tap(new Heading(2), function ($heading) use ($url, $latestVersion, $releaseDate) {
+        return tap(new Heading(2), function (Heading $heading) use ($url, $latestVersion, $releaseDate) {
             $heading->appendChild($this->createLinkNode($latestVersion, $url));
             $heading->appendChild($this->createDateNode($releaseDate));
         });
@@ -29,7 +29,7 @@ class CreateNewReleaseHeading
 
     protected function createLinkNode(string $latestVersion, string $url): Link
     {
-        return tap(new Link($url), function ($link) use ($latestVersion) {
+        return tap(new Link($url), function (Link $link) use ($latestVersion) {
             $linkText = new Text($latestVersion);
             $link->appendChild($linkText);
         });

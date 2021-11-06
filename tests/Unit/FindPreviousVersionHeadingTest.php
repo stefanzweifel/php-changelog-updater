@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\FindPreviousVersionHeading;
+use App\Queries\FindPreviousVersionHeading;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
