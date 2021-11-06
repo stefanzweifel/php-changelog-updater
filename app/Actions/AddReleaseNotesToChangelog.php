@@ -60,8 +60,8 @@ class AddReleaseNotesToChangelog
         if ($unreleasedHeading) {
             return $this->pasteReleaseNotesBasedOnUnreleasedHeading($unreleasedHeading, $latestVersion, $releaseDate, $releaseNotes, $changelog);
         }
-        return $this->pasteReleaseNotesAtTheTop($latestVersion, $releaseNotes, $releaseDate, $changelog);
 
+        return $this->pasteReleaseNotesAtTheTop($latestVersion, $releaseNotes, $releaseDate, $changelog);
     }
 
     /**
@@ -152,7 +152,7 @@ class AddReleaseNotesToChangelog
     protected function pasteReleaseNotesAtTheTop(string $latestVersion, string $releaseNotes, string $releaseDate, Document $changelog): RenderedContentInterface
     {
         // Create new Heading containing the new version number
-        $newReleaseHeading =  tap(new Heading(2), function ($heading) use ($latestVersion, $releaseDate) {
+        $newReleaseHeading = tap(new Heading(2), function ($heading) use ($latestVersion, $releaseDate) {
             $heading->appendChild(new Text($latestVersion));
             $heading->appendChild(new Text(" - {$releaseDate}"));
         });
