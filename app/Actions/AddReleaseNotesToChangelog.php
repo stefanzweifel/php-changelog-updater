@@ -7,7 +7,6 @@ namespace App\Actions;
 use App\MarkdownParser;
 use App\MarkdownRenderer;
 use App\Queries\FindUnreleasedHeading;
-use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
 
