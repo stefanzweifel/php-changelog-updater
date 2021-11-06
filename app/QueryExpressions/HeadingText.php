@@ -7,8 +7,9 @@ namespace App\QueryExpressions;
 use Illuminate\Support\Str;
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Node\Node;
+use League\CommonMark\Node\Query\ExpressionInterface;
 
-class HeadingText implements \League\CommonMark\Node\Query\ExpressionInterface
+class HeadingText implements ExpressionInterface
 {
     private string $text;
 
