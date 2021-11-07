@@ -30,7 +30,7 @@ it('throws error if release-notes are missing', function () {
 
 it('throws error if latest-version is missing', function () {
     $this->artisan('update', [
-        '--release-notes' => '::release-notes::'
+        '--release-notes' => '::release-notes::',
         ])
        ->assertExitCode(1);
 })->throws(InvalidArgumentException::class, 'No latest-version option provided. Abort.');
