@@ -1,6 +1,6 @@
 # changelog-updater
 
-A PHP CLI to update a CHANGELOG following the ["Keep a Changelog"](https://keepachangelog.com/) format with the latest release notes.
+A PHP CLI to update a changelog with the latest release notes.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 [![Tests](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml)
@@ -8,12 +8,13 @@ A PHP CLI to update a CHANGELOG following the ["Keep a Changelog"](https://keepa
 [![Psalm](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 
+Want to automate the process of updating your changelog with GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
 
-Want to automate the process of updating your Changelog with GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
+*If your changelog follows the ["Keep a Changelog"](https://keepachangelog.com/) format and has a "Unreleased" heading in it, the CLI will update the link in and place the release notes below heading.*
 
 ## Installation
 
-You can install the changelog-updater CLI as a global composer dependency. It requires PHP 8.0 or higher.
+You can install the changelog-updater CLI as a composer dependency in your project or globally. It requires PHP 8.0 or higher.
 
 ```bash
 composer global require wnx/changelog-updater
@@ -42,42 +43,13 @@ php changelog-updater update \
 
 `--release-date`, `--path-to-changelog` and `--write` are optional. Learn more about the options by running `php changelog-updater update --help`.
 
-
-### Important
-
-Note that the Changelog MUST follow the "[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)"-format. 
-The CLI looks for a second level "Unreleased"-heading with a link. The link MUST point to the compare view of the latest version and `HEAD`.
-The CLI also looks for a second level heading with the name of the previous version. (If you release `v1.1.0` now, the previous version might be `v1.0.0`.) 
-
-Here is an example Markdown file, that will work fine with the CLI.
-
-
-```
-# Changelog
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
-
-## [Unreleased](https://github.com/org/repo/compare/v0.1.0...HEAD)
-
-*Please do not manually update this file. We've automated the process.*
-
-## v0.1.0 - 2021-01-01
-
-### Added
-- Initial Release
-```
-
-The content between the "Unreleased"-heading and the latest version will remain untouched by the CLI.
-
 ### CLI Options
 
 ### `--release-notes`
-**Required**. The release notes you want to add to your CHANGELOG. Should be markdown.
+**Required**. The release notes you want to add to your changelog. Should be markdown.
 
 ### `--latest-version`
-**Required**. Version number of the latest release. The value will be used as the heading text and as a parameter in the compare URL.
+**Required**. Version number of the latest release. The value will be used as the heading text. If the changelog has a "Unreleased" heading, the value will be used in the updated compare URL.
 
 Example: `v1.0.0`
 
@@ -89,6 +61,100 @@ Optional (Defaults to `CHANGELOG.md`). Path to CHANGELOG.md file.
 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
+
+## Expected Changelog Formats
+
+The CLI does its best to place the given release notes in the right place. 
+
+The CLI looks for the first second level heading in your current `CHANGELOG.md` file. It assumes that this heading represents the previous version. Here is an example of a `CHANGELOG.md` that the CLI can understand.
+
+```
+# Changelog
+
+## v1.0.0 - 2021-11-01
+
+### Added
+- Initial Release
+```
+
+The CLI will then place the new version and its release notes **above** the existing versions.
+
+```diff
+# Changelog
+
++ ## v1.1.0 - 2021-11-10
++ 
++ ### Added
++ 
++ * New Feature
++ 
+## v1.0.0 - 2021-11-01
+
+### Added
+
+* Initial Release
+```
+
+If the changelog does not contain a second level heading, it considers the changelog to be "empty". It will then place the release notes at the bottom of the document.
+
+```diff
+# Changelog
+All notable changes to this project will be documented in this file.
+
++## v1.0.0 - 2021-11-01
++
++### Added
++
++* Initial Release
+```
+
+---
+
+If your changelog follows the ["Keep a Changelog"](https://keepachangelog.com/) format and contains an "Unreleased"-heading with a link to the repositories compare view, the CLI will automatically update the link in the Unreleased heading.
+
+Here is an example of a changelog, before it is updated with the CLI.
+
+```
+# Changelog
+
+## [Unreleased](https://github.com/org/repo/compare/v1.0.0...HEAD)
+
+Please do not update the unreleased notes.
+
+<!-- Content should be placed here -->
+
+## v1.0.0 - 2021-01-01
+
+### Added
+- Initial Release
+```
+
+Below you find a diff-view of how the CLI will update the changelog.
+
+```diff
+# Changelog
+
++## [Unreleased](https://github.com/org/repo/compare/v1.1.0...HEAD)
+-## [Unreleased](https://github.com/org/repo/compare/v1.0.0...HEAD)
+
+Please do not update the unreleased notes.
+
+<!-- Content should be placed here -->
++## [v1.1.0](https://github.com/org/repo/compare/v1.0.0...v1.1.0) - 2021-02-01
++
++### Added
++
++* New Feature A
++* New Feature B
++
+
+## v1.0.0 - 2021-01-01
+
+### Added
+* Initial Release
+```
+
+The content between the "Unreleased"-heading and the latest version will remain untouched by the CLI.
 
 ## Testing
 
