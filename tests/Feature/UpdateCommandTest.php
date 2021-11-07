@@ -24,11 +24,16 @@ it('places given release notes in correct position in given markdown changelog',
 });
 
 it('throws error if release-notes are missing', function () {
-    $this->markTestIncomplete('TODO: Add Validation to Update Command');
-
-    $this->artisan('update')
+    $this->artisan('update', [])
        ->assertExitCode(1);
-});
+})->throws(InvalidArgumentException::class, 'No release-notes option provided. Abort.');
+
+it('throws error if latest-version is missing', function () {
+    $this->artisan('update', [
+        '--release-notes' => '::release-notes::',
+        ])
+       ->assertExitCode(1);
+})->throws(InvalidArgumentException::class, 'No latest-version option provided. Abort.');
 
 it('uses current date for release date if no option is provieded', function () {
     $expectedChangelog = file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md');

@@ -16,6 +16,7 @@
     "require": {
         "php": "^8.0",
         "league/commonmark": "^2.0",
+        "webmozart/assert": "^1.10",
         "wnx/commonmark-markdown-renderer": "^1.0"
     },
     "require-dev": {
