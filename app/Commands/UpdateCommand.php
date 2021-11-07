@@ -8,6 +8,7 @@ use App\Actions\AddReleaseNotesToChangelog;
 use LaravelZero\Framework\Commands\Command;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
+use Webmozart\Assert\Assert;
 
 class UpdateCommand extends Command
 {
@@ -26,6 +27,8 @@ class UpdateCommand extends Command
      */
     public function handle(AddReleaseNotesToChangelog $addReleaseNotesToChangelog): void
     {
+        $this->validateOptions();
+
         $releaseNotes = $this->option('release-notes');
         $latestVersion = $this->option('latest-version');
         $releaseDate = $this->option('release-date');
@@ -60,5 +63,11 @@ class UpdateCommand extends Command
         if ($shouldWriteToFile) {
             file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
         }
+    }
+
+    private function validateOptions(): void
+    {
+        Assert::stringNotEmpty($this->option('release-notes'), 'No release-notes option provided. Abort.');
+        Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
     }
 }
