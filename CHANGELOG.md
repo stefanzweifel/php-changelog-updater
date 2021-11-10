@@ -12,9 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
-- Validate Input Options (#10) @stefanzweifel
-- Add Release Notes at the end if no heading was found (#9) @stefanzweifel
-- Paste Release Notes at the top if no Unreleased Heading can be found (#7) @stefanzweifel
+- Validate Input Options [#10](https://github.com/stefanzweifel/php-changelog-updater/pull/10)
+- Add Release Notes at the end if no heading was found [#9](https://github.com/stefanzweifel/php-changelog-updater/pull/9)
+- Paste Release Notes at the top if no Unreleased Heading can be found [#7](https://github.com/stefanzweifel/php-changelog-updater/pull/7)
 
 ## Changed
 
