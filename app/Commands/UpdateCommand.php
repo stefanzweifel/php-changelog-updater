@@ -13,10 +13,11 @@ use Webmozart\Assert\Assert;
 class UpdateCommand extends Command
 {
     protected $signature = 'update
-        {--release-notes= : Markdown Release Notes to be added to the CHANGELOG}
-        {--latest-version= : The version the CHANGELOG should be updated too}
+        {--release-notes= : Markdown Release Notes to be added to the CHANGELOG.}
+        {--latest-version= : The version the CHANGELOG should be updated too.}
         {--release-date= : Date when latest version has been released. Defaults to today.}
-        {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated}
+        {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated.}
+        {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
         {-w\--write : Write changes to file}
     ';
 
@@ -33,6 +34,7 @@ class UpdateCommand extends Command
         $latestVersion = $this->option('latest-version');
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
+        $compareUrlTargetRevision = $this->option('compare-url-target-revision');
 
         if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
@@ -44,7 +46,8 @@ class UpdateCommand extends Command
             originalChangelog: $changelog,
             releaseNotes: $releaseNotes,
             latestVersion: $latestVersion,
-            releaseDate: $releaseDate
+            releaseDate: $releaseDate,
+            compareUrlTargetRevision: $compareUrlTargetRevision
         );
 
         $this->info($updatedChangelog->getContent());

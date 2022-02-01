@@ -38,10 +38,11 @@ php changelog-updater update \
 --latest-version="v1.0.0" \
 --release-date="2021-08-07" \
 --path-to-changelog="CHANGELOG.md" \
+--compare-url-target-revision="1.x"
 --write
 ```
 
-`--release-date`, `--path-to-changelog` and `--write` are optional. Learn more about the options by running `php changelog-updater update --help`.
+`--release-date`, `--path-to-changelog`, `--compare-url-target-revision` and `--write` are optional. Learn more about the options by running `php changelog-updater update --help`.
 
 ### CLI Options
 
@@ -58,6 +59,9 @@ Optional (Defaults to current date). The date the latest version has been releas
 
 ### `--path-to-changelog`
 Optional (Defaults to `CHANGELOG.md`). Path to CHANGELOG.md file.
+
+### `--compare-url-target-revision`
+Optional (Defaults to `HEAD`). If the changelog has a "Unreleased" heading, the value will be used together with the `--latest-version` value in the updated compare URL.
 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
