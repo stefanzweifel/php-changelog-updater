@@ -161,7 +161,7 @@ it('uses compare-url-target option in unreleased heading url', function () {
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-custom-compare-url-target.md',
         '--release-date' => '2021-02-01',
-        '--compare-url-target-revision' => '1.x'
+        '--compare-url-target-revision' => '1.x',
     ])
          ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-custom-compare-url-target.md'))
          ->assertExitCode(0);
