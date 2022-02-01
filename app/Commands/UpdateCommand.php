@@ -46,7 +46,8 @@ class UpdateCommand extends Command
             originalChangelog: $changelog,
             releaseNotes: $releaseNotes,
             latestVersion: $latestVersion,
-            releaseDate: $releaseDate
+            releaseDate: $releaseDate,
+            compareUrlTarget: $compareUrlTarget
         );
 
         $this->info($updatedChangelog->getContent());

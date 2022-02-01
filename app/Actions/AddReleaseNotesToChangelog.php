@@ -35,14 +35,21 @@ class AddReleaseNotesToChangelog
     /**
      * @throws Throwable
      */
-    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate): RenderedContentInterface
+    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $compareUrlTarget): RenderedContentInterface
     {
         $changelog = $this->markdownParser->parse($originalChangelog);
 
         $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
         if ($unreleasedHeading !== null) {
-            $changelog = $this->pasteReleaseNotesBelowUnreleasedHeading->execute($unreleasedHeading, $latestVersion, $releaseDate, $releaseNotes, $changelog);
+            $changelog = $this->pasteReleaseNotesBelowUnreleasedHeading->execute(
+                unreleasedHeading: $unreleasedHeading,
+                latestVersion: $latestVersion,
+                releaseDate: $releaseDate,
+                releaseNotes: $releaseNotes,
+                changelog: $changelog,
+                compareUrlTarget: $compareUrlTarget
+            );
         } else {
             $changelog = $this->pasteReleaseNotesAtTheTop->execute($latestVersion, $releaseNotes, $releaseDate, $changelog);
         }
