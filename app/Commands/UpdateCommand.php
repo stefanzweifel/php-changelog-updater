@@ -17,7 +17,7 @@ class UpdateCommand extends Command
         {--latest-version= : The version the CHANGELOG should be updated too.}
         {--release-date= : Date when latest version has been released. Defaults to today.}
         {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated.}
-        {--compare-url-target=HEAD : Target revision used in the compare URL of Unreleased heading.}
+        {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
         {-w\--write : Write changes to file}
     ';
 
@@ -34,7 +34,7 @@ class UpdateCommand extends Command
         $latestVersion = $this->option('latest-version');
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
-        $compareUrlTarget = $this->option('compare-url-target');
+        $compareUrlTargetRevision = $this->option('compare-url-target-revision');
 
         if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
@@ -47,7 +47,7 @@ class UpdateCommand extends Command
             releaseNotes: $releaseNotes,
             latestVersion: $latestVersion,
             releaseDate: $releaseDate,
-            compareUrlTarget: $compareUrlTarget
+            compareUrlTargetRevision: $compareUrlTargetRevision
         );
 
         $this->info($updatedChangelog->getContent());

@@ -37,11 +37,11 @@ class PasteReleaseNotesBelowUnreleasedHeading
     /**
      * @throws Throwable
      */
-    public function execute(Heading $unreleasedHeading, string $latestVersion, string $releaseDate, string $releaseNotes, Document $changelog, string $compareUrlTarget): Document
+    public function execute(Heading $unreleasedHeading, string $latestVersion, string $releaseDate, string $releaseNotes, Document $changelog, string $compareUrlTargetRevision): Document
     {
         $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($unreleasedHeading);
         $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($unreleasedHeading);
-        $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $latestVersion, $compareUrlTarget);
+        $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $latestVersion, $compareUrlTargetRevision);
 
         $link = $this->getLinkNodeFromHeading($unreleasedHeading);
         $link->setUrl($updatedUrl);
