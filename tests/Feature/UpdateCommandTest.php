@@ -145,6 +145,27 @@ it('places given release notes in correct position even if the release notes and
          ->assertExitCode(0);
 });
 
+it('places given release notes in correct position even if changelog is empty besides an unreleased heading', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-empty-with-unreleased.md',
+        '--release-date' => '2021-02-01',
+    ])
+         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-empty-with-unreleased.md'))
+         ->assertExitCode(0);
+})->only();
+
 it('uses compare-url-target option in unreleased heading url', function () {
     $this->artisan('update', [
         '--release-notes' => <<<MD
