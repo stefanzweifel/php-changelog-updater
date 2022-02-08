@@ -164,7 +164,7 @@ it('places given release notes in correct position even if changelog is empty be
     ])
          ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-empty-with-unreleased.md'))
          ->assertExitCode(0);
-})->only();
+});
 
 it('uses compare-url-target option in unreleased heading url', function () {
     $this->artisan('update', [
