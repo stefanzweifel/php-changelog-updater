@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\MarkdownParser;
 use App\MarkdownRenderer;
+use App\Queries\FindSecondLevelHeading;
 use App\Queries\FindUnreleasedHeading;
+use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
 
@@ -39,6 +42,8 @@ class AddReleaseNotesToChangelog
     {
         $changelog = $this->markdownParser->parse($originalChangelog);
 
+        $this->checkIfVersionAlreadyExistsInChangelog($changelog, $latestVersion);
+
         $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
         if ($unreleasedHeading !== null) {
@@ -55,5 +60,12 @@ class AddReleaseNotesToChangelog
         }
 
         return $this->markdownRenderer->render($changelog);
+    }
+
+    private function checkIfVersionAlreadyExistsInChangelog(Document $changelog, string $latestVersion): void
+    {
+        $result = app(FindSecondLevelHeading::class)->find($changelog, $latestVersion);
+
+        throw_unless(is_null($result), new ReleaseAlreadyExistsInChangelogException($latestVersion));
     }
 }
