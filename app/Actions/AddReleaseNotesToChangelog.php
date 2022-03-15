@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\MarkdownParser;
 use App\MarkdownRenderer;
-use App\Queries\FindPreviousVersionHeading;
+use App\Queries\FindSecondLevelHeadingWithText;
 use App\Queries\FindUnreleasedHeading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
@@ -64,7 +64,7 @@ class AddReleaseNotesToChangelog
 
     private function checkIfVersionAlreadyExistsInChangelog(Document $changelog, string $latestVersion): void
     {
-        $result = app(FindPreviousVersionHeading::class)->find($changelog, $latestVersion);
+        $result = app(FindSecondLevelHeadingWithText::class)->find($changelog, $latestVersion);
 
         throw_unless(is_null($result), new ReleaseAlreadyExistsInChangelogException($latestVersion));
     }

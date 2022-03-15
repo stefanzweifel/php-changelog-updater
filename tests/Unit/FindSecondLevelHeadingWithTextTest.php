@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Queries\FindPreviousVersionHeading;
+use App\Queries\FindSecondLevelHeadingWithText;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
@@ -19,7 +19,7 @@ it('finds previous version heading in markdown ast', function () {
 
     $ast = $parser->parse($markdown);
 
-    $result = app(FindPreviousVersionHeading::class)->find($ast, 'v1.0.0');
+    $result = app(FindSecondLevelHeadingWithText::class)->find($ast, 'v1.0.0');
 
     $this->assertNotNull($result);
     $this->assertInstanceOf(Heading::class, $result);
@@ -37,7 +37,7 @@ it('returns null if no previous version heading can be found in the markdown ast
 
     $ast = $parser->parse($markdown);
 
-    $result = app(FindPreviousVersionHeading::class)->find($ast, 'v1.0.0');
+    $result = app(FindSecondLevelHeadingWithText::class)->find($ast, 'v1.0.0');
 
     $this->assertNull($result);
 });
