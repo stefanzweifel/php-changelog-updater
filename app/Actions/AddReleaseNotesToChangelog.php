@@ -65,6 +65,10 @@ class AddReleaseNotesToChangelog
         return $this->markdownRenderer->render($changelog);
     }
 
+    /**
+     * Check if a second-level heading for the latestVersion already exists in the document.
+     * @throws ReleaseAlreadyExistsInChangelogException|Throwable
+     */
     private function checkIfVersionAlreadyExistsInChangelog(Document $changelog, string $latestVersion): void
     {
         $result = $this->findSecondLevelHeadingWithText->find($changelog, $latestVersion);
