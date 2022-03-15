@@ -18,6 +18,7 @@ class AddReleaseNotesToChangelog
     private MarkdownParser $markdownParser;
     private MarkdownRenderer $markdownRenderer;
     private FindUnreleasedHeading $findUnreleasedHeading;
+    private FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText;
     private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading;
     private PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop;
 
@@ -25,12 +26,14 @@ class AddReleaseNotesToChangelog
         MarkdownParser $markdownParser,
         MarkdownRenderer $markdownRenderer,
         FindUnreleasedHeading $findUnreleasedHeading,
+        FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText,
         PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
         PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop
     ) {
         $this->markdownParser = $markdownParser;
         $this->markdownRenderer = $markdownRenderer;
         $this->findUnreleasedHeading = $findUnreleasedHeading;
+        $this->findSecondLevelHeadingWithText = $findSecondLevelHeadingWithText;
         $this->pasteReleaseNotesBelowUnreleasedHeading = $pasteReleaseNotesBelowUnreleasedHeading;
         $this->pasteReleaseNotesAtTheTop = $pasteReleaseNotesAtTheTop;
     }
@@ -64,7 +67,7 @@ class AddReleaseNotesToChangelog
 
     private function checkIfVersionAlreadyExistsInChangelog(Document $changelog, string $latestVersion): void
     {
-        $result = app(FindSecondLevelHeadingWithText::class)->find($changelog, $latestVersion);
+        $result = $this->findSecondLevelHeadingWithText->find($changelog, $latestVersion);
 
         throw_unless(is_null($result), new ReleaseAlreadyExistsInChangelogException($latestVersion));
     }
