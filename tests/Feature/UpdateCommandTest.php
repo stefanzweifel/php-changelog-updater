@@ -23,11 +23,6 @@ it('places given release notes in correct position in given markdown changelog',
          ->assertExitCode(0);
 });
 
-it('throws error if release-notes are missing', function () {
-    $this->artisan('update', [])
-       ->assertExitCode(1);
-})->throws(InvalidArgumentException::class, 'No release-notes option provided. Abort.');
-
 it('throws error if latest-version is missing', function () {
     $this->artisan('update', [
         '--release-notes' => '::release-notes::',
