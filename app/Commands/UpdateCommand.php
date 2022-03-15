@@ -60,7 +60,6 @@ class UpdateCommand extends Command
 
     private function validateOptions(): void
     {
-        Assert::stringNotEmpty($this->option('release-notes'), 'No release-notes option provided. Abort.');
         Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
     }
 
