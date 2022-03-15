@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Commands;
 
 use App\Actions\AddReleaseNotesToChangelog;
+use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use LaravelZero\Framework\Commands\Command;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
@@ -42,17 +43,19 @@ class UpdateCommand extends Command
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
-        $updatedChangelog = $addReleaseNotesToChangelog->execute(
-            originalChangelog: $changelog,
-            releaseNotes: $releaseNotes,
-            latestVersion: $latestVersion,
-            releaseDate: $releaseDate,
-            compareUrlTargetRevision: $compareUrlTargetRevision
-        );
-
-        $this->info($updatedChangelog->getContent());
-
-        $this->writeChangelogToFile($pathToChangelog, $updatedChangelog);
+        try {
+            $updatedChangelog = $addReleaseNotesToChangelog->execute(
+                originalChangelog: $changelog,
+                releaseNotes: $releaseNotes,
+                latestVersion: $latestVersion,
+                releaseDate: $releaseDate,
+                compareUrlTargetRevision: $compareUrlTargetRevision
+            );
+            $this->info($updatedChangelog->getContent());
+            $this->writeChangelogToFile($pathToChangelog, $updatedChangelog);
+        } catch (ReleaseAlreadyExistsInChangelogException $exception) {
+            $this->warn("CHANGELOG was not updated as release notes for {$exception->release} already exist.");
+        }
     }
 
     private function validateOptions(): void

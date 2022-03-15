@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\CreateNewReleaseHeading;
 use App\GenerateCompareUrl;
 use App\MarkdownParser;
-use App\Queries\FindPreviousVersionHeading;
+use App\Queries\FindSecondLevelHeadingWithText;
 use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -19,14 +19,14 @@ class PasteReleaseNotesBelowUnreleasedHeading
 {
     private MarkdownParser $parser;
     private GenerateCompareUrl $generateCompareUrl;
-    private FindPreviousVersionHeading $findPreviousVersionHeading;
+    private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
     private CreateNewReleaseHeading $createNewReleaseHeading;
 
     public function __construct(
-        MarkdownParser $markdownParser,
-        GenerateCompareUrl $generateCompareUrl,
-        FindPreviousVersionHeading $findPreviousVersionHeading,
-        CreateNewReleaseHeading $createNewReleaseHeading
+        MarkdownParser                 $markdownParser,
+        GenerateCompareUrl             $generateCompareUrl,
+        FindSecondLevelHeadingWithText $findPreviousVersionHeading,
+        CreateNewReleaseHeading        $createNewReleaseHeading
     ) {
         $this->parser = $markdownParser;
         $this->generateCompareUrl = $generateCompareUrl;

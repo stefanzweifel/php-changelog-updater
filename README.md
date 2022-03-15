@@ -44,6 +44,8 @@ php changelog-updater update \
 
 `--release-date`, `--path-to-changelog`, `--compare-url-target-revision` and `--write` are optional. Learn more about the options by running `php changelog-updater update --help`.
 
+If a given version already exists in the CHANGELOG, the CLI will display a warning and not update the CHANGELOG.
+
 ### CLI Options
 
 ### `--release-notes`

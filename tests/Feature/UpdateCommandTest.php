@@ -124,27 +124,6 @@ it('places given release notes in correct position in given markdown changelog w
          ->assertExitCode(0);
 });
 
-it('places given release notes in correct position even if the release notes and version already exists in the changelog', function () {
-    $this->artisan('update', [
-        '--release-notes' => <<<MD
-        ### Added
-        - New Feature A
-        - New Feature B
-
-        ### Changed
-        - Update Feature C
-
-        ### Removes
-        - Remove Feature D
-        MD,
-        '--latest-version' => 'v1.0.0',
-        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-release.md',
-        '--release-date' => '2021-02-01',
-    ])
-         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-release.md'))
-         ->assertExitCode(0);
-});
-
 it('places given release notes in correct position even if changelog is empty besides an unreleased heading', function () {
     $this->artisan('update', [
         '--release-notes' => <<<MD
@@ -185,5 +164,27 @@ it('uses compare-url-target option in unreleased heading url', function () {
         '--compare-url-target-revision' => '1.x',
     ])
          ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-custom-compare-url-target.md'))
+         ->assertExitCode(0);
+});
+
+it('shows warning if version already exists in the changelog', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v0.1.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--compare-url-target-revision' => '1.x',
+    ])
+         ->expectsOutput('CHANGELOG was not updated as release notes for v0.1.0 already exist.')
          ->assertExitCode(0);
 });

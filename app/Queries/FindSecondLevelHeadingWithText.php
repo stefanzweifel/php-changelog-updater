@@ -11,7 +11,7 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Node\Query;
 
-class FindPreviousVersionHeading
+class FindSecondLevelHeadingWithText
 {
     public function find(Document $document, string $previousVersion): ?Node
     {
