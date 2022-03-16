@@ -76,7 +76,7 @@ class PasteReleaseNotesBelowUnreleasedHeading
     /**
      * @throws Throwable
      */
-    private function getPreviousVersionFromUnreleasedHeading(Heading $unreleasedHeading): string
+    private function getPreviousVersionFromUnreleasedHeading(Heading $unreleasedHeading): ?string
     {
         $linkNode = $this->getLinkNodeFromHeading($unreleasedHeading);
 
