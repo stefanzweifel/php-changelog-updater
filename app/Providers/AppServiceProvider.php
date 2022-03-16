@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->singleton(GitHubActionsOutput::class, fn() => new GitHubActionsOutput());
+        $this->app->singleton(GitHubActionsOutput::class, fn () => new GitHubActionsOutput());
     }
 
     /**
