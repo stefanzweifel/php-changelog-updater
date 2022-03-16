@@ -204,5 +204,4 @@ it('nothing happens if no release notes have been given and no unreleased headin
     ])
          ->expectsOutput('Release Notes were not provided. Pass them through the `--release-notes`-option.')
          ->assertFailed();
-
 });

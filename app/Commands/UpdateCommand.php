@@ -54,12 +54,15 @@ class UpdateCommand extends Command
             );
             $this->info($updatedChangelog->getContent());
             $this->writeChangelogToFile($pathToChangelog, $updatedChangelog);
+
             return self::SUCCESS;
         } catch (ReleaseAlreadyExistsInChangelogException $exception) {
             $this->warn($exception->getMessage());
+
             return self::SUCCESS;
         } catch (ReleaseNotesNotProvidedException $exception) {
             $this->error($exception->getMessage());
+
             return self::FAILURE;
         }
     }
