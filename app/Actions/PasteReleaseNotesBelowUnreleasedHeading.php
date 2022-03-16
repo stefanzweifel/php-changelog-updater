@@ -8,6 +8,7 @@ use App\CreateNewReleaseHeading;
 use App\GenerateCompareUrl;
 use App\MarkdownParser;
 use App\Queries\FindSecondLevelHeadingWithText;
+use App\Support\GitHubActionsOutput;
 use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -21,17 +22,20 @@ class PasteReleaseNotesBelowUnreleasedHeading
     private GenerateCompareUrl $generateCompareUrl;
     private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
     private CreateNewReleaseHeading $createNewReleaseHeading;
+    private GitHubActionsOutput $gitHubActionsOutput;
 
     public function __construct(
         MarkdownParser                 $markdownParser,
         GenerateCompareUrl             $generateCompareUrl,
         FindSecondLevelHeadingWithText $findPreviousVersionHeading,
-        CreateNewReleaseHeading        $createNewReleaseHeading
+        CreateNewReleaseHeading        $createNewReleaseHeading,
+        GitHubActionsOutput $gitHubActionsOutput
     ) {
         $this->parser = $markdownParser;
         $this->generateCompareUrl = $generateCompareUrl;
         $this->findPreviousVersionHeading = $findPreviousVersionHeading;
         $this->createNewReleaseHeading = $createNewReleaseHeading;
+        $this->gitHubActionsOutput = $gitHubActionsOutput;
     }
 
     /**
@@ -45,6 +49,7 @@ class PasteReleaseNotesBelowUnreleasedHeading
 
         $link = $this->getLinkNodeFromHeading($unreleasedHeading);
         $link->setUrl($updatedUrl);
+        $this->gitHubActionsOutput->add('UNRELEASED_COMPARE_URL', $updatedUrl);
 
         // Create new Heading containing the new version number
         $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $releaseDate);
