@@ -23,11 +23,6 @@ it('places given release notes in correct position in given markdown changelog',
          ->assertExitCode(0);
 });
 
-it('throws error if release-notes are missing', function () {
-    $this->artisan('update', [])
-       ->assertExitCode(1);
-})->throws(InvalidArgumentException::class, 'No release-notes option provided. Abort.');
-
 it('throws error if latest-version is missing', function () {
     $this->artisan('update', [
         '--release-notes' => '::release-notes::',
@@ -187,4 +182,26 @@ it('shows warning if version already exists in the changelog', function () {
     ])
          ->expectsOutput('CHANGELOG was not updated as release notes for v0.1.0 already exist.')
          ->assertExitCode(0);
+});
+
+it('uses existing content between unreleased and previous version heading as release notes', function () {
+    $this->artisan('update', [
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
+        '--release-date' => '2021-02-01',
+        '--compare-url-target-revision' => '1.x',
+    ])
+         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-unreleased-notes.md'))
+         ->assertExitCode(0);
+});
+
+it('nothing happens if no release notes have been given and no unreleased heading can be found', function () {
+    $this->artisan('update', [
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
+        '--release-date' => '2021-02-01',
+        '--compare-url-target-revision' => '1.x',
+    ])
+         ->expectsOutput('Release Notes were not provided. Pass them through the `--release-notes`-option.')
+         ->assertFailed();
 });

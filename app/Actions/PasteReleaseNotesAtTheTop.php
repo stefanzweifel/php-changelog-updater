@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use App\Exceptions\ReleaseNotesNotProvidedException;
 use App\MarkdownParser;
 use App\Queries\FindFirstSecondLevelHeading;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
+use Throwable;
 
 class PasteReleaseNotesAtTheTop
 {
@@ -21,8 +23,13 @@ class PasteReleaseNotesAtTheTop
         $this->parser = $markdownParser;
     }
 
-    public function execute(string $latestVersion, string $releaseNotes, string $releaseDate, Document $changelog): Document
+    /**
+     * @throws Throwable
+     */
+    public function execute(string $latestVersion, ?string $releaseNotes, string $releaseDate, Document $changelog): Document
     {
+        throw_if(is_null($releaseNotes), ReleaseNotesNotProvidedException::class);
+
         // Create new Heading containing the new version and date
         $newReleaseHeading = $this->createNewReleaseHeading($latestVersion, $releaseDate);
 

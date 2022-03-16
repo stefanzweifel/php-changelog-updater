@@ -41,7 +41,7 @@ class AddReleaseNotesToChangelog
     /**
      * @throws Throwable
      */
-    public function execute(string $originalChangelog, string $releaseNotes, string $latestVersion, string $releaseDate, string $compareUrlTargetRevision): RenderedContentInterface
+    public function execute(string $originalChangelog, ?string $releaseNotes, string $latestVersion, string $releaseDate, string $compareUrlTargetRevision): RenderedContentInterface
     {
         $changelog = $this->markdownParser->parse($originalChangelog);
 
