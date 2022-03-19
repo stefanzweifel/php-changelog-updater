@@ -68,10 +68,12 @@ Optional (Defaults to `HEAD`). If the changelog has a "Unreleased" heading, the 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
 
+### `--github-action-output`
+Optional. Will output values for `UNRELEASED_COMPARE_URL` and `RELEASE_COMPARE_URL` that can be picked up by GitHub Actions and further used in ones Workflow. 
+
 ## Expected Changelog Formats
 
 The CLI does its best to place the given release notes in the right place. 
-
 The CLI looks for the first second level heading in your current `CHANGELOG.md` file. It assumes that this heading represents the previous version. Here is an example of a `CHANGELOG.md` that the CLI can understand.
 
 ```
