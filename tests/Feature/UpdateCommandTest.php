@@ -23,6 +23,29 @@ it('places given release notes in correct position in given markdown changelog',
          ->assertExitCode(0);
 });
 
+it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL for GitHub Actions in CI environment', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--github-actions-output' => true,
+    ])
+         ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'RELEASE_COMPARE_URL', 'https://github.com/org/repo/compare/v0.1.0...v1.0.0'))
+         ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD'))
+         ->assertExitCode(0);
+});
+
 it('throws error if latest-version is missing', function () {
     $this->artisan('update', [
         '--release-notes' => '::release-notes::',
