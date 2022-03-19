@@ -68,7 +68,7 @@ Optional (Defaults to `HEAD`). If the changelog has a "Unreleased" heading, the 
 ### `--write`
 Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-changelog`.
 
-### `--github-action-output`
+### `--github-actions-output`
 Optional. Will output values for `UNRELEASED_COMPARE_URL` and `RELEASE_COMPARE_URL` that can be picked up by GitHub Actions and further used in ones Workflow. 
 
 ## Expected Changelog Formats

@@ -21,7 +21,7 @@ class UpdateCommand extends Command
         {--release-date= : Date when latest version has been released. Defaults to today.}
         {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated.}
         {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
-        {--github-action-output=false: Display GitHub Actions related output}
+        {--github-actions-output=false: Display GitHub Actions related output}
         {-w\--write : Write changes to file}
     ';
 
@@ -67,7 +67,7 @@ class UpdateCommand extends Command
 
             return self::FAILURE;
         } finally {
-            if ($this->option('github-action-output')) {
+            if ($this->option('github-actions-output')) {
                 $gitHubActionsOutput->render($this->getOutput());
             }
         }

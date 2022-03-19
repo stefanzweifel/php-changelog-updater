@@ -39,7 +39,7 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL for GitHub Actions in
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
         '--release-date' => '2021-02-01',
-        '--github-action-output' => true,
+        '--github-actions-output' => true,
     ])
          ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'RELEASE_COMPARE_URL', 'https://github.com/org/repo/compare/v0.1.0...v1.0.0'))
          ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD'))
