@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.3.0...HEAD)
+## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.4.0...HEAD)
 
 <!-- New Release notes will be placed here automatically -->
+## [v1.4.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.3.0...v1.4.0) - 2022-03-19
+
+## Added
+
+- Output GitHub Actions Output Variables ([#18](https://github.com/stefanzweifel/php-changelog-updater/pull/18))
+- Throw Warning if Release already exists in Changelog ([#16](https://github.com/stefanzweifel/php-changelog-updater/pull/16))
+
+## Changed
+
+- Make Release Notes Optional ([#17](https://github.com/stefanzweifel/php-changelog-updater/pull/17))
+
 ## [v1.3.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.2.2...v1.3.0) - 2022-02-09
 
 ## Changed
