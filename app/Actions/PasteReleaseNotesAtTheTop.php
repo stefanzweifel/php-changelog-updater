@@ -28,7 +28,7 @@ class PasteReleaseNotesAtTheTop
      */
     public function execute(string $latestVersion, ?string $releaseNotes, string $releaseDate, Document $changelog): Document
     {
-        throw_if(is_null($releaseNotes), ReleaseNotesNotProvidedException::class);
+        throw_if(empty($releaseNotes), ReleaseNotesNotProvidedException::class);
 
         // Create new Heading containing the new version and date
         $newReleaseHeading = $this->createNewReleaseHeading($latestVersion, $releaseDate);
