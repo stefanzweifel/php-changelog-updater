@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Actions\ExtractNewReleaseHeadingFragmentAction;
+use App\Actions\ExtractPermalinkFragmentFromHeading;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Inline\Text;
 
 class CreateNewReleaseHeading
 {
-    private ExtractNewReleaseHeadingFragmentAction $extractNewReleaseHeadingFragmentAction;
+    private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading;
 
-    public function __construct(ExtractNewReleaseHeadingFragmentAction $extractNewReleaseHeadingFragmentAction)
+    public function __construct(ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading)
     {
-        $this->extractNewReleaseHeadingFragmentAction = $extractNewReleaseHeadingFragmentAction;
+        $this->extractPermalinkFragmentFromHeading = $extractPermalinkFragmentFromHeading;
     }
 
     public function create(string $latestVersion, string $releaseDate): Heading
@@ -23,7 +23,7 @@ class CreateNewReleaseHeading
             $heading->appendChild(new Text($latestVersion));
             $heading->appendChild(new Text(" - {$releaseDate}"));
 
-            $this->extractNewReleaseHeadingFragmentAction->execute($heading);
+            $this->extractPermalinkFragmentFromHeading->execute($heading);
         });
     }
 }

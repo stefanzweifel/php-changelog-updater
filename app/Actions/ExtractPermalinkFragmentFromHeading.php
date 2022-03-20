@@ -16,7 +16,7 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\HtmlRenderer;
 
-class ExtractNewReleaseHeadingFragmentAction
+class ExtractPermalinkFragmentFromHeading
 {
     private GitHubActionsOutput $gitHubActionsOutput;
 
