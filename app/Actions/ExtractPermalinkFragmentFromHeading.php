@@ -9,11 +9,11 @@ use DOMDocument;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\HtmlRenderer;
 
 class ExtractPermalinkFragmentFromHeading
@@ -25,7 +25,7 @@ class ExtractPermalinkFragmentFromHeading
         $this->gitHubActionsOutput = $gitHubActionsOutput;
     }
 
-    public function execute(Node $releaseHeading): string
+    public function execute(Heading $releaseHeading): string
     {
         $releaseHeading = clone $releaseHeading;
 
@@ -37,7 +37,7 @@ class ExtractPermalinkFragmentFromHeading
         });
     }
 
-    protected function attachPermalinkAndRenderAsHtml(Node $releaseHeading): string
+    protected function attachPermalinkAndRenderAsHtml(Heading $releaseHeading): string
     {
         $environment = $this->prepareCommonmarkEnvironment();
 
@@ -74,11 +74,11 @@ class ExtractPermalinkFragmentFromHeading
     /**
      * Attach Heading Permalink to given ReleaseHeading using
      * the Commonmark Heading Permalink Extension.
-     * @param Node $releaseHeading
+     * @param Heading $releaseHeading
      * @param Environment $environment
      * @return Document
      */
-    protected function attachPermalinkToHeading(Node $releaseHeading, Environment $environment): Document
+    protected function attachPermalinkToHeading(Heading $releaseHeading, Environment $environment): Document
     {
         $document = new Document();
         $document->appendChild($releaseHeading);
