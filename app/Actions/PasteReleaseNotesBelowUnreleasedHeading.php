@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
-use App\CreateNewReleaseHeading;
+use App\CreateNewReleaseHeadingWithCompareUrl;
 use App\GenerateCompareUrl;
 use App\MarkdownParser;
 use App\Queries\FindSecondLevelHeadingWithText;
@@ -21,15 +21,15 @@ class PasteReleaseNotesBelowUnreleasedHeading
     private MarkdownParser $parser;
     private GenerateCompareUrl $generateCompareUrl;
     private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
-    private CreateNewReleaseHeading $createNewReleaseHeading;
+    private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading;
     private GitHubActionsOutput $gitHubActionsOutput;
 
     public function __construct(
-        MarkdownParser                 $markdownParser,
-        GenerateCompareUrl             $generateCompareUrl,
-        FindSecondLevelHeadingWithText $findPreviousVersionHeading,
-        CreateNewReleaseHeading        $createNewReleaseHeading,
-        GitHubActionsOutput $gitHubActionsOutput
+        MarkdownParser                        $markdownParser,
+        GenerateCompareUrl                    $generateCompareUrl,
+        FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
+        CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
+        GitHubActionsOutput                   $gitHubActionsOutput
     ) {
         $this->parser = $markdownParser;
         $this->generateCompareUrl = $generateCompareUrl;

@@ -9,7 +9,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Inline\Text;
 
-class CreateNewReleaseHeading
+class CreateNewReleaseHeadingWithCompareUrl
 {
     private GenerateCompareUrl $generateCompareUrl;
     private GitHubActionsOutput $gitHubActionsOutput;

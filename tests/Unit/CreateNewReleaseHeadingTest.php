@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\CreateNewReleaseHeading;
+use App\CreateNewReleaseHeadingWithCompareUrl;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -22,7 +22,7 @@ test('creates new release heading ast', function () {
     $markdownRenderer = new MarkdownRenderer($environment);
 
     /** @var Document $result */
-    $result = app(CreateNewReleaseHeading::class)->create(
+    $result = app(CreateNewReleaseHeadingWithCompareUrl::class)->create(
         $repositoryUrl,
         $previousVersion,
         $latestVersion,
