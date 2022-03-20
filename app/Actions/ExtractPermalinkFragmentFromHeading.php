@@ -71,6 +71,13 @@ class ExtractPermalinkFragmentFromHeading
         return $environment;
     }
 
+    /**
+     * Attach Heading Permalink to given ReleaseHeading using
+     * the Commonmark Heading Permalink Extension.
+     * @param Node $releaseHeading
+     * @param Environment $environment
+     * @return Document
+     */
     protected function attachPermalinkToHeading(Node $releaseHeading, Environment $environment): Document
     {
         $document = new Document();
@@ -85,10 +92,16 @@ class ExtractPermalinkFragmentFromHeading
         return $document;
     }
 
-    protected function extractLinkFragmentFromRenderedHtml(string $result): ?string
+    /**
+     * Parse the rendered HTML as a DOM Document and extract the
+     * href attribute from the generated a-tag.
+     * @param string $html
+     * @return string|null
+     */
+    protected function extractLinkFragmentFromRenderedHtml(string $html): ?string
     {
         $domDocument = new DOMDocument();
-        $domDocument->loadHTML($result);
+        $domDocument->loadHTML($html);
 
         return $domDocument
             ->getElementsByTagName('a')
