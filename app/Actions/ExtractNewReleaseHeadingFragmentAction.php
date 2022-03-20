@@ -85,7 +85,7 @@ class ExtractNewReleaseHeadingFragmentAction
         return $document;
     }
 
-    protected function extractLinkFragmentFromRenderedHtml(string $result): string
+    protected function extractLinkFragmentFromRenderedHtml(string $result): ?string
     {
         $domDocument = new DOMDocument();
         $domDocument->loadHTML($result);
