@@ -80,7 +80,6 @@ class ExtractNewReleaseHeadingFragmentAction
 
         $processor = (new HeadingPermalinkProcessor());
         $processor->setEnvironment($environment);
-        // Tests fail when running this line :/
         $processor->__invoke($documentParsedEvent);
 
         return $document;
