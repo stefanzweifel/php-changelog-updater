@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Actions\ExtractNewReleaseHeadingFragmentAction;
 use App\Support\GitHubActionsOutput;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -13,11 +14,13 @@ class CreateNewReleaseHeadingWithCompareUrl
 {
     private GenerateCompareUrl $generateCompareUrl;
     private GitHubActionsOutput $gitHubActionsOutput;
+    private ExtractNewReleaseHeadingFragmentAction $extractNewReleaseHeadingFragmentAction;
 
-    public function __construct(GenerateCompareUrl $generateCompareUrl, GitHubActionsOutput $gitHubActionsOutput)
+    public function __construct(GenerateCompareUrl $generateCompareUrl, GitHubActionsOutput $gitHubActionsOutput, ExtractNewReleaseHeadingFragmentAction $extractNewReleaseHeadingFragmentAction)
     {
         $this->generateCompareUrl = $generateCompareUrl;
         $this->gitHubActionsOutput = $gitHubActionsOutput;
+        $this->extractNewReleaseHeadingFragmentAction = $extractNewReleaseHeadingFragmentAction;
     }
 
     public function create(string $repositoryUrl, string $previousVersion, string $latestVersion, string $releaseDate): Heading
@@ -29,6 +32,8 @@ class CreateNewReleaseHeadingWithCompareUrl
         return tap(new Heading(2), function (Heading $heading) use ($url, $latestVersion, $releaseDate) {
             $heading->appendChild($this->createLinkNode($latestVersion, $url));
             $heading->appendChild($this->createDateNode($releaseDate));
+
+            $this->extractNewReleaseHeadingFragmentAction->execute($heading);
         });
     }
 
