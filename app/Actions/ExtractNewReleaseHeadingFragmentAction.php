@@ -29,7 +29,7 @@ class ExtractNewReleaseHeadingFragmentAction
     {
         $releaseHeading = clone $releaseHeading;
 
-        $renderedHtml = $this->attachHeadingPermalinkAndParseAsHtml($releaseHeading);
+        $renderedHtml = $this->attachPermalinkAndRenderAsHtml($releaseHeading);
         $linkFragment = $this->extractLinkFragmentFromRenderedHtml($renderedHtml);
 
         return tap($linkFragment, function (string $linkFragment) {
@@ -37,11 +37,11 @@ class ExtractNewReleaseHeadingFragmentAction
         });
     }
 
-    protected function attachHeadingPermalinkAndParseAsHtml(Node $releaseHeading): string
+    protected function attachPermalinkAndRenderAsHtml(Node $releaseHeading): string
     {
         $environment = $this->prepareCommonmarkEnvironment();
 
-        $document = $this->attachHeadingPermalink($releaseHeading, $environment);
+        $document = $this->attachPermalinkToHeading($releaseHeading, $environment);
 
         $renderer = new HtmlRenderer($environment);
 
@@ -71,7 +71,7 @@ class ExtractNewReleaseHeadingFragmentAction
         return $environment;
     }
 
-    protected function attachHeadingPermalink(Node $releaseHeading, Environment $environment): Document
+    protected function attachPermalinkToHeading(Node $releaseHeading, Environment $environment): Document
     {
         $document = new Document();
         $document->appendChild($releaseHeading);
