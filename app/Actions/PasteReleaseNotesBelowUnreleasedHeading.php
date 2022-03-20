@@ -54,7 +54,7 @@ class PasteReleaseNotesBelowUnreleasedHeading
         // Create new Heading containing the new version number
         $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $releaseDate);
 
-        if (is_null($releaseNotes)) {
+        if (empty($releaseNotes)) {
             // If no Release Notes have been passed, add the new Release Heading below the updated Unreleased Heading.
             // We assume that the user already added their release notes under the Unreleased Heading.
             $unreleasedHeading->insertAfter($newReleaseHeading);
