@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use App\Support\GitHubActionsOutput;
 use DOMDocument;
-use League\CommonMark\Event\DocumentParsedEvent;
-use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
+use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkProcessor;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Node;
@@ -25,6 +27,8 @@ class ExtractNewReleaseHeadingFragmentAction
 
     public function execute(Node $releaseHeading): string
     {
+        $releaseHeading = clone $releaseHeading;
+
         $renderedHtml = $this->attachHeadingPermalinkAndParseAsHtml($releaseHeading);
         $linkFragment = $this->extractLinkFragmentFromRenderedHtml($renderedHtml);
 
@@ -40,6 +44,7 @@ class ExtractNewReleaseHeadingFragmentAction
         $document = $this->attachHeadingPermalink($releaseHeading, $environment);
 
         $renderer = new HtmlRenderer($environment);
+
         return $renderer->renderDocument($document)->getContent();
     }
 
@@ -62,6 +67,7 @@ class ExtractNewReleaseHeadingFragmentAction
         $environment = new Environment($config);
         $environment->addExtension(new CommonMarkCoreExtension());
         $environment->addExtension(new HeadingPermalinkExtension());
+
         return $environment;
     }
 
@@ -76,6 +82,7 @@ class ExtractNewReleaseHeadingFragmentAction
         $processor->setEnvironment($environment);
         // Tests fail when running this line :/
         $processor->__invoke($documentParsedEvent);
+
         return $document;
     }
 
