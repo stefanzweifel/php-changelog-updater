@@ -241,3 +241,24 @@ it('nothing happens if no release notes have been given and no unreleased headin
          ->expectsOutput('Release Notes were not provided. Pass them through the `--release-notes`-option.')
          ->assertFailed();
 });
+
+test('it shows warning if changelog is empty and content can not be placed', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/empty-changelog.md',
+        '--compare-url-target-revision' => 'HEAD',
+    ])
+         ->expectsOutput('Release notes could not be placed. Is the CHANGELOG empty? Does it contain at least one heading?')
+         ->assertFailed();
+});
