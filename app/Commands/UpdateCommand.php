@@ -6,6 +6,7 @@ namespace App\Commands;
 
 use App\Actions\AddReleaseNotesToChangelog;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
+use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
 use App\Support\GitHubActionsOutput;
 use LaravelZero\Framework\Commands\Command;
@@ -55,6 +56,7 @@ class UpdateCommand extends Command
                 compareUrlTargetRevision: $compareUrlTargetRevision
             );
             $this->info($updatedChangelog->getContent());
+
             $this->writeChangelogToFile($pathToChangelog, $updatedChangelog);
 
             return self::SUCCESS;
@@ -62,7 +64,7 @@ class UpdateCommand extends Command
             $this->warn($exception->getMessage());
 
             return self::SUCCESS;
-        } catch (ReleaseNotesNotProvidedException $exception) {
+        } catch (ReleaseNotesNotProvidedException|ReleaseNotesCanNotBeplacedException $exception) {
             $this->error($exception->getMessage());
 
             return self::FAILURE;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\CreateNewReleaseHeading;
+use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
 use App\MarkdownParser;
 use App\Queries\FindFirstSecondLevelHeading;
@@ -43,8 +44,10 @@ class PasteReleaseNotesAtTheTop
         if ($previousVersionHeading !== null) {
             // Insert the newest Release Notes before the previous Release Heading
             $previousVersionHeading->insertBefore($parsedReleaseNotes);
+        } elseif ($changelog->lastChild() !== null) {
+            $changelog->lastChild()->insertAfter($parsedReleaseNotes);
         } else {
-            $changelog->lastChild()?->insertAfter($parsedReleaseNotes);
+            throw new ReleaseNotesCanNotBeplacedException();
         }
 
         return $changelog;
