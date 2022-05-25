@@ -10,7 +10,7 @@ use League\CommonMark\Node\Query;
 
 class ShiftHeadingLevelInDocument
 {
-    public function execute(Document $document, int $minLevel): Document
+    public function execute(Document $document, int $baseHeadingLevel): Document
     {
         $headings = (new Query())
             ->where(Query::type(Heading::class))
@@ -19,12 +19,14 @@ class ShiftHeadingLevelInDocument
         /** @var Heading $heading */
         foreach ($headings as $heading) {
 
-            $currentHeadingLevel = $heading->getLevel();
-            $diffToDesiredLevel = $minLevel - $currentHeadingLevel;
-
-            if ($heading->getLevel() <= $minLevel) {
-                $heading->setLevel($heading->getLevel() + $diffToDesiredLevel);
+            // Don't shift heading if level is above base level
+            if ($heading->getLevel() >= $baseHeadingLevel) {
+                continue;
             }
+
+            // TODO: Should we keep the hierarchy of all headings intact?
+            $diffToDesiredLevel = $baseHeadingLevel - $heading->getLevel();
+            $heading->setLevel($heading->getLevel() + $diffToDesiredLevel);
         }
 
         return $document;
