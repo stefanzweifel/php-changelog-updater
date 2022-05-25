@@ -262,3 +262,24 @@ test('it shows warning if changelog is empty and content can not be placed', fun
          ->expectsOutput('Release notes could not be placed. Is the CHANGELOG empty? Does it contain at least one heading?')
          ->assertFailed();
 });
+
+test('it automatically shifts heading levels to be level 3 headings to fit into the existing changelog', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ## Added
+        - New Feature A
+        - New Feature B
+
+        ## Changed
+        - Update Feature C
+
+        ## Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+    ])
+         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md'))
+         ->assertSuccessful();
+});
