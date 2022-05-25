@@ -23,19 +23,22 @@ class PasteReleaseNotesBelowUnreleasedHeading
     private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
     private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading;
     private GitHubActionsOutput $gitHubActionsOutput;
+    private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
 
     public function __construct(
         MarkdownParser                        $markdownParser,
         GenerateCompareUrl                    $generateCompareUrl,
         FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
         CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
-        GitHubActionsOutput                   $gitHubActionsOutput
+        GitHubActionsOutput                   $gitHubActionsOutput,
+        ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument
     ) {
         $this->parser = $markdownParser;
         $this->generateCompareUrl = $generateCompareUrl;
         $this->findPreviousVersionHeading = $findPreviousVersionHeading;
         $this->createNewReleaseHeading = $createNewReleaseHeading;
         $this->gitHubActionsOutput = $gitHubActionsOutput;
+        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
     }
 
     /**
@@ -62,6 +65,11 @@ class PasteReleaseNotesBelowUnreleasedHeading
 
             // Prepend the new Release Heading to the Release Notes
             $parsedReleaseNotes = $this->parser->parse($releaseNotes);
+            $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
+                document: $parsedReleaseNotes,
+                baseHeadingLevel: 3
+            );
+
             $parsedReleaseNotes->prependChild($newReleaseHeading);
 
             // Find the Heading of the previous Version
