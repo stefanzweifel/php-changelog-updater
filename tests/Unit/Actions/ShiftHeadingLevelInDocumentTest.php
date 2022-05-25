@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Actions\ShiftHeadingLevelInDocument;
 use App\MarkdownParser;
 use App\MarkdownRenderer;
 
 test('shifts headings to be below min heading level', function () {
-
     $document = app(MarkdownParser::class)->parse(<<<MD
     # Level 1 Heading
 
@@ -34,5 +35,4 @@ test('shifts headings to be below min heading level', function () {
 ##### Level 5 Heading
 MD
 , trim($updatedDocument->getContent()));
-
 });
