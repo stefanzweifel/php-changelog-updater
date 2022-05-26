@@ -264,7 +264,6 @@ test('it shows warning if changelog is empty and content can not be placed', fun
 });
 
 test('it automatically shifts heading levels to be level 3 headings to fit into the existing changelog', function ($releaseNotes) {
-
     $this->artisan('update', [
         '--release-notes' => $releaseNotes,
         '--latest-version' => 'v1.0.0',
