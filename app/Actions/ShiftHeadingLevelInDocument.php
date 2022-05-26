@@ -24,7 +24,6 @@ class ShiftHeadingLevelInDocument
                 continue;
             }
 
-            // $heading->setLevel($heading->getLevel() + ($baseHeadingLevel - $heading->getLevel()));
             $heading->setLevel($baseHeadingLevel);
         }
 
