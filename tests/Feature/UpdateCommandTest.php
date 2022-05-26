@@ -306,4 +306,4 @@ test('it automatically shifts heading levels to be level 3 headings to fit into 
         #### Removes
         - Remove Feature D
         MD,
-])->only();
+]);
