@@ -24,9 +24,8 @@ class ShiftHeadingLevelInDocument
                 continue;
             }
 
-            // TODO: Should we keep the hierarchy of all headings intact?
-            $diffToDesiredLevel = $baseHeadingLevel - $heading->getLevel();
-            $heading->setLevel($heading->getLevel() + $diffToDesiredLevel);
+            // $heading->setLevel($heading->getLevel() + ($baseHeadingLevel - $heading->getLevel()));
+            $heading->setLevel($baseHeadingLevel);
         }
 
         return $document;
