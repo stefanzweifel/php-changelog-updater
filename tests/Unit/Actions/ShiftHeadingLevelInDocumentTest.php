@@ -36,3 +36,38 @@ test('shifts headings to be below min heading level', function () {
 MD
 , trim($updatedDocument->getContent()));
 });
+
+test('shifts headings and keeps hierarchy', function () {
+    $document = app(MarkdownParser::class)->parse(<<<MD
+    # Level 1 becomes Level 2
+
+    ## Level 2 becomes Level 3
+
+    ### Level 3 becomes Level 4
+
+    #### Level 4 becomes Level 5
+
+    ##### Level 5 becomes Level 6
+
+    ###### Level 6 becomes Level 6
+    MD);
+
+    $result = app(ShiftHeadingLevelInDocument::class)->execute($document, 2);
+
+    $updatedDocument = app(MarkdownRenderer::class)->render($result);
+
+    $this->assertEquals(<<<MD
+## Level 1 becomes Level 2
+
+### Level 2 becomes Level 3
+
+#### Level 3 becomes Level 4
+
+##### Level 4 becomes Level 5
+
+###### Level 5 becomes Level 6
+
+###### Level 6 becomes Level 6
+MD
+, trim($updatedDocument->getContent()));
+})->skip("Not implemented yet, maybe something for the future");
