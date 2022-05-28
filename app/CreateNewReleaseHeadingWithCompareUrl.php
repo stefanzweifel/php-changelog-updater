@@ -19,14 +19,14 @@ class CreateNewReleaseHeadingWithCompareUrl
     ) {
     }
 
-    public function create(string $repositoryUrl, string $previousVersion, string $latestVersion, string $releaseDate): Heading
+    public function create(string $repositoryUrl, string $previousVersion, string $latestVersion, string $headingText, string $releaseDate): Heading
     {
         $url = $this->generateCompareUrl->generate($repositoryUrl, $previousVersion, $latestVersion);
 
         $this->gitHubActionsOutput->add('RELEASE_COMPARE_URL', $url);
 
-        return tap(new Heading(2), function (Heading $heading) use ($url, $latestVersion, $releaseDate) {
-            $heading->appendChild($this->createLinkNode($latestVersion, $url));
+        return tap(new Heading(2), function (Heading $heading) use ($headingText, $url, $releaseDate) {
+            $heading->appendChild($this->createLinkNode($headingText, $url));
             $heading->appendChild($this->createDateNode($releaseDate));
 
             $this->extractPermalinkFragmentFromHeading->execute($heading);

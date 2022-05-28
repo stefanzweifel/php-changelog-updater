@@ -22,11 +22,11 @@ class PlaceReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    public function execute(Document $changelog, string $latestVersion, string $releaseDate, ?string $releaseNotes): Document
+    public function execute(Document $changelog, string $latestVersion, string $headingText, string $releaseDate, ?string $releaseNotes): Document
     {
         throw_if(empty($releaseNotes), ReleaseNotesNotProvidedException::class);
 
-        $newReleaseHeading = $this->createNewReleaseHeading->create($latestVersion, $releaseDate);
+        $newReleaseHeading = $this->createNewReleaseHeading->create($headingText, $releaseDate);
 
         // Find the Heading of the previous Version
         $previousVersionHeading = $this->findFirstSecondLevelHeading->find($changelog);

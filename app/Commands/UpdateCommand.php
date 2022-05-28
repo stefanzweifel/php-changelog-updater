@@ -56,8 +56,9 @@ class UpdateCommand extends Command
         try {
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
                 originalChangelog: $changelog,
-                releaseNotes: $releaseNotes,
                 latestVersion: $latestVersion,
+                headingText: $headingText,
+                releaseNotes: $releaseNotes,
                 releaseDate: $releaseDate,
                 compareUrlTargetRevision: $compareUrlTargetRevision
             );

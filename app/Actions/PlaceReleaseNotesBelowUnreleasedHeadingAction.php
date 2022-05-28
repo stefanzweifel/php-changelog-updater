@@ -29,7 +29,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
     /**
      * @throws Throwable
      */
-    public function execute(Heading $unreleasedHeading, string $latestVersion, string $releaseDate, ?string $releaseNotes, Document $changelog, string $compareUrlTargetRevision): Document
+    public function execute(Heading $unreleasedHeading, string $latestVersion, string $headingText, string $releaseDate, ?string $releaseNotes, Document $changelog, string $compareUrlTargetRevision): Document
     {
         $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($unreleasedHeading);
         $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($unreleasedHeading);
@@ -40,7 +40,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
         $this->gitHubActionsOutput->add('UNRELEASED_COMPARE_URL', $updatedUrl);
 
         // Create new Heading containing the new version number
-        $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $releaseDate);
+        $newReleaseHeading = $this->createNewReleaseHeading->create($repositoryUrl, $previousVersion, $latestVersion, $headingText, $releaseDate);
 
         if (empty($releaseNotes)) {
             // If no Release Notes have been passed, add the new Release Heading below the updated Unreleased Heading.
