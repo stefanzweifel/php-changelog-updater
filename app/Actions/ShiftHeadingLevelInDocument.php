@@ -50,6 +50,7 @@ class ShiftHeadingLevelInDocument
                 if ($level === null) {
                     return $heading->getLevel();
                 }
+
                 return min($level, $heading->getLevel());
             },
             null
