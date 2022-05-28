@@ -9,7 +9,6 @@ use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\GenerateCompareUrl;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
-use App\Support\Markdown;
 use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -24,10 +23,8 @@ class PasteReleaseNotesBelowUnreleasedHeadingAction
         private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
         private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
         private GitHubActionsOutput                   $gitHubActionsOutput,
-        private ShiftHeadingLevelInDocumentAction     $shiftHeadingLevelInDocument,
-        private Markdown                              $markdown
-    )
-    {
+        private PrepareReleaseNotesAction $prepareReleaseNotesAction,
+    ) {
     }
 
     /**
@@ -51,15 +48,7 @@ class PasteReleaseNotesBelowUnreleasedHeadingAction
             // We assume that the user already added their release notes under the Unreleased Heading.
             $unreleasedHeading->insertAfter($newReleaseHeading);
         } else {
-
-            // Prepend the new Release Heading to the Release Notes
-            $parsedReleaseNotes = $this->markdown->parse($releaseNotes);
-            $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
-                document: $parsedReleaseNotes,
-                baseHeadingLevel: 3
-            );
-
-            $parsedReleaseNotes->prependChild($newReleaseHeading);
+            $parsedReleaseNotes = $this->prepareReleaseNotesAction->execute($releaseNotes, $newReleaseHeading);
 
             // Find the Heading of the previous Version
             $previousVersionHeading = $this->findPreviousVersionHeading->find($changelog, $previousVersion);

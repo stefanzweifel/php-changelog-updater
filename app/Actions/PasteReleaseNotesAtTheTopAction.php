@@ -8,7 +8,6 @@ use App\CreateNewReleaseHeading;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
 use App\Queries\FindFirstSecondLevelHeading;
-use App\Support\Markdown;
 use League\CommonMark\Node\Block\Document;
 use Throwable;
 
@@ -17,8 +16,7 @@ class PasteReleaseNotesAtTheTopAction
     public function __construct(
         private FindFirstSecondLevelHeading       $findFirstSecondLevelHeading,
         private CreateNewReleaseHeading           $createNewReleaseHeading,
-        private ShiftHeadingLevelInDocumentAction $shiftHeadingLevelInDocument,
-        private Markdown                          $markdown
+        private PrepareReleaseNotesAction $prepareReleaseNotesAction,
     ) {
     }
 
@@ -31,14 +29,7 @@ class PasteReleaseNotesAtTheTopAction
 
         $newReleaseHeading = $this->createNewReleaseHeading->create($latestVersion, $releaseDate);
 
-        // Prepend the new Release Heading to the Release Notes
-        $parsedReleaseNotes = $this->markdown->parse($releaseNotes);
-        $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
-            document: $parsedReleaseNotes,
-            baseHeadingLevel: 3
-        );
-
-        $parsedReleaseNotes->prependChild($newReleaseHeading);
+        $parsedReleaseNotes = $this->prepareReleaseNotesAction->execute($releaseNotes, $newReleaseHeading);
 
         // Find the Heading of the previous Version
         $previousVersionHeading = $this->findFirstSecondLevelHeading->find($changelog);
