@@ -23,7 +23,7 @@ class PasteReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    public function execute(string $latestVersion, ?string $releaseNotes, string $releaseDate, Document $changelog): Document
+    public function execute(Document $changelog, string $latestVersion, string $releaseDate, ?string $releaseNotes): Document
     {
         throw_if(empty($releaseNotes), ReleaseNotesNotProvidedException::class);
 
