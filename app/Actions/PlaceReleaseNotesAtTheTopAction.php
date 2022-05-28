@@ -22,7 +22,7 @@ class PlaceReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    public function execute(Document $changelog, string $latestVersion, string $headingText, string $releaseDate, ?string $releaseNotes): Document
+    public function execute(Document $changelog, string $headingText, string $releaseDate, ?string $releaseNotes): Document
     {
         throw_if(empty($releaseNotes), ReleaseNotesNotProvidedException::class);
 

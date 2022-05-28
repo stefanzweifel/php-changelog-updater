@@ -47,7 +47,6 @@ class AddReleaseNotesToChangelogAction
         } else {
             $changelog = $this->addNewReleaseToChangelog->execute(
                 changelog: $changelog,
-                latestVersion: $latestVersion,
                 headingText: $headingText,
                 releaseDate: $releaseDate,
                 releaseNotes: $releaseNotes
