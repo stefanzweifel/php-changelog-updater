@@ -12,13 +12,13 @@ use App\Support\Markdown;
 use League\CommonMark\Node\Block\Document;
 use Throwable;
 
-class PasteReleaseNotesAtTheTop
+class PasteReleaseNotesAtTheTopAction
 {
     public function __construct(
-        private FindFirstSecondLevelHeading $findFirstSecondLevelHeading,
-        private CreateNewReleaseHeading $createNewReleaseHeading,
-        private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument,
-        private Markdown $markdown
+        private FindFirstSecondLevelHeading       $findFirstSecondLevelHeading,
+        private CreateNewReleaseHeading           $createNewReleaseHeading,
+        private ShiftHeadingLevelInDocumentAction $shiftHeadingLevelInDocument,
+        private Markdown                          $markdown
     ) {
     }
 

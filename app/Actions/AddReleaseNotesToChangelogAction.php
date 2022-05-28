@@ -12,14 +12,14 @@ use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
 
-class AddReleaseNotesToChangelog
+class AddReleaseNotesToChangelogAction
 {
     public function __construct(
-        private Markdown $markdown,
-        private FindUnreleasedHeading                   $findUnreleasedHeading,
-        private FindSecondLevelHeadingWithText          $findSecondLevelHeadingWithText,
-        private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
-        private PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop
+        private Markdown                                      $markdown,
+        private FindUnreleasedHeading                         $findUnreleasedHeading,
+        private FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
+        private PasteReleaseNotesBelowUnreleasedHeadingAction $pasteReleaseNotesBelowUnreleasedHeading,
+        private PasteReleaseNotesAtTheTopAction               $pasteReleaseNotesAtTheTop
     ) {
     }
 

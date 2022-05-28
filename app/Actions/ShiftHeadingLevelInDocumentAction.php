@@ -8,7 +8,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Query;
 
-class ShiftHeadingLevelInDocument
+class ShiftHeadingLevelInDocumentAction
 {
     private const MAX_HEADER_SIZE = 6;
 

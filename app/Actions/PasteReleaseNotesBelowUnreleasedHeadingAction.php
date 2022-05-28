@@ -16,15 +16,15 @@ use League\CommonMark\Node\Block\Document;
 use LogicException;
 use Throwable;
 
-class PasteReleaseNotesBelowUnreleasedHeading
+class PasteReleaseNotesBelowUnreleasedHeadingAction
 {
     public function __construct(
         private GenerateCompareUrl                    $generateCompareUrl,
         private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
         private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
         private GitHubActionsOutput                   $gitHubActionsOutput,
-        private ShiftHeadingLevelInDocument           $shiftHeadingLevelInDocument,
-        private Markdown $markdown
+        private ShiftHeadingLevelInDocumentAction     $shiftHeadingLevelInDocument,
+        private Markdown                              $markdown
     ) {
     }
 

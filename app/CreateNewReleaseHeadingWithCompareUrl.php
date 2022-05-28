@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Actions\ExtractPermalinkFragmentFromHeading;
+use App\Actions\ExtractPermalinkFragmentFromHeadingAction;
 use App\Support\GitHubActionsOutput;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -15,7 +15,7 @@ class CreateNewReleaseHeadingWithCompareUrl
     public function __construct(
         private GenerateCompareUrl $generateCompareUrl,
         private GitHubActionsOutput $gitHubActionsOutput,
-        private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading
+        private ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading
     ) {
     }
 

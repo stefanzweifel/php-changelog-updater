@@ -16,7 +16,7 @@ use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkRenderer;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Renderer\HtmlRenderer;
 
-class ExtractPermalinkFragmentFromHeading
+class ExtractPermalinkFragmentFromHeadingAction
 {
     public function __construct(private GitHubActionsOutput $gitHubActionsOutput)
     {

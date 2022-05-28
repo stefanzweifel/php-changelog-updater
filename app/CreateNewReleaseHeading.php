@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Actions\ExtractPermalinkFragmentFromHeading;
+use App\Actions\ExtractPermalinkFragmentFromHeadingAction;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Inline\Text;
 
 class CreateNewReleaseHeading
 {
-    public function __construct(private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading)
+    public function __construct(private ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading)
     {
     }
 
