@@ -16,7 +16,7 @@ use League\CommonMark\Node\Block\Document;
 use LogicException;
 use Throwable;
 
-class PasteReleaseNotesBelowUnreleasedHeadingAction
+class PlaceReleaseNotesBelowUnreleasedHeadingAction
 {
     public function __construct(
         private GenerateCompareUrl                    $generateCompareUrl,

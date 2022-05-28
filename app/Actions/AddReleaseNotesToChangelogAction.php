@@ -18,8 +18,8 @@ class AddReleaseNotesToChangelogAction
         private Markdown                                      $markdown,
         private FindUnreleasedHeading                         $findUnreleasedHeading,
         private FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
-        private PasteReleaseNotesBelowUnreleasedHeadingAction $pasteReleaseNotesBelowUnreleasedHeading,
-        private PasteReleaseNotesAtTheTopAction               $pasteReleaseNotesAtTheTop
+        private PlaceReleaseNotesBelowUnreleasedHeadingAction $pasteReleaseNotesBelowUnreleasedHeading,
+        private PlaceReleaseNotesAtTheTopAction $pasteReleaseNotesAtTheTop
     ) {
     }
 

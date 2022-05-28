@@ -11,7 +11,7 @@ use App\Queries\FindFirstSecondLevelHeading;
 use League\CommonMark\Node\Block\Document;
 use Throwable;
 
-class PasteReleaseNotesAtTheTopAction
+class PlaceReleaseNotesAtTheTopAction
 {
     public function __construct(
         private FindFirstSecondLevelHeading       $findFirstSecondLevelHeading,
