@@ -15,6 +15,7 @@ test('creates new release heading ast', function () {
     $repositoryUrl = 'https://github.com/org/repo';
     $previousVersion = 'v0.1.0';
     $latestVersion = 'v1.0.0';
+    $headingText = $latestVersion;
     $releaseDate = '2021-02-01';
 
     $environment = new Environment();
@@ -26,6 +27,7 @@ test('creates new release heading ast', function () {
         $repositoryUrl,
         $previousVersion,
         $latestVersion,
+        $headingText,
         $releaseDate
     );
 

@@ -296,3 +296,47 @@ test('it automatically shifts heading levels to be level 3 headings to fit into 
         - Remove Feature D
         MD,
 ]);
+
+it('heading-text option allows user to use different heading text than latest-version when changelog contains unreleased heading', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--heading-text' => '::heading-text::',
+    ])
+         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-heading-text.md'))
+         ->assertSuccessful();
+});
+
+it('heading-text option allows user to use different heading text than latest-version when changelog does not contain unreleased heading', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
+        '--release-date' => '2021-02-01',
+        '--heading-text' => '::heading-text::',
+    ])
+         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-without-unreleased-with-heading-text.md'))
+         ->assertSuccessful();
+});
