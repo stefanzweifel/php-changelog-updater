@@ -18,8 +18,8 @@ class AddReleaseNotesToChangelogAction
         private Markdown                                      $markdown,
         private FindUnreleasedHeading                         $findUnreleasedHeading,
         private FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
-        private PlaceReleaseNotesBelowUnreleasedHeadingAction $pasteReleaseNotesBelowUnreleasedHeading,
-        private PlaceReleaseNotesAtTheTopAction $pasteReleaseNotesAtTheTop
+        private PlaceReleaseNotesBelowUnreleasedHeadingAction $addNewReleaseNotesWithUnreleasedHeadingToChangelog,
+        private PlaceReleaseNotesAtTheTopAction               $addNewReleaseToChangelog
     ) {
     }
 
@@ -35,7 +35,7 @@ class AddReleaseNotesToChangelogAction
         $unreleasedHeading = $this->findUnreleasedHeading->find($changelog);
 
         if ($unreleasedHeading !== null) {
-            $changelog = $this->pasteReleaseNotesBelowUnreleasedHeading->execute(
+            $changelog = $this->addNewReleaseNotesWithUnreleasedHeadingToChangelog->execute(
                 unreleasedHeading: $unreleasedHeading,
                 latestVersion: $latestVersion,
                 releaseDate: $releaseDate,
@@ -44,7 +44,7 @@ class AddReleaseNotesToChangelogAction
                 compareUrlTargetRevision: $compareUrlTargetRevision
             );
         } else {
-            $changelog = $this->pasteReleaseNotesAtTheTop->execute(
+            $changelog = $this->addNewReleaseToChangelog->execute(
                 changelog: $changelog,
                 latestVersion: $latestVersion,
                 releaseDate: $releaseDate,
