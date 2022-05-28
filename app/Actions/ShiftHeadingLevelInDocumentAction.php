@@ -17,12 +17,16 @@ class ShiftHeadingLevelInDocumentAction
         $headings = (new Query())
             ->where(Query::type(Heading::class))
             ->findAll($document);
-        /** @var array<Heading> $headings */
+
+        /**
+         * @var array<Heading> $headings
+         * @psalm-suppress InvalidArgument
+         */
         $headings = iterator_to_array($headings);
 
         // Find the lowest heading level
         $lowestHeadingLevel = $this->findLowestHeadingLevel($headings);
-        # Calculate the amount to increase the header levels by
+        // Calculate the amount to increase the header levels by
         $increaseBy = $baseHeadingLevel - $lowestHeadingLevel;
 
         foreach ($headings as $heading) {
