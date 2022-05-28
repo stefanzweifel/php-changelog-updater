@@ -278,10 +278,10 @@ test('it automatically shifts heading levels to be level 3 headings to fit into 
         - New Feature A
         - New Feature B
 
-        ## Changed
+        # Changed
         - Update Feature C
 
-        #### Removes
+        ## Removes
         - Remove Feature D
         MD,
     'starts with h2' => <<<MD
@@ -289,21 +289,10 @@ test('it automatically shifts heading levels to be level 3 headings to fit into 
         - New Feature A
         - New Feature B
 
-        ### Changed
+        ## Changed
         - Update Feature C
 
-        #### Removes
-        - Remove Feature D
-        MD,
-    'starts with h3' => <<<MD
-        ### Added
-        - New Feature A
-        - New Feature B
-
-        ### Changed
-        - Update Feature C
-
-        #### Removes
+        ### Removes
         - Remove Feature D
         MD,
 ]);
