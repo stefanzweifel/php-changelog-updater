@@ -78,6 +78,7 @@ class UpdateCommand extends Command
     private function validateOptions(): void
     {
         Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
+        Assert::fileExists($this->option('path-to-changelog'), 'CHANGELOG file not found. Abort.');
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool | string
