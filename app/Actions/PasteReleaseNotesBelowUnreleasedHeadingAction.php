@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\CreateNewReleaseHeadingWithCompareUrl;
+use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\GenerateCompareUrl;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
@@ -25,7 +26,8 @@ class PasteReleaseNotesBelowUnreleasedHeadingAction
         private GitHubActionsOutput                   $gitHubActionsOutput,
         private ShiftHeadingLevelInDocumentAction     $shiftHeadingLevelInDocument,
         private Markdown                              $markdown
-    ) {
+    )
+    {
     }
 
     /**
@@ -65,8 +67,10 @@ class PasteReleaseNotesBelowUnreleasedHeadingAction
             if ($previousVersionHeading !== null) {
                 // Insert the newest Release Notes before the previous Release Heading
                 $previousVersionHeading->insertBefore($parsedReleaseNotes);
+            } elseif ($changelog->lastChild() !== null) {
+                $changelog->lastChild()->insertAfter($parsedReleaseNotes);
             } else {
-                $changelog->lastChild()?->insertAfter($parsedReleaseNotes);
+                throw new ReleaseNotesCanNotBeplacedException();
             }
         }
 
