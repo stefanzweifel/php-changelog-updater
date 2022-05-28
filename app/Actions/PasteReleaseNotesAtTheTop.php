@@ -14,18 +14,12 @@ use Throwable;
 
 class PasteReleaseNotesAtTheTop
 {
-    private FindFirstSecondLevelHeading $findFirstSecondLevelHeading;
-    private CreateNewReleaseHeading $createNewReleaseHeading;
-    private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
-    private Markdown $markdown;
-
-    public function __construct(FindFirstSecondLevelHeading $findFirstSecondLevelHeading, CreateNewReleaseHeading $createNewReleaseHeading, ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument, Markdown $markdown)
-    {
-        $this->findFirstSecondLevelHeading = $findFirstSecondLevelHeading;
-        ;
-        $this->createNewReleaseHeading = $createNewReleaseHeading;
-        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
-        $this->markdown = $markdown;
+    public function __construct(
+        private FindFirstSecondLevelHeading $findFirstSecondLevelHeading,
+        private CreateNewReleaseHeading $createNewReleaseHeading,
+        private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument,
+        private Markdown $markdown
+    ) {
     }
 
     /**

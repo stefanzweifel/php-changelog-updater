@@ -18,27 +18,14 @@ use Throwable;
 
 class PasteReleaseNotesBelowUnreleasedHeading
 {
-    private GenerateCompareUrl $generateCompareUrl;
-    private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
-    private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading;
-    private GitHubActionsOutput $gitHubActionsOutput;
-    private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
-    private Markdown $markdown;
-
     public function __construct(
-        GenerateCompareUrl                    $generateCompareUrl,
-        FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
-        CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
-        GitHubActionsOutput                   $gitHubActionsOutput,
-        ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument,
-        Markdown $markdown
+        private GenerateCompareUrl                    $generateCompareUrl,
+        private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
+        private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
+        private GitHubActionsOutput                   $gitHubActionsOutput,
+        private ShiftHeadingLevelInDocument           $shiftHeadingLevelInDocument,
+        private Markdown $markdown
     ) {
-        $this->generateCompareUrl = $generateCompareUrl;
-        $this->findPreviousVersionHeading = $findPreviousVersionHeading;
-        $this->createNewReleaseHeading = $createNewReleaseHeading;
-        $this->gitHubActionsOutput = $gitHubActionsOutput;
-        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
-        $this->markdown = $markdown;
     }
 
     /**
