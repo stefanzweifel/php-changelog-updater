@@ -17,12 +17,14 @@ class PasteReleaseNotesAtTheTop
     private FindFirstSecondLevelHeading $findFirstSecondLevelHeading;
     private MarkdownParser $parser;
     private CreateNewReleaseHeading $createNewReleaseHeading;
+    private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
 
-    public function __construct(FindFirstSecondLevelHeading $findFirstSecondLevelHeading, MarkdownParser $markdownParser, CreateNewReleaseHeading $createNewReleaseHeading)
+    public function __construct(FindFirstSecondLevelHeading $findFirstSecondLevelHeading, MarkdownParser $markdownParser, CreateNewReleaseHeading $createNewReleaseHeading, ShiftHeadingLevelInDocument $shiftHeadingLevelInDocumentt)
     {
         $this->findFirstSecondLevelHeading = $findFirstSecondLevelHeading;
         $this->parser = $markdownParser;
         $this->createNewReleaseHeading = $createNewReleaseHeading;
+        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocumentt;
     }
 
     /**
@@ -36,6 +38,11 @@ class PasteReleaseNotesAtTheTop
 
         // Prepend the new Release Heading to the Release Notes
         $parsedReleaseNotes = $this->parser->parse($releaseNotes);
+        $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
+            document: $parsedReleaseNotes,
+            baseHeadingLevel: 3
+        );
+
         $parsedReleaseNotes->prependChild($newReleaseHeading);
 
         // Find the Heading of the previous Version
