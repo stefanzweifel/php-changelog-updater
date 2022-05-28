@@ -45,10 +45,10 @@ class AddReleaseNotesToChangelogAction
             );
         } else {
             $changelog = $this->pasteReleaseNotesAtTheTop->execute(
+                changelog: $changelog,
                 latestVersion: $latestVersion,
-                releaseNotes: $releaseNotes,
                 releaseDate: $releaseDate,
-                changelog: $changelog
+                releaseNotes: $releaseNotes
             );
         }
 
