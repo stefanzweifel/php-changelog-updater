@@ -33,10 +33,10 @@ class CreateNewReleaseHeadingWithCompareUrl
         });
     }
 
-    protected function createLinkNode(string $latestVersion, string $url): Link
+    protected function createLinkNode(string $text, string $url): Link
     {
-        return tap(new Link($url), function (Link $link) use ($latestVersion) {
-            $linkText = new Text($latestVersion);
+        return tap(new Link($url), function (Link $link) use ($text) {
+            $linkText = new Text($text);
             $link->appendChild($linkText);
         });
     }
