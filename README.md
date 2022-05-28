@@ -52,7 +52,7 @@ If a given version already exists in the CHANGELOG, the CLI will display a warni
 **Required**. The release notes you want to add to your changelog. Should be markdown.
 
 ### `--latest-version`
-**Required**. Version number of the latest release. The value will be used as the heading text. If the changelog has a "Unreleased" heading, the value will be used in the updated compare URL.
+**Required**. Version number of the latest release. The value will be used as the heading text if `--heading-text` is not set. If the changelog has a "Unreleased" heading, the value will be used in the updated compare URL.
 
 Example: `v1.0.0`
 
@@ -70,6 +70,14 @@ Optional. Write the changes to `CHANGELOG.md` or to the value of `--path-to-chan
 
 ### `--github-actions-output`
 Optional. Will output values for `UNRELEASED_COMPARE_URL` and `RELEASE_COMPARE_URL` that can be picked up by GitHub Actions and further used in ones Workflow. 
+
+### `--heading-text`
+Optional (Defaults to value of `--latest-version`). The text value used in the heading that is created for the new release. 
+
+```md
+## heading-text - 2021-02-01
+## [heading-text](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-02-01
+```
 
 ## Expected Changelog Formats
 
