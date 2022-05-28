@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\CreateNewReleaseHeadingWithCompareUrl;
-use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\GenerateCompareUrl;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
@@ -23,7 +22,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
         private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
         private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
         private GitHubActionsOutput                   $gitHubActionsOutput,
-        private PrepareReleaseNotesAction $prepareReleaseNotesAction,
+        private InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
     ) {
     }
 
@@ -48,19 +47,15 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
             // We assume that the user already added their release notes under the Unreleased Heading.
             $unreleasedHeading->insertAfter($newReleaseHeading);
         } else {
-            $parsedReleaseNotes = $this->prepareReleaseNotesAction->execute($releaseNotes, $newReleaseHeading);
-
             // Find the Heading of the previous Version
             $previousVersionHeading = $this->findPreviousVersionHeading->find($changelog, $previousVersion);
 
-            if ($previousVersionHeading !== null) {
-                // Insert the newest Release Notes before the previous Release Heading
-                $previousVersionHeading->insertBefore($parsedReleaseNotes);
-            } elseif ($changelog->lastChild() !== null) {
-                $changelog->lastChild()->insertAfter($parsedReleaseNotes);
-            } else {
-                throw new ReleaseNotesCanNotBeplacedException();
-            }
+            return $this->insertReleaseNotesInChangelogAction->execute(
+                changelog: $changelog,
+                releaseNotes: $releaseNotes,
+                newReleaseHeading: $newReleaseHeading,
+                previousVersionHeading: $previousVersionHeading
+            );
         }
 
         return $changelog;
