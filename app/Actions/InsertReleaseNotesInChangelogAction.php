@@ -13,17 +13,24 @@ class InsertReleaseNotesInChangelogAction
     /**
      * @throws ReleaseNotesCanNotBeplacedException
      */
-    public function execute(Document $changelog, Document $parsedReleaseNotes, ?Heading $previousVersionHeading): Document
+    public function execute(Document $changelog, Document $releaseNotes, ?Heading $previousVersionHeading): Document
     {
+        // If heading for a previous release exists, insert new release
+        // notes block **before** the previous release heading.
         if ($previousVersionHeading !== null) {
-            // Insert the newest Release Notes before the previous Release Heading
-            $previousVersionHeading->insertBefore($parsedReleaseNotes);
-        } elseif ($changelog->lastChild() !== null) {
-            $changelog->lastChild()->insertAfter($parsedReleaseNotes);
-        } else {
-            throw new ReleaseNotesCanNotBeplacedException();
+            $previousVersionHeading->insertBefore($releaseNotes);
+            return $changelog;
         }
 
-        return $changelog;
+        // If no previous version heading exists in the document, we consider the CHANGELOG empty.
+        // Insert the release notes at the end of the document (after the last element in the existing CHANGELOG).
+        if ($changelog->lastChild() !== null) {
+            $changelog->lastChild()->insertAfter($releaseNotes);
+            return $changelog;
+        }
+
+        // If the CHANGELOG doesn't have any children, we currently don't insert the release notes.
+        // An exception is thrown and an error message is displayed to the user.
+        throw new ReleaseNotesCanNotBeplacedException();
     }
 }
