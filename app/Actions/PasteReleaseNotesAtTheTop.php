@@ -7,8 +7,8 @@ namespace App\Actions;
 use App\CreateNewReleaseHeading;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
-use App\MarkdownParser;
 use App\Queries\FindFirstSecondLevelHeading;
+use App\Support\MarkdownParser;
 use League\CommonMark\Node\Block\Document;
 use Throwable;
 

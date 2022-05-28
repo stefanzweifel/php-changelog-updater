@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use App\Actions\ShiftHeadingLevelInDocument;
-use App\MarkdownParser;
-use App\MarkdownRenderer;
+use App\Support\MarkdownParser;
+use App\Support\MarkdownRenderer;
 
 test('shifts headings to be below min heading level', function () {
     $document = app(MarkdownParser::class)->parse(<<<MD

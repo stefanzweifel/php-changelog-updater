@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Support;
 
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Node\Block\Document;

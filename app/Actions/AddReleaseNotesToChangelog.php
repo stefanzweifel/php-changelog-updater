@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
-use App\MarkdownParser;
-use App\MarkdownRenderer;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Queries\FindUnreleasedHeading;
+use App\Support\MarkdownParser;
+use App\Support\MarkdownRenderer;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;

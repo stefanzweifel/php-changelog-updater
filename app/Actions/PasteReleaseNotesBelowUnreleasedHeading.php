@@ -6,9 +6,9 @@ namespace App\Actions;
 
 use App\CreateNewReleaseHeadingWithCompareUrl;
 use App\GenerateCompareUrl;
-use App\MarkdownParser;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
+use App\Support\MarkdownParser;
 use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
