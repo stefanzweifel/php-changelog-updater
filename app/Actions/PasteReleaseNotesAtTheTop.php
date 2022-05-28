@@ -8,23 +8,24 @@ use App\CreateNewReleaseHeading;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
 use App\Queries\FindFirstSecondLevelHeading;
-use App\Support\MarkdownParser;
+use App\Support\Markdown;
 use League\CommonMark\Node\Block\Document;
 use Throwable;
 
 class PasteReleaseNotesAtTheTop
 {
     private FindFirstSecondLevelHeading $findFirstSecondLevelHeading;
-    private MarkdownParser $parser;
     private CreateNewReleaseHeading $createNewReleaseHeading;
     private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
+    private Markdown $markdown;
 
-    public function __construct(FindFirstSecondLevelHeading $findFirstSecondLevelHeading, MarkdownParser $markdownParser, CreateNewReleaseHeading $createNewReleaseHeading, ShiftHeadingLevelInDocument $shiftHeadingLevelInDocumentt)
+    public function __construct(FindFirstSecondLevelHeading $findFirstSecondLevelHeading, CreateNewReleaseHeading $createNewReleaseHeading, ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument, Markdown $markdown)
     {
         $this->findFirstSecondLevelHeading = $findFirstSecondLevelHeading;
-        $this->parser = $markdownParser;
+        ;
         $this->createNewReleaseHeading = $createNewReleaseHeading;
-        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocumentt;
+        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
+        $this->markdown = $markdown;
     }
 
     /**
@@ -37,7 +38,7 @@ class PasteReleaseNotesAtTheTop
         $newReleaseHeading = $this->createNewReleaseHeading->create($latestVersion, $releaseDate);
 
         // Prepend the new Release Heading to the Release Notes
-        $parsedReleaseNotes = $this->parser->parse($releaseNotes);
+        $parsedReleaseNotes = $this->markdown->parse($releaseNotes);
         $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
             document: $parsedReleaseNotes,
             baseHeadingLevel: 3

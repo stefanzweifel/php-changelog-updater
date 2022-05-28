@@ -8,7 +8,7 @@ use App\CreateNewReleaseHeadingWithCompareUrl;
 use App\GenerateCompareUrl;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
-use App\Support\MarkdownParser;
+use App\Support\Markdown;
 use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
@@ -18,27 +18,27 @@ use Throwable;
 
 class PasteReleaseNotesBelowUnreleasedHeading
 {
-    private MarkdownParser $parser;
     private GenerateCompareUrl $generateCompareUrl;
     private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
     private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading;
     private GitHubActionsOutput $gitHubActionsOutput;
     private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
+    private Markdown $markdown;
 
     public function __construct(
-        MarkdownParser                        $markdownParser,
         GenerateCompareUrl                    $generateCompareUrl,
         FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
         CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
         GitHubActionsOutput                   $gitHubActionsOutput,
-        ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument
+        ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument,
+        Markdown $markdown
     ) {
-        $this->parser = $markdownParser;
         $this->generateCompareUrl = $generateCompareUrl;
         $this->findPreviousVersionHeading = $findPreviousVersionHeading;
         $this->createNewReleaseHeading = $createNewReleaseHeading;
         $this->gitHubActionsOutput = $gitHubActionsOutput;
         $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
+        $this->markdown = $markdown;
     }
 
     /**
@@ -64,7 +64,7 @@ class PasteReleaseNotesBelowUnreleasedHeading
         } else {
 
             // Prepend the new Release Heading to the Release Notes
-            $parsedReleaseNotes = $this->parser->parse($releaseNotes);
+            $parsedReleaseNotes = $this->markdown->parse($releaseNotes);
             $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
                 document: $parsedReleaseNotes,
                 baseHeadingLevel: 3

@@ -7,8 +7,7 @@ namespace App\Actions;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Queries\FindUnreleasedHeading;
-use App\Support\MarkdownParser;
-use App\Support\MarkdownRenderer;
+use App\Support\Markdown;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
@@ -16,8 +15,7 @@ use Throwable;
 class AddReleaseNotesToChangelog
 {
     public function __construct(
-        private MarkdownParser                          $markdownParser,
-        private MarkdownRenderer                        $markdownRenderer,
+        private Markdown $markdown,
         private FindUnreleasedHeading                   $findUnreleasedHeading,
         private FindSecondLevelHeadingWithText          $findSecondLevelHeadingWithText,
         private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
@@ -30,7 +28,7 @@ class AddReleaseNotesToChangelog
      */
     public function execute(string $originalChangelog, ?string $releaseNotes, string $latestVersion, string $releaseDate, string $compareUrlTargetRevision): RenderedContentInterface
     {
-        $changelog = $this->markdownParser->parse($originalChangelog);
+        $changelog = $this->markdown->parse($originalChangelog);
 
         $this->checkIfVersionAlreadyExistsInChangelog($changelog, $latestVersion);
 
@@ -49,7 +47,7 @@ class AddReleaseNotesToChangelog
             $changelog = $this->pasteReleaseNotesAtTheTop->execute($latestVersion, $releaseNotes, $releaseDate, $changelog);
         }
 
-        return $this->markdownRenderer->render($changelog);
+        return $this->markdown->render($changelog);
     }
 
     /**
