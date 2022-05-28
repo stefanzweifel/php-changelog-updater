@@ -18,11 +18,8 @@ use League\CommonMark\Renderer\HtmlRenderer;
 
 class ExtractPermalinkFragmentFromHeading
 {
-    private GitHubActionsOutput $gitHubActionsOutput;
-
-    public function __construct(GitHubActionsOutput $gitHubActionsOutput)
+    public function __construct(private GitHubActionsOutput $gitHubActionsOutput)
     {
-        $this->gitHubActionsOutput = $gitHubActionsOutput;
     }
 
     public function execute(Heading $releaseHeading): string

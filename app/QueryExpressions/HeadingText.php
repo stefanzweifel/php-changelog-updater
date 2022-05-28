@@ -11,11 +11,8 @@ use League\CommonMark\Node\Query\ExpressionInterface;
 
 class HeadingText implements ExpressionInterface
 {
-    private string $text;
-
-    public function __construct(string $text)
+    public function __construct(private string $text)
     {
-        $this->text = $text;
     }
 
     public function __invoke(Node $node): bool

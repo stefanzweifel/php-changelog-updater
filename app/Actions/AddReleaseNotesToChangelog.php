@@ -15,27 +15,14 @@ use Throwable;
 
 class AddReleaseNotesToChangelog
 {
-    private MarkdownParser $markdownParser;
-    private MarkdownRenderer $markdownRenderer;
-    private FindUnreleasedHeading $findUnreleasedHeading;
-    private FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText;
-    private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading;
-    private PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop;
-
     public function __construct(
-        MarkdownParser $markdownParser,
-        MarkdownRenderer $markdownRenderer,
-        FindUnreleasedHeading $findUnreleasedHeading,
-        FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText,
-        PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
-        PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop
+        private MarkdownParser                          $markdownParser,
+        private MarkdownRenderer                        $markdownRenderer,
+        private FindUnreleasedHeading                   $findUnreleasedHeading,
+        private FindSecondLevelHeadingWithText          $findSecondLevelHeadingWithText,
+        private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
+        private PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop
     ) {
-        $this->markdownParser = $markdownParser;
-        $this->markdownRenderer = $markdownRenderer;
-        $this->findUnreleasedHeading = $findUnreleasedHeading;
-        $this->findSecondLevelHeadingWithText = $findSecondLevelHeadingWithText;
-        $this->pasteReleaseNotesBelowUnreleasedHeading = $pasteReleaseNotesBelowUnreleasedHeading;
-        $this->pasteReleaseNotesAtTheTop = $pasteReleaseNotesAtTheTop;
     }
 
     /**

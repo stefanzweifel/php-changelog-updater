@@ -12,15 +12,11 @@ use League\CommonMark\Node\Inline\Text;
 
 class CreateNewReleaseHeadingWithCompareUrl
 {
-    private GenerateCompareUrl $generateCompareUrl;
-    private GitHubActionsOutput $gitHubActionsOutput;
-    private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading;
-
-    public function __construct(GenerateCompareUrl $generateCompareUrl, GitHubActionsOutput $gitHubActionsOutput, ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading)
-    {
-        $this->generateCompareUrl = $generateCompareUrl;
-        $this->gitHubActionsOutput = $gitHubActionsOutput;
-        $this->extractPermalinkFragmentFromHeading = $extractPermalinkFragmentFromHeading;
+    public function __construct(
+        private GenerateCompareUrl $generateCompareUrl,
+        private GitHubActionsOutput $gitHubActionsOutput,
+        private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading
+    ) {
     }
 
     public function create(string $repositoryUrl, string $previousVersion, string $latestVersion, string $releaseDate): Heading

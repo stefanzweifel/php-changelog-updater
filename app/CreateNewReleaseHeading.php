@@ -10,11 +10,8 @@ use League\CommonMark\Node\Inline\Text;
 
 class CreateNewReleaseHeading
 {
-    private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading;
-
-    public function __construct(ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading)
+    public function __construct(private ExtractPermalinkFragmentFromHeading $extractPermalinkFragmentFromHeading)
     {
-        $this->extractPermalinkFragmentFromHeading = $extractPermalinkFragmentFromHeading;
     }
 
     public function create(string $latestVersion, string $releaseDate): Heading
