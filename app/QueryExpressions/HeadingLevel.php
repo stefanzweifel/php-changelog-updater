@@ -10,11 +10,8 @@ use League\CommonMark\Node\Query\ExpressionInterface;
 
 class HeadingLevel implements ExpressionInterface
 {
-    private int $level;
-
-    public function __construct(int $level)
+    public function __construct(private int $level)
     {
-        $this->level = $level;
     }
 
     public function __invoke(Node $node): bool

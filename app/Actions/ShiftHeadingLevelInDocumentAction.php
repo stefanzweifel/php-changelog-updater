@@ -8,7 +8,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Query;
 
-class ShiftHeadingLevelInDocument
+class ShiftHeadingLevelInDocumentAction
 {
     private const MAX_HEADER_SIZE = 6;
 
@@ -17,12 +17,16 @@ class ShiftHeadingLevelInDocument
         $headings = (new Query())
             ->where(Query::type(Heading::class))
             ->findAll($document);
-        /** @var array<Heading> $headings */
+
+        /**
+         * @var array<Heading> $headings
+         * @psalm-suppress InvalidArgument
+         */
         $headings = iterator_to_array($headings);
 
         // Find the lowest heading level
         $lowestHeadingLevel = $this->findLowestHeadingLevel($headings);
-        # Calculate the amount to increase the header levels by
+        // Calculate the amount to increase the header levels by
         $increaseBy = $baseHeadingLevel - $lowestHeadingLevel;
 
         foreach ($headings as $heading) {

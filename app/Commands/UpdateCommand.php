@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Commands;
 
-use App\Actions\AddReleaseNotesToChangelog;
+use App\Actions\AddReleaseNotesToChangelogAction;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
@@ -31,7 +31,7 @@ class UpdateCommand extends Command
     /**
      * @throws Throwable
      */
-    public function handle(AddReleaseNotesToChangelog $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
+    public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
     {
         $this->validateOptions();
 
@@ -78,6 +78,7 @@ class UpdateCommand extends Command
     private function validateOptions(): void
     {
         Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
+        Assert::fileExists($this->option('path-to-changelog'), 'CHANGELOG file not found. Abort.');
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool | string

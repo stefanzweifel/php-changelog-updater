@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Actions\ShiftHeadingLevelInDocument;
-use App\MarkdownParser;
-use App\MarkdownRenderer;
+use App\Actions\ShiftHeadingLevelInDocumentAction;
+use App\Support\Markdown;
 
 test('shifts headings to be below min heading level', function () {
-    $document = app(MarkdownParser::class)->parse(<<<MD
+    $document = app(Markdown::class)->parse(<<<MD
     # Level 1 Heading
 
     ## Level 2 Heading
@@ -19,9 +18,9 @@ test('shifts headings to be below min heading level', function () {
     ##### Level 5 Heading
     MD);
 
-    $result = app(ShiftHeadingLevelInDocument::class)->execute($document, 3);
+    $result = app(ShiftHeadingLevelInDocumentAction::class)->execute($document, 3);
 
-    $updatedDocument = app(MarkdownRenderer::class)->render($result);
+    $updatedDocument = app(Markdown::class)->render($result);
 
     expect(trim($updatedDocument->getContent()))
         ->toEqual(
@@ -40,7 +39,7 @@ test('shifts headings to be below min heading level', function () {
 });
 
 test('shifts headings and keeps hierarchy', function () {
-    $document = app(MarkdownParser::class)->parse(<<<MD
+    $document = app(Markdown::class)->parse(<<<MD
     # Level 1 becomes Level 2
 
     ## Level 2 becomes Level 3
@@ -54,9 +53,9 @@ test('shifts headings and keeps hierarchy', function () {
     ###### Level 6 becomes Level 6
     MD);
 
-    $result = app(ShiftHeadingLevelInDocument::class)->execute($document, 2);
+    $result = app(ShiftHeadingLevelInDocumentAction::class)->execute($document, 2);
 
-    $updatedDocument = app(MarkdownRenderer::class)->render($result);
+    $updatedDocument = app(Markdown::class)->render($result);
 
     expect(trim($updatedDocument->getContent()))
         ->toEqual(

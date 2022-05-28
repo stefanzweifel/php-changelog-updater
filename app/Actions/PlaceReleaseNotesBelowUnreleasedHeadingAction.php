@@ -6,7 +6,6 @@ namespace App\Actions;
 
 use App\CreateNewReleaseHeadingWithCompareUrl;
 use App\GenerateCompareUrl;
-use App\MarkdownParser;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Support\GitHubActionsOutput;
 use Illuminate\Support\Str;
@@ -16,29 +15,15 @@ use League\CommonMark\Node\Block\Document;
 use LogicException;
 use Throwable;
 
-class PasteReleaseNotesBelowUnreleasedHeading
+class PlaceReleaseNotesBelowUnreleasedHeadingAction
 {
-    private MarkdownParser $parser;
-    private GenerateCompareUrl $generateCompareUrl;
-    private FindSecondLevelHeadingWithText $findPreviousVersionHeading;
-    private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading;
-    private GitHubActionsOutput $gitHubActionsOutput;
-    private ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument;
-
     public function __construct(
-        MarkdownParser                        $markdownParser,
-        GenerateCompareUrl                    $generateCompareUrl,
-        FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
-        CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
-        GitHubActionsOutput                   $gitHubActionsOutput,
-        ShiftHeadingLevelInDocument $shiftHeadingLevelInDocument
+        private GenerateCompareUrl                    $generateCompareUrl,
+        private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
+        private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
+        private GitHubActionsOutput                   $gitHubActionsOutput,
+        private InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
     ) {
-        $this->parser = $markdownParser;
-        $this->generateCompareUrl = $generateCompareUrl;
-        $this->findPreviousVersionHeading = $findPreviousVersionHeading;
-        $this->createNewReleaseHeading = $createNewReleaseHeading;
-        $this->gitHubActionsOutput = $gitHubActionsOutput;
-        $this->shiftHeadingLevelInDocument = $shiftHeadingLevelInDocument;
     }
 
     /**
@@ -62,25 +47,15 @@ class PasteReleaseNotesBelowUnreleasedHeading
             // We assume that the user already added their release notes under the Unreleased Heading.
             $unreleasedHeading->insertAfter($newReleaseHeading);
         } else {
-
-            // Prepend the new Release Heading to the Release Notes
-            $parsedReleaseNotes = $this->parser->parse($releaseNotes);
-            $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
-                document: $parsedReleaseNotes,
-                baseHeadingLevel: 3
-            );
-
-            $parsedReleaseNotes->prependChild($newReleaseHeading);
-
             // Find the Heading of the previous Version
             $previousVersionHeading = $this->findPreviousVersionHeading->find($changelog, $previousVersion);
 
-            if ($previousVersionHeading !== null) {
-                // Insert the newest Release Notes before the previous Release Heading
-                $previousVersionHeading->insertBefore($parsedReleaseNotes);
-            } else {
-                $changelog->lastChild()?->insertAfter($parsedReleaseNotes);
-            }
+            return $this->insertReleaseNotesInChangelogAction->execute(
+                changelog: $changelog,
+                releaseNotes: $releaseNotes,
+                newReleaseHeading: $newReleaseHeading,
+                previousVersionHeading: $previousVersionHeading
+            );
         }
 
         return $changelog;

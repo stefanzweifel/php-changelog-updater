@@ -5,37 +5,22 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
-use App\MarkdownParser;
-use App\MarkdownRenderer;
 use App\Queries\FindSecondLevelHeadingWithText;
 use App\Queries\FindUnreleasedHeading;
+use App\Support\Markdown;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
 
-class AddReleaseNotesToChangelog
+class AddReleaseNotesToChangelogAction
 {
-    private MarkdownParser $markdownParser;
-    private MarkdownRenderer $markdownRenderer;
-    private FindUnreleasedHeading $findUnreleasedHeading;
-    private FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText;
-    private PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading;
-    private PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop;
-
     public function __construct(
-        MarkdownParser $markdownParser,
-        MarkdownRenderer $markdownRenderer,
-        FindUnreleasedHeading $findUnreleasedHeading,
-        FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText,
-        PasteReleaseNotesBelowUnreleasedHeading $pasteReleaseNotesBelowUnreleasedHeading,
-        PasteReleaseNotesAtTheTop $pasteReleaseNotesAtTheTop
+        private Markdown                                      $markdown,
+        private FindUnreleasedHeading                         $findUnreleasedHeading,
+        private FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
+        private PlaceReleaseNotesBelowUnreleasedHeadingAction $pasteReleaseNotesBelowUnreleasedHeading,
+        private PlaceReleaseNotesAtTheTopAction $pasteReleaseNotesAtTheTop
     ) {
-        $this->markdownParser = $markdownParser;
-        $this->markdownRenderer = $markdownRenderer;
-        $this->findUnreleasedHeading = $findUnreleasedHeading;
-        $this->findSecondLevelHeadingWithText = $findSecondLevelHeadingWithText;
-        $this->pasteReleaseNotesBelowUnreleasedHeading = $pasteReleaseNotesBelowUnreleasedHeading;
-        $this->pasteReleaseNotesAtTheTop = $pasteReleaseNotesAtTheTop;
     }
 
     /**
@@ -43,7 +28,7 @@ class AddReleaseNotesToChangelog
      */
     public function execute(string $originalChangelog, ?string $releaseNotes, string $latestVersion, string $releaseDate, string $compareUrlTargetRevision): RenderedContentInterface
     {
-        $changelog = $this->markdownParser->parse($originalChangelog);
+        $changelog = $this->markdown->parse($originalChangelog);
 
         $this->checkIfVersionAlreadyExistsInChangelog($changelog, $latestVersion);
 
@@ -59,10 +44,15 @@ class AddReleaseNotesToChangelog
                 compareUrlTargetRevision: $compareUrlTargetRevision
             );
         } else {
-            $changelog = $this->pasteReleaseNotesAtTheTop->execute($latestVersion, $releaseNotes, $releaseDate, $changelog);
+            $changelog = $this->pasteReleaseNotesAtTheTop->execute(
+                changelog: $changelog,
+                latestVersion: $latestVersion,
+                releaseDate: $releaseDate,
+                releaseNotes: $releaseNotes
+            );
         }
 
-        return $this->markdownRenderer->render($changelog);
+        return $this->markdown->render($changelog);
     }
 
     /**
