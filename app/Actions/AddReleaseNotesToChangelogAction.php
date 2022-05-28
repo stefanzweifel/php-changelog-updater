@@ -44,7 +44,12 @@ class AddReleaseNotesToChangelogAction
                 compareUrlTargetRevision: $compareUrlTargetRevision
             );
         } else {
-            $changelog = $this->pasteReleaseNotesAtTheTop->execute($latestVersion, $releaseNotes, $releaseDate, $changelog);
+            $changelog = $this->pasteReleaseNotesAtTheTop->execute(
+                latestVersion: $latestVersion,
+                releaseNotes: $releaseNotes,
+                releaseDate: $releaseDate,
+                changelog: $changelog
+            );
         }
 
         return $this->markdown->render($changelog);
