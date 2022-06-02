@@ -18,7 +18,7 @@ use League\CommonMark\Renderer\HtmlRenderer;
 
 class ExtractPermalinkFragmentFromHeadingAction
 {
-    public function __construct(private GitHubActionsOutput $gitHubActionsOutput)
+    public function __construct(private readonly GitHubActionsOutput $gitHubActionsOutput)
     {
     }
 
@@ -71,9 +71,6 @@ class ExtractPermalinkFragmentFromHeadingAction
     /**
      * Attach Heading Permalink to given ReleaseHeading using
      * the Commonmark Heading Permalink Extension.
-     * @param Heading $releaseHeading
-     * @param Environment $environment
-     * @return Document
      */
     protected function attachPermalinkToHeading(Heading $releaseHeading, Environment $environment): Document
     {
@@ -92,8 +89,6 @@ class ExtractPermalinkFragmentFromHeadingAction
     /**
      * Parse the rendered HTML as a DOM Document and extract the
      * href attribute from the generated a-tag.
-     * @param string $html
-     * @return string|null
      */
     protected function extractLinkFragmentFromRenderedHtml(string $html): ?string
     {

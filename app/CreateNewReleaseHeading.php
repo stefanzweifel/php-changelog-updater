@@ -10,7 +10,7 @@ use League\CommonMark\Node\Inline\Text;
 
 class CreateNewReleaseHeading
 {
-    public function __construct(private ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading)
+    public function __construct(private readonly ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading)
     {
     }
 

@@ -11,7 +11,7 @@ use League\CommonMark\Node\Query\ExpressionInterface;
 
 class HeadingText implements ExpressionInterface
 {
-    public function __construct(private string $text)
+    public function __construct(private readonly string $text)
     {
     }
 
