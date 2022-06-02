@@ -12,7 +12,7 @@ use Wnx\CommonmarkMarkdownRenderer\Renderer\MarkdownRenderer as CommonmarkRender
 
 class MarkdownRenderer
 {
-    private CommonmarkRenderer $renderer;
+    private readonly CommonmarkRenderer $renderer;
 
     public function __construct(Environment $environment)
     {

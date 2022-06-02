@@ -15,11 +15,11 @@ use Throwable;
 class AddReleaseNotesToChangelogAction
 {
     public function __construct(
-        private Markdown                                      $markdown,
-        private FindUnreleasedHeading                         $findUnreleasedHeading,
-        private FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
-        private PlaceReleaseNotesBelowUnreleasedHeadingAction $addNewReleaseNotesWithUnreleasedHeadingToChangelog,
-        private PlaceReleaseNotesAtTheTopAction               $addNewReleaseToChangelog
+        private readonly Markdown                                      $markdown,
+        private readonly FindUnreleasedHeading                         $findUnreleasedHeading,
+        private readonly FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
+        private readonly PlaceReleaseNotesBelowUnreleasedHeadingAction $addNewReleaseNotesWithUnreleasedHeadingToChangelog,
+        private readonly PlaceReleaseNotesAtTheTopAction               $addNewReleaseToChangelog
     ) {
     }
 

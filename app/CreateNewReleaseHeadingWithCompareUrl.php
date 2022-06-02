@@ -13,9 +13,9 @@ use League\CommonMark\Node\Inline\Text;
 class CreateNewReleaseHeadingWithCompareUrl
 {
     public function __construct(
-        private GenerateCompareUrl $generateCompareUrl,
-        private GitHubActionsOutput $gitHubActionsOutput,
-        private ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading
+        private readonly GenerateCompareUrl $generateCompareUrl,
+        private readonly GitHubActionsOutput $gitHubActionsOutput,
+        private readonly ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading
     ) {
     }
 

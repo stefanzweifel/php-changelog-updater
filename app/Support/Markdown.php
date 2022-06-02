@@ -10,8 +10,8 @@ use League\CommonMark\Output\RenderedContentInterface;
 class Markdown
 {
     public function __construct(
-        private MarkdownParser $markdownParser,
-        private MarkdownRenderer $markdownRenderer
+        private readonly MarkdownParser $markdownParser,
+        private readonly MarkdownRenderer $markdownRenderer
     ) {
     }
 

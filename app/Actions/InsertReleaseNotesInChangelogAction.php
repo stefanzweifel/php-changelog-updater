@@ -10,7 +10,7 @@ use League\CommonMark\Node\Block\Document;
 
 class InsertReleaseNotesInChangelogAction
 {
-    public function __construct(private PrepareReleaseNotesAction $prepareReleaseNotes)
+    public function __construct(private readonly PrepareReleaseNotesAction $prepareReleaseNotes)
     {
     }
 

@@ -18,11 +18,11 @@ use Throwable;
 class PlaceReleaseNotesBelowUnreleasedHeadingAction
 {
     public function __construct(
-        private GenerateCompareUrl                    $generateCompareUrl,
-        private FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
-        private CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
-        private GitHubActionsOutput                   $gitHubActionsOutput,
-        private InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
+        private readonly GenerateCompareUrl                    $generateCompareUrl,
+        private readonly FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
+        private readonly CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
+        private readonly GitHubActionsOutput                   $gitHubActionsOutput,
+        private readonly InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
     ) {
     }
 

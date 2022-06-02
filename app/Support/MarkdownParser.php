@@ -11,7 +11,7 @@ use League\CommonMark\Parser\MarkdownParser as CommonmarkMarkdownParser;
 
 class MarkdownParser
 {
-    private CommonmarkMarkdownParser $parser;
+    private readonly CommonmarkMarkdownParser $parser;
 
     public function __construct(Environment $environment)
     {
