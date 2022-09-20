@@ -16,6 +16,7 @@ it('places given release notes in correct position in given markdown changelog',
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
+        '--latest-commit' => '1eefb4b7adef74e1b21c336063fbb8071f0c6e6f',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
         '--release-date' => '2021-02-01',
     ])
@@ -71,6 +72,7 @@ it('uses current date for release date if no option is provieded', function () {
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
+        '--latest-commit' => '1eefb4b7adef74e1b21c336063fbb8071f0c6e6f',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
     ])
          ->expectsOutput($expectedOutput)
@@ -94,6 +96,7 @@ it('uses current date for release date if option is empty', function () {
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
+        '--latest-commit' => '1eefb4b7adef74e1b21c336063fbb8071f0c6e6f',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
         '--release-date' => '',
     ])
@@ -157,6 +160,7 @@ it('places given release notes in correct position even if changelog is empty be
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
+        '--latest-commit' => '1eefb4b7adef74e1b21c336063fbb8071f0c6e6f',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-empty-with-unreleased.md',
         '--release-date' => '2021-02-01',
     ])
@@ -178,6 +182,7 @@ it('uses compare-url-target option in unreleased heading url', function () {
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
+        '--latest-commit' => '1eefb4b7adef74e1b21c336063fbb8071f0c6e6f',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-custom-compare-url-target.md',
         '--release-date' => '2021-02-01',
         '--compare-url-target-revision' => '1.x',
