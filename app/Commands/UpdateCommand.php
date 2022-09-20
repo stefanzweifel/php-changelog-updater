@@ -19,6 +19,7 @@ class UpdateCommand extends Command
     protected $signature = 'update
         {--release-notes= : Markdown Release Notes to be added to the CHANGELOG.}
         {--latest-version= : The version the CHANGELOG should be updated too.}
+        {--latest-commit= : The commit hash of the latest version.}
         {--heading-text= : Text used in the new release heading. Defaults to the value from --latest-version.}
         {--release-date= : Date when latest version has been released. Defaults to today.}
         {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated.}
@@ -38,10 +39,15 @@ class UpdateCommand extends Command
 
         $releaseNotes = $this->option('release-notes');
         $latestVersion = $this->option('latest-version');
+        $latestCommit = $this->option('latest-commit');
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
         $compareUrlTargetRevision = $this->option('compare-url-target-revision');
         $headingText = $this->option('heading-text');
+
+        if (empty($latestCommit)) {
+            $latestCommit = $latestVersion;
+        }
 
         if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
@@ -57,6 +63,7 @@ class UpdateCommand extends Command
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
                 originalChangelog: $changelog,
                 latestVersion: $latestVersion,
+                latestCommit: $latestCommit,
                 headingText: $headingText,
                 releaseNotes: $releaseNotes,
                 releaseDate: $releaseDate,
