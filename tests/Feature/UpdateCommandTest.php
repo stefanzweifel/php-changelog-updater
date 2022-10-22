@@ -45,15 +45,11 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL for GitHub Actions in
         ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'RELEASE_URL_FRAGMENT', '#v100---2021-02-01'))
         ->expectsOutputToContain(sprintf("::set-output name=%s::%s", 'UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD'))
         ->assertSuccessful();
-
-    $this->assertGitHubOutputDoesntContain('RELEASE_COMPARE_URL', 'https://github.com/org/repo/compare/v0.1.0...v1.0.0');
-    $this->assertGitHubOutputDoesntContain('RELEASE_URL_FRAGMENT', '#v100---2021-02-01');
-    $this->assertGitHubOutputDoesntContain('UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD');
+})->skip(function () {
+    return now()->year > 2022;
 });
 
 it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT environment', function () {
-    $this->hasGitHubOutputEnvironment();
-
     $this->artisan('update', [
         '--release-notes' => <<<MD
         ### Added
@@ -70,11 +66,7 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT envi
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
         '--release-date' => '2021-02-01',
         '--github-actions-output' => true,
-    ])
-        ->doesntExpectOutputToContain(sprintf("::set-output name=%s::%s", 'RELEASE_COMPARE_URL', 'https://github.com/org/repo/compare/v0.1.0...v1.0.0'))
-        ->doesntExpectOutputToContain(sprintf("::set-output name=%s::%s", 'RELEASE_URL_FRAGMENT', '#v100---2021-02-01'))
-        ->doesntExpectOutputToContain(sprintf("::set-output name=%s::%s", 'UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD'))
-        ->assertSuccessful();
+    ])->assertSuccessful();
 
     $this->assertGitHubOutputContains('RELEASE_COMPARE_URL', 'https://github.com/org/repo/compare/v0.1.0...v1.0.0');
     $this->assertGitHubOutputContains('RELEASE_URL_FRAGMENT', '#v100---2021-02-01');
