@@ -21,16 +21,10 @@ trait CreatesApplication
 
         $this->gitHubOutputTestfile = base_path('tests/github_output.txt');
 
-        // Can be enabled by default, once the old set-output syntax has been removed.
-        // $this->hasGitHubOutputEnvironment();
+        putenv("GITHUB_OUTPUT=$this->gitHubOutputTestfile");
 
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
-    }
-
-    public function hasGitHubOutputEnvironment()
-    {
-        putenv("GITHUB_OUTPUT=$this->gitHubOutputTestfile");
     }
 }
