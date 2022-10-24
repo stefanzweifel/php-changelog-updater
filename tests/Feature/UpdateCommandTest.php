@@ -340,3 +340,24 @@ it('heading-text option allows user to use different heading text than latest-ve
          ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-without-unreleased-with-heading-text.md'))
          ->assertSuccessful();
 });
+
+it('allows release date to be in any given format', function () {
+    $this->artisan('update', [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '::release-date::',
+    ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-different-date-format.md'))
+        ->assertSuccessful();
+});
