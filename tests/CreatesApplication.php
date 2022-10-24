@@ -8,6 +8,8 @@ use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
 {
+    public readonly string $gitHubOutputTestfile;
+
     /**
      * Creates the application.
      *
@@ -16,6 +18,10 @@ trait CreatesApplication
     public function createApplication()
     {
         $app = require __DIR__.'/../bootstrap/app.php';
+
+        $this->gitHubOutputTestfile = base_path('tests/github_output.txt');
+
+        putenv("GITHUB_OUTPUT=$this->gitHubOutputTestfile");
 
         $app->make(Kernel::class)->bootstrap();
 
