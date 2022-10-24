@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.0...HEAD)
+## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.1...HEAD)
 
 <!-- New Release notes will be placed here automatically -->
+## [v1.6.1](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.0...v1.6.1) - 2022-10-24
+
+### Changed
+
+- Add Support for PHP 8.2 ([#31](https://github.com/stefanzweifel/php-changelog-updater/pull/31))
+- Update CLI to use new GITHUB_OUTPUT environment ([#30](https://github.com/stefanzweifel/php-changelog-updater/pull/30))
+- Bump min PHP version to 8.1 ([#28](https://github.com/stefanzweifel/php-changelog-updater/pull/28))
+
 ## [v1.6.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.5.0...v1.6.0) - 2022-05-28
 
 ### Added
