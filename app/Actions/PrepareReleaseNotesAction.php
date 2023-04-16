@@ -19,7 +19,7 @@ class PrepareReleaseNotesAction
         // Turn Release Notes into Markdown AST
         $parsedReleaseNotes = $this->markdown->parse($releaseNotes);
 
-        // Shift Headings in Release Notes to be all atleast level 3
+        // Shift Headings in Release Notes to be all at least level 3
         $parsedReleaseNotes = $this->shiftHeadingLevelInDocument->execute(
             document: $parsedReleaseNotes,
             baseHeadingLevel: 3
