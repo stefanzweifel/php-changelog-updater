@@ -22,7 +22,7 @@ test('shifts headings to be below min heading level', function () {
 
     $updatedDocument = app(Markdown::class)->render($result);
 
-    expect(trim($updatedDocument->getContent()))
+    expect(trim((string) $updatedDocument->getContent()))
         ->toEqual(
             <<<MD
             ### Level 1 Heading
@@ -57,7 +57,7 @@ test('shifts headings and keeps hierarchy', function () {
 
     $updatedDocument = app(Markdown::class)->render($result);
 
-    expect(trim($updatedDocument->getContent()))
+    expect(trim((string) $updatedDocument->getContent()))
         ->toEqual(
             <<<MD
             ## Level 1 becomes Level 2
