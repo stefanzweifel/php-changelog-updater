@@ -389,3 +389,35 @@ it('allows release date to be in any given format', function () {
         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-different-date-format.md'))
         ->assertSuccessful();
 });
+
+it('writes changes to changelog to file', function () {
+
+    $originalContent = file_get_contents(__DIR__ . '/../Stubs/base-changelog.md');
+
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--write' => true,
+    ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md'))
+        ->assertSuccessful();
+
+    $updatedChangelogContent = file_get_contents(__DIR__ . '/../Stubs/base-changelog.md');
+    $expectedChangelogContent = file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md');
+
+    $this->assertEquals($expectedChangelogContent, $updatedChangelogContent);
+
+    file_put_contents(__DIR__ . '/../Stubs/base-changelog.md', $originalContent);
+});
