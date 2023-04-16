@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Commands\UpdateCommand;
+
 it('places given release notes in correct position in given markdown changelog', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -24,7 +26,7 @@ it('places given release notes in correct position in given markdown changelog',
 });
 
 it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL for GitHub Actions in CI environment', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -50,7 +52,7 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL for GitHub Actions in
 });
 
 it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT environment', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -74,7 +76,7 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT envi
 });
 
 it('throws error if latest-version is missing', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => '::release-notes::',
     ])
         ->assertFailed();
@@ -84,7 +86,7 @@ it('uses current date for release date if no option is provieded', function () {
     $expectedChangelog = file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md');
     $expectedOutput = str_replace('2021-02-01', now()->format('Y-m-d'), $expectedChangelog);
 
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -107,7 +109,7 @@ it('uses current date for release date if option is empty', function () {
     $expectedChangelog = file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md');
     $expectedOutput = str_replace('2021-02-01', now()->format('Y-m-d'), $expectedChangelog);
 
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -128,7 +130,7 @@ it('uses current date for release date if option is empty', function () {
 });
 
 it('places given release notes in correct position in given markdown changelog when no unreleased heading is available', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -149,7 +151,7 @@ it('places given release notes in correct position in given markdown changelog w
 });
 
 it('places given release notes in correct position in given markdown changelog when no heading is available', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -170,7 +172,7 @@ it('places given release notes in correct position in given markdown changelog w
 });
 
 it('places given release notes in correct position even if changelog is empty besides an unreleased heading', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -191,7 +193,7 @@ it('places given release notes in correct position even if changelog is empty be
 });
 
 it('uses compare-url-target option in unreleased heading url', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -213,7 +215,7 @@ it('uses compare-url-target option in unreleased heading url', function () {
 });
 
 it('shows warning if version already exists in the changelog', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -235,7 +237,7 @@ it('shows warning if version already exists in the changelog', function () {
 });
 
 it('uses existing content between unreleased and previous version heading as release notes if release notes are empty', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => '',
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
@@ -247,7 +249,7 @@ it('uses existing content between unreleased and previous version heading as rel
 });
 
 it('uses existing content between unreleased and previous version heading as release notes if release notes option is not provided', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
         '--release-date' => '2021-02-01',
@@ -258,7 +260,7 @@ it('uses existing content between unreleased and previous version heading as rel
 });
 
 it('nothing happens if no release notes have been given and no unreleased heading can be found', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
         '--release-date' => '2021-02-01',
@@ -269,7 +271,7 @@ it('nothing happens if no release notes have been given and no unreleased headin
 });
 
 test('it shows warning if changelog is empty and content can not be placed', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -290,7 +292,7 @@ test('it shows warning if changelog is empty and content can not be placed', fun
 });
 
 test('it automatically shifts heading levels to be level 3 headings to fit into the existing changelog', function ($releaseNotes) {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => $releaseNotes,
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
@@ -324,7 +326,7 @@ test('it automatically shifts heading levels to be level 3 headings to fit into 
 ]);
 
 it('heading-text option allows user to use different heading text than latest-version when changelog contains unreleased heading', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -346,7 +348,7 @@ it('heading-text option allows user to use different heading text than latest-ve
 });
 
 it('heading-text option allows user to use different heading text than latest-version when changelog does not contain unreleased heading', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
@@ -368,7 +370,7 @@ it('heading-text option allows user to use different heading text than latest-ve
 });
 
 it('allows release date to be in any given format', function () {
-    $this->artisan('update', [
+    $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<MD
         ### Added
         - New Feature A
