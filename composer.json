@@ -23,7 +23,7 @@
     "require-dev": {
         "laravel-zero/framework": "^10",
         "mockery/mockery": "^1.5.1",
-        "pestphp/pest": "^1.22.1",
+        "pestphp/pest": "^2",
         "friendsofphp/php-cs-fixer": "^3.12",
         "vimeo/psalm": "^5.7"
     },
