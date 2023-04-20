@@ -34,14 +34,15 @@ class UpdateCommand extends Command
      */
     public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
     {
-        $this->validateOptions();
-
-        $releaseNotes = $this->option('release-notes');
-        $latestVersion = $this->option('latest-version');
+        $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG should be updated too?');
+        $releaseNotes = $this->getReleaseNotes();
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
         $compareUrlTargetRevision = $this->option('compare-url-target-revision');
         $headingText = $this->option('heading-text');
+
+        Assert::stringNotEmpty($latestVersion, 'No latest-version option provided. Abort.');
+        Assert::fileExists($pathToChangelog, 'CHANGELOG file not found. Abort.');
 
         if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
@@ -82,10 +83,13 @@ class UpdateCommand extends Command
         }
     }
 
-    private function validateOptions(): void
+    protected function getReleaseNotes(): null | string
     {
-        Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
-        Assert::fileExists($this->option('path-to-changelog'), 'CHANGELOG file not found. Abort.');
+        if ( $this->hasOption('release-notes') ) {
+            return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
+        }
+
+        return null;
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool | string
