@@ -18,6 +18,7 @@ class UpdateCommand extends Command
 {
     protected $signature = 'update
         {--release-notes= : Markdown Release Notes to be added to the CHANGELOG.}
+        {--parse-release-notes : Use existing Release Notes content between Unreleased and previous version heading.}
         {--latest-version= : The version the CHANGELOG should be updated too.}
         {--heading-text= : Text used in the new release heading. Defaults to the value from --latest-version.}
         {--release-date= : Date when latest version has been released. Defaults to today.}
@@ -85,11 +86,11 @@ class UpdateCommand extends Command
 
     protected function getReleaseNotes(): null | string
     {
-        if ( $this->hasOption('release-notes') ) {
-            return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
+        if ( $this->option('parse-release-notes') ) {
+            return null;
         }
 
-        return null;
+        return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool | string
