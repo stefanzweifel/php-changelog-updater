@@ -74,6 +74,9 @@ Optional. Will output values for `UNRELEASED_COMPARE_URL` and `RELEASE_COMPARE_U
 ### `--heading-text`
 Optional (Defaults to value of `--latest-version`). The text value used in the heading that is created for the new release. 
 
+### `--parse-release-notes`
+Optional. Tell the CLI explicitly to use the content between an "Unreleased Heading" and the previous version heading as release notes. The value from `--release-notes` will be ignored.
+
 ```md
 ## heading-text - 2021-02-01
 ## [heading-text](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-02-01
