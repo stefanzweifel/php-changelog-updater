@@ -73,12 +73,11 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT envi
     $this->assertGitHubOutputContains('UNRELEASED_COMPARE_URL', 'https://github.com/org/repo/compare/v1.0.0...HEAD');
 });
 
-it('throws error if latest-version is missing', function () {
+it('expects question if latest-version option is missing', function () {
     $this->artisan(UpdateCommand::class, [
         '--release-notes' => '::release-notes::',
-    ])
-        ->assertFailed();
-})->throws(InvalidArgumentException::class, 'No latest-version option provided. Abort.');
+    ])->expectsQuestion('What version should the CHANGELOG should be updated too?', 'v1.0.0');
+});
 
 it('uses current date for release date if no option is provieded', function () {
     $expectedChangelog = file_get_contents(__DIR__ . '/../Stubs/expected-changelog.md');
@@ -236,18 +235,33 @@ it('shows warning if version already exists in the changelog', function () {
 
 it('uses existing content between unreleased and previous version heading as release notes if release notes are empty', function () {
     $this->artisan(UpdateCommand::class, [
-        '--release-notes' => '',
+        '--parse-release-notes' => true,
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
         '--release-date' => '2021-02-01',
         '--compare-url-target-revision' => '1.x',
     ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-unreleased-notes.md'))
+        ->assertSuccessful();
+});
+
+it('uses existing content between unreleased and previous version heading as release notes if release notes are empty parse-release notes is not given and command is run in no-interaction mode', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => null,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
+        '--release-date' => '2021-02-01',
+        '--compare-url-target-revision' => '1.x',
+        '--no-interaction' => true,
+    ])
+        ->expectsQuestion('What markdown Release Notes should be added to the CHANGELOG?', null)
         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-unreleased-notes.md'))
         ->assertSuccessful();
 });
 
 it('uses existing content between unreleased and previous version heading as release notes if release notes option is not provided', function () {
     $this->artisan(UpdateCommand::class, [
+        '--parse-release-notes' => true,
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
         '--release-date' => '2021-02-01',
@@ -257,8 +271,18 @@ it('uses existing content between unreleased and previous version heading as rel
         ->assertSuccessful();
 });
 
+it('asks question if no release notes have been given', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => '',
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
+        '--release-date' => '2021-02-01',
+    ])->expectsQuestion('What markdown Release Notes should be added to the CHANGELOG?', '...');
+});
+
 it('nothing happens if no release notes have been given and no unreleased heading can be found', function () {
     $this->artisan(UpdateCommand::class, [
+        '--parse-release-notes' => true,
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
         '--release-date' => '2021-02-01',

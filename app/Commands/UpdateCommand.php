@@ -18,6 +18,7 @@ class UpdateCommand extends Command
 {
     protected $signature = 'update
         {--release-notes= : Markdown Release Notes to be added to the CHANGELOG.}
+        {--parse-release-notes : Use existing Release Notes content between Unreleased and previous version heading.}
         {--latest-version= : The version the CHANGELOG should be updated too.}
         {--heading-text= : Text used in the new release heading. Defaults to the value from --latest-version.}
         {--release-date= : Date when latest version has been released. Defaults to today.}
@@ -34,14 +35,15 @@ class UpdateCommand extends Command
      */
     public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
     {
-        $this->validateOptions();
-
-        $releaseNotes = $this->option('release-notes');
-        $latestVersion = $this->option('latest-version');
+        $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG should be updated too?');
+        $releaseNotes = $this->getReleaseNotes();
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
         $compareUrlTargetRevision = $this->option('compare-url-target-revision');
         $headingText = $this->option('heading-text');
+
+        Assert::stringNotEmpty($latestVersion, 'No latest-version option provided. Abort.');
+        Assert::fileExists($pathToChangelog, 'CHANGELOG file not found. Abort.');
 
         if (empty($releaseDate)) {
             $releaseDate = now()->format('Y-m-d');
@@ -82,10 +84,13 @@ class UpdateCommand extends Command
         }
     }
 
-    private function validateOptions(): void
+    protected function getReleaseNotes(): null | string
     {
-        Assert::stringNotEmpty($this->option('latest-version'), 'No latest-version option provided. Abort.');
-        Assert::fileExists($this->option('path-to-changelog'), 'CHANGELOG file not found. Abort.');
+        if ($this->option('parse-release-notes')) {
+            return null;
+        }
+
+        return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
     }
 
     protected function getChangelogContent(string $pathToChangelog): bool | string
