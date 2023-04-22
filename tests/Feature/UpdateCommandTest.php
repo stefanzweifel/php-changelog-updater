@@ -76,7 +76,7 @@ it('outputs RELEASE_COMPARE_URL and UNRELEASED_COMPARE_URL to GITHUB_OUTPUT envi
 it('expects question if latest-version option is missing', function () {
     $this->artisan(UpdateCommand::class, [
         '--release-notes' => '::release-notes::',
-    ])->expectsQuestion('What version should the CHANGELOG should be updated too?', 'v1.0.0');
+    ])->expectsQuestion('What version should the CHANGELOG be updated too?', 'v1.0.0');
 });
 
 it('uses current date for release date if no option is provieded', function () {
