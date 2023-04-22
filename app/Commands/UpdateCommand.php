@@ -86,7 +86,7 @@ class UpdateCommand extends Command
 
     protected function getReleaseNotes(): null | string
     {
-        if ( $this->option('parse-release-notes') ) {
+        if ($this->option('parse-release-notes')) {
             return null;
         }
 

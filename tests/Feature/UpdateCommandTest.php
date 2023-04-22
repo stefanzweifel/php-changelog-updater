@@ -271,13 +271,13 @@ it('uses existing content between unreleased and previous version heading as rel
         ->assertSuccessful();
 });
 
-it('asks question if no release notes have been given', function() {
+it('asks question if no release notes have been given', function () {
     $this->artisan(UpdateCommand::class, [
         '--release-notes' => '',
         '--latest-version' => 'v1.0.0',
         '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
         '--release-date' => '2021-02-01',
-    ])->expectsQuestion('What markdown Release Notes should be added to the CHANGELOG?', '...');;
+    ])->expectsQuestion('What markdown Release Notes should be added to the CHANGELOG?', '...');
 });
 
 it('nothing happens if no release notes have been given and no unreleased heading can be found', function () {
