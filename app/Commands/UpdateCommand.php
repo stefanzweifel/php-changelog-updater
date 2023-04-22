@@ -35,7 +35,7 @@ class UpdateCommand extends Command
      */
     public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
     {
-        $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG should be updated too?');
+        $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG be updated too?');
         $releaseNotes = $this->getReleaseNotes();
         $releaseDate = $this->option('release-date');
         $pathToChangelog = $this->option('path-to-changelog');
