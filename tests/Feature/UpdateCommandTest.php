@@ -245,6 +245,20 @@ it('uses existing content between unreleased and previous version heading as rel
         ->assertSuccessful();
 });
 
+it('uses existing content between unreleased and previous version heading as release notes if release notes are empty parse-release notes is not given and command is run in no-interaction mode', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => null,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-with-unreleased-notes.md',
+        '--release-date' => '2021-02-01',
+        '--compare-url-target-revision' => '1.x',
+        '--no-interaction' => true,
+    ])
+        ->expectsQuestion('What markdown Release Notes should be added to the CHANGELOG?', null)
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-unreleased-notes.md'))
+        ->assertSuccessful();
+});
+
 it('uses existing content between unreleased and previous version heading as release notes if release notes option is not provided', function () {
     $this->artisan(UpdateCommand::class, [
         '--parse-release-notes' => true,
