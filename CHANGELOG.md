@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.2...HEAD)
+## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.7.0...HEAD)
 
 <!-- New Release notes will be placed here automatically -->
+## [v1.7.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.2...v1.7.0) - 2023-04-22
+
+### Added
+
+- Allow release-notes and latest-version options to be prompted ([#35](https://github.com/stefanzweifel/php-changelog-updater/pull/35))
+
+### Changed
+
+- Upgrade to Pest v2 ([#34](https://github.com/stefanzweifel/php-changelog-updater/pull/34))
+- Upgrade to Laravel Zero v10 ([#33](https://github.com/stefanzweifel/php-changelog-updater/pull/33))
+
 ## [v1.6.2](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.6.1...v1.6.2) - 2022-10-24
 
 ### Changed
