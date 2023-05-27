@@ -26,7 +26,7 @@ class AddReleaseNotesToChangelogAction
     /**
      * @throws Throwable
      */
-    public function execute(string $originalChangelog, string $latestVersion, string $headingText, ?string $releaseNotes, string $releaseDate, string $compareUrlTargetRevision): RenderedContentInterface
+    public function execute(string $originalChangelog, string $latestVersion, string $headingText, ?string $releaseNotes, string $releaseDate, string $compareUrlTargetRevision, bool $hideDate = false): RenderedContentInterface
     {
         $changelog = $this->markdown->parse($originalChangelog);
 
@@ -42,14 +42,16 @@ class AddReleaseNotesToChangelogAction
                 releaseDate: $releaseDate,
                 releaseNotes: $releaseNotes,
                 changelog: $changelog,
-                compareUrlTargetRevision: $compareUrlTargetRevision
+                compareUrlTargetRevision: $compareUrlTargetRevision,
+                hideDate: $hideDate
             );
         } else {
             $changelog = $this->addNewReleaseToChangelog->execute(
                 changelog: $changelog,
                 headingText: $headingText,
                 releaseDate: $releaseDate,
-                releaseNotes: $releaseNotes
+                releaseNotes: $releaseNotes,
+                hideDate: $hideDate,
             );
         }
 
