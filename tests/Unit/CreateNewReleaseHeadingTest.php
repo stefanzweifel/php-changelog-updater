@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 
 use App\CreateNewReleaseHeading;
 use League\CommonMark\Environment\Environment;
