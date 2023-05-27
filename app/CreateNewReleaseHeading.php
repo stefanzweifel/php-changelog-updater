@@ -14,11 +14,14 @@ class CreateNewReleaseHeading
     {
     }
 
-    public function create(string $text, string $releaseDate): Heading
+    public function create(string $text, string $releaseDate, bool $hideDate = false): Heading
     {
-        return tap(new Heading(2), function (Heading $heading) use ($text, $releaseDate) {
+        return tap(new Heading(2), function (Heading $heading) use ($hideDate, $text, $releaseDate) {
             $heading->appendChild(new Text($text));
-            $heading->appendChild(new Text(" - {$releaseDate}"));
+
+            if ($hideDate === false) {
+                $heading->appendChild(new Text(" - {$releaseDate}"));
+            }
 
             $this->extractPermalinkFragmentFromHeading->execute($heading);
         });
