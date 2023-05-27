@@ -28,7 +28,8 @@ test('creates new release heading ast', function () {
         $previousVersion,
         $latestVersion,
         $headingText,
-        $releaseDate
+        $releaseDate,
+        hideDate: false,
     );
 
     $document = new Document();
@@ -42,4 +43,39 @@ test('creates new release heading ast', function () {
 
     $renderedMarkdown = $markdownRenderer->renderDocument($document);
     $this->assertEquals('## [v1.0.0](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-02-01', trim($renderedMarkdown->getContent()));
+
+});
+
+it('does not add date to release heading if hideDate is false', function () {
+    $repositoryUrl = 'https://github.com/org/repo';
+    $previousVersion = 'v0.1.0';
+    $latestVersion = 'v1.0.0';
+    $headingText = $latestVersion;
+    $releaseDate = '2021-02-01';
+
+    $environment = new Environment();
+    $environment->addExtension(new MarkdownRendererExtension());
+    $markdownRenderer = new MarkdownRenderer($environment);
+
+    /** @var Document $result */
+    $result = app(CreateNewReleaseHeadingWithCompareUrl::class)->create(
+        $repositoryUrl,
+        $previousVersion,
+        $latestVersion,
+        $headingText,
+        $releaseDate,
+        hideDate: true,
+    );
+
+    $document = new Document();
+    $document->appendChild($result);
+
+    $this->assertInstanceOf(Heading::class, $result);
+    $this->assertInstanceOf(Link::class, $result->firstChild());
+    $this->assertInstanceOf(Text::class, $result->firstChild()->firstChild());
+    $this->assertInstanceOf(Text::class, $result->firstChild()->firstChild());
+
+
+    $renderedMarkdown = $markdownRenderer->renderDocument($document);
+    $this->assertEquals('## [v1.0.0](https://github.com/org/repo/compare/v0.1.0...v1.0.0)', trim($renderedMarkdown->getContent()));
 });
