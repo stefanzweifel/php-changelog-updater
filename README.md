@@ -82,7 +82,7 @@ Optional (Defaults to value of `--latest-version`). The text value used in the h
 ### `--parse-release-notes`
 Optional. Tell the CLI explicitly to use the content between an "Unreleased Heading" and the previous version heading as release notes. The value from `--release-notes` will be ignored.
 
-### `--hide-date`
+### `--hide-release-date`
 Optional. Don't add the release date to the release heading.
 
 ## Expected Changelog Formats

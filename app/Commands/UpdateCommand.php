@@ -25,7 +25,7 @@ class UpdateCommand extends Command
         {--path-to-changelog=CHANGELOG.md : Path to changelog markdown file to be updated.}
         {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
         {--github-actions-output : Display GitHub Actions related output}
-        {--hide-date : Hide date in the new release heading.}
+        {--hide-release-date : Hide release date in the new release heading.}
         {-w\--write : Write changes to file}
     ';
 
@@ -42,7 +42,7 @@ class UpdateCommand extends Command
         $pathToChangelog = $this->option('path-to-changelog');
         $compareUrlTargetRevision = $this->option('compare-url-target-revision');
         $headingText = $this->option('heading-text');
-        $hideDate = $this->option('hide-date');
+        $hideDate = $this->option('hide-release-date');
 
         Assert::stringNotEmpty($latestVersion, 'No latest-version option provided. Abort.');
         Assert::fileExists($pathToChangelog, 'CHANGELOG file not found. Abort.');
