@@ -443,3 +443,47 @@ it('writes changes to changelog to file', function () {
 
     file_put_contents(__DIR__ . '/../Stubs/base-changelog.md', $originalContent);
 });
+
+it('does not add date to release headings that have a compare url in it if --hide-release-date is passed', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--hide-release-date' => true,
+    ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-without-date.md'))
+        ->assertSuccessful();
+});
+
+it('does not add date to release heading if it does not contain a compare url and --hide-release-date option is passed', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog-without-unreleased.md',
+        '--release-date' => '2021-02-01',
+        '--hide-release-date' => true,
+    ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-without-unreleased-without-date.md'))
+        ->assertSuccessful();
+});
