@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace App\Commands;
 
 use App\Actions\AddReleaseNotesToChangelogAction;
+use App\Actions\ParseAndLinkifyGitHubUsernamesAction;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
+use App\Middlewares\ParseGitHubUsernamesAndAddLinksMiddleware;
 use App\Support\GitHubActionsOutput;
+use Illuminate\Support\Facades\Pipeline;
 use LaravelZero\Framework\Commands\Command;
 use League\CommonMark\Output\RenderedContentInterface;
 use Throwable;
@@ -35,7 +38,7 @@ class UpdateCommand extends Command
     /**
      * @throws Throwable
      */
-    public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
+    public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput, ParseAndLinkifyGitHubUsernamesAction $parseAndLinkifyGitHubUsernames)
     {
         $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG be updated too?');
         $releaseNotes = $this->getReleaseNotes();
@@ -56,9 +59,12 @@ class UpdateCommand extends Command
             $headingText = $latestVersion;
         }
 
+        if ($this->option('parse-github-usernames')) {
+            $releaseNotes = $parseAndLinkifyGitHubUsernames->execute($releaseNotes);
+        }
+
         $changelog = $this->getChangelogContent($pathToChangelog);
 
-        $releaseNotes = $this->applyMiddlewaresToReleaseNotes($releaseNotes);
 
         try {
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
@@ -109,23 +115,5 @@ class UpdateCommand extends Command
         if ($this->option('write')) {
             file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
         }
-    }
-
-    private function applyMiddlewaresToReleaseNotes(?string $releaseNotes): string
-    {
-        $parseGitHubUsernames = $this->option('parse-github-usernames');
-
-        if ($parseGitHubUsernames) {
-            // (?<!\[) and (?!\]) are negative lookbehind and lookahead assertions, respectively.
-            // They ensure that the GitHub username is not preceded or followed by a square
-            // bracket [ or ], which indicates that the username is already wrapped in a link.
-            // @([A-Za-z0-9_]+) matches the GitHub username itself. It starts with
-            // the @ symbol and consists of alphanumeric characters and underscores.
-            $pattern = '/(?<!\[)@([A-Za-z0-9_]+)(?!\])/';
-            $replacement = '[@$1](https://github.com/$1)';
-            $releaseNotes = preg_replace($pattern, $replacement, $releaseNotes);
-        }
-
-        return $releaseNotes;
     }
 }
