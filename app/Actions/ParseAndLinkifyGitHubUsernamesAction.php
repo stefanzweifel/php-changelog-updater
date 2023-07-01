@@ -17,7 +17,7 @@ class ParseAndLinkifyGitHubUsernamesAction
         // - `@([A-Za-z0-9_]+)` matches the GitHub username itself. It starts with
         //   the @ symbol and consists of alphanumeric characters and underscores.
         $pattern = '/(?<!\[)@([A-Za-z0-9_]+)(?!\])/';
-        
+
         $replacement = '[@$1](https://github.com/$1)';
         return preg_replace($pattern, $replacement, $releaseNotes);
     }
