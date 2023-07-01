@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Commands;
 
 use App\Actions\AddReleaseNotesToChangelogAction;
+use App\Actions\ParseAndLinkifyGitHubUsernamesAction;
 use App\Exceptions\ReleaseAlreadyExistsInChangelogException;
 use App\Exceptions\ReleaseNotesCanNotBeplacedException;
 use App\Exceptions\ReleaseNotesNotProvidedException;
@@ -26,6 +27,7 @@ class UpdateCommand extends Command
         {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
         {--github-actions-output : Display GitHub Actions related output}
         {--hide-release-date : Hide release date in the new release heading.}
+        {--parse-github-usernames : Experimental: Find GitHub usernames in release notes and link to their profile.}
         {-w\--write : Write changes to file}
     ';
 
@@ -34,7 +36,7 @@ class UpdateCommand extends Command
     /**
      * @throws Throwable
      */
-    public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput)
+    public function handle(AddReleaseNotesToChangelogAction $addReleaseNotesToChangelog, GitHubActionsOutput $gitHubActionsOutput, ParseAndLinkifyGitHubUsernamesAction $parseAndLinkifyGitHubUsernames)
     {
         $latestVersion = $this->option('latest-version') ?: $this->ask('What version should the CHANGELOG be updated too?');
         $releaseNotes = $this->getReleaseNotes();
@@ -55,7 +57,12 @@ class UpdateCommand extends Command
             $headingText = $latestVersion;
         }
 
+        if ($this->option('parse-github-usernames')) {
+            $releaseNotes = $parseAndLinkifyGitHubUsernames->execute($releaseNotes);
+        }
+
         $changelog = $this->getChangelogContent($pathToChangelog);
+
 
         try {
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
