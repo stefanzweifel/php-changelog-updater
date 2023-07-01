@@ -487,3 +487,25 @@ it('does not add date to release heading if it does not contain a compare url an
         ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-without-unreleased-without-date.md'))
         ->assertSuccessful();
 });
+
+it('parses github usernames and links to their github user profiles', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => <<<MD
+        ### Added
+        - New Feature A @stefanzweifel
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__ . '/../Stubs/base-changelog.md',
+        '--release-date' => '2021-02-01',
+        '--parse-github-usernames' => true,
+    ])
+        ->expectsOutput(file_get_contents(__DIR__ . '/../Stubs/expected-changelog-with-parsed-github-usernames.md'))
+        ->assertSuccessful();
+});
