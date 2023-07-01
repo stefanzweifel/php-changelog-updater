@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 class ParseAndLinkifyGitHubUsernamesAction
@@ -19,6 +21,7 @@ class ParseAndLinkifyGitHubUsernamesAction
         $pattern = '/(?<!\[)@([A-Za-z0-9_]+)(?!\])/';
 
         $replacement = '[@$1](https://github.com/$1)';
+
         return preg_replace($pattern, $replacement, $releaseNotes);
     }
 }
