@@ -9,7 +9,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Parser\MarkdownParser;
 
 test('find unreleased heading in markdown ast', function () {
-    $markdown = <<<TXT
+    $markdown = <<<'TXT'
     ## [Unreleased](http://example.com)
     TXT;
 
@@ -26,7 +26,7 @@ test('find unreleased heading in markdown ast', function () {
 });
 
 test('returns null if unreleased heading is not level 2', function () {
-    $markdown = <<<TXT
+    $markdown = <<<'TXT'
     ### [Unreleased](http://example.com)
     TXT;
 
@@ -42,7 +42,7 @@ test('returns null if unreleased heading is not level 2', function () {
 });
 
 test('returns null if unreleased heading is not a link', function () {
-    $markdown = <<<TXT
+    $markdown = <<<'TXT'
     ## Unreleased
     TXT;
 
@@ -58,7 +58,7 @@ test('returns null if unreleased heading is not a link', function () {
 });
 
 test('return null if no unreleased heading is found in markdown ast', function () {
-    $markdown = <<<TXT
+    $markdown = <<<'TXT'
     # Wrong Header
     TXT;
 

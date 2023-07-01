@@ -63,7 +63,6 @@ class UpdateCommand extends Command
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
-
         try {
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
                 originalChangelog: $changelog,
@@ -94,7 +93,7 @@ class UpdateCommand extends Command
         }
     }
 
-    protected function getReleaseNotes(): null | string
+    protected function getReleaseNotes(): null|string
     {
         if ($this->option('parse-release-notes')) {
             return null;
@@ -103,7 +102,7 @@ class UpdateCommand extends Command
         return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
     }
 
-    protected function getChangelogContent(string $pathToChangelog): bool | string
+    protected function getChangelogContent(string $pathToChangelog): bool|string
     {
         return file_get_contents($pathToChangelog);
     }

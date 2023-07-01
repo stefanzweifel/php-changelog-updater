@@ -9,7 +9,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Parser\MarkdownParser;
 
 it('finds previous version heading in markdown ast', function () {
-    $markdown = <<<MD
+    $markdown = <<<'MD'
     ## [v1.0.0](http://example.com)
     MD;
 
@@ -25,9 +25,8 @@ it('finds previous version heading in markdown ast', function () {
     $this->assertInstanceOf(Heading::class, $result);
 });
 
-
 it('returns null if no previous version heading can be found in the markdown ast', function () {
-    $markdown = <<<MD
+    $markdown = <<<'MD'
     There is no heading here.
     MD;
 

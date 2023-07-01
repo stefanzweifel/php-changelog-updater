@@ -6,7 +6,7 @@ use App\Actions\ShiftHeadingLevelInDocumentAction;
 use App\Support\Markdown;
 
 test('shifts headings to be below min heading level', function () {
-    $document = app(Markdown::class)->parse(<<<MD
+    $document = app(Markdown::class)->parse(<<<'MD'
     # Level 1 Heading
 
     ## Level 2 Heading
@@ -24,7 +24,7 @@ test('shifts headings to be below min heading level', function () {
 
     expect(trim((string) $updatedDocument->getContent()))
         ->toEqual(
-            <<<MD
+            <<<'MD'
             ### Level 1 Heading
 
             #### Level 2 Heading
@@ -39,7 +39,7 @@ test('shifts headings to be below min heading level', function () {
 });
 
 test('shifts headings and keeps hierarchy', function () {
-    $document = app(Markdown::class)->parse(<<<MD
+    $document = app(Markdown::class)->parse(<<<'MD'
     # Level 1 becomes Level 2
 
     ## Level 2 becomes Level 3
@@ -59,7 +59,7 @@ test('shifts headings and keeps hierarchy', function () {
 
     expect(trim((string) $updatedDocument->getContent()))
         ->toEqual(
-            <<<MD
+            <<<'MD'
             ## Level 1 becomes Level 2
 
             ### Level 2 becomes Level 3

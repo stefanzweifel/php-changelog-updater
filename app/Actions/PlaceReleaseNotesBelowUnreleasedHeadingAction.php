@@ -18,10 +18,10 @@ use Throwable;
 class PlaceReleaseNotesBelowUnreleasedHeadingAction
 {
     public function __construct(
-        private readonly GenerateCompareUrl                    $generateCompareUrl,
-        private readonly FindSecondLevelHeadingWithText        $findPreviousVersionHeading,
+        private readonly GenerateCompareUrl $generateCompareUrl,
+        private readonly FindSecondLevelHeadingWithText $findPreviousVersionHeading,
         private readonly CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
-        private readonly GitHubActionsOutput                   $gitHubActionsOutput,
+        private readonly GitHubActionsOutput $gitHubActionsOutput,
         private readonly InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
     ) {
     }
@@ -94,7 +94,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
         /** @var Link $linkNode */
         $linkNode = $unreleasedHeading->firstChild();
 
-        throw_if($linkNode === null, new LogicException("Can not find link node in unreleased heading."));
+        throw_if($linkNode === null, new LogicException('Can not find link node in unreleased heading.'));
 
         return $linkNode;
     }

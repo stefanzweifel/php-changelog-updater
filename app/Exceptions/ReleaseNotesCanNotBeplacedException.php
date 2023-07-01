@@ -10,6 +10,6 @@ class ReleaseNotesCanNotBeplacedException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Release notes could not be placed. Is the CHANGELOG empty? Does it contain at least one heading?");
+        parent::__construct('Release notes could not be placed. Is the CHANGELOG empty? Does it contain at least one heading?');
     }
 }

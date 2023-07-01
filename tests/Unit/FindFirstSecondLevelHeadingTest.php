@@ -9,7 +9,7 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Parser\MarkdownParser;
 
 it('finds first second level heading in markdown ast', function () {
-    $markdown = <<<MD
+    $markdown = <<<'MD'
     ## v1.1.0
     ## v1.0.0
     MD;
@@ -29,7 +29,7 @@ it('finds first second level heading in markdown ast', function () {
 });
 
 it('finds first second level heading in markdown ast if heading contains a link', function () {
-    $markdown = <<<MD
+    $markdown = <<<'MD'
     ## [v1.1.0](http://example.com)
     ## [v1.0.0](http://example.com)
     MD;

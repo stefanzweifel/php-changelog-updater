@@ -20,6 +20,7 @@ class ShiftHeadingLevelInDocumentAction
 
         /**
          * @var array<Heading> $headings
+         *
          * @psalm-suppress InvalidArgument
          */
         $headings = iterator_to_array($headings);
@@ -44,7 +45,7 @@ class ShiftHeadingLevelInDocumentAction
     }
 
     /**
-     * @param array<Heading> $headings
+     * @param  array<Heading>  $headings
      */
     public function findLowestHeadingLevel(array $headings): int|null
     {

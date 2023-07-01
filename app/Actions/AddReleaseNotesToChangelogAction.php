@@ -15,11 +15,11 @@ use Throwable;
 class AddReleaseNotesToChangelogAction
 {
     public function __construct(
-        private readonly Markdown                                      $markdown,
-        private readonly FindUnreleasedHeading                         $findUnreleasedHeading,
-        private readonly FindSecondLevelHeadingWithText                $findSecondLevelHeadingWithText,
+        private readonly Markdown $markdown,
+        private readonly FindUnreleasedHeading $findUnreleasedHeading,
+        private readonly FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText,
         private readonly PlaceReleaseNotesBelowUnreleasedHeadingAction $addNewReleaseNotesWithUnreleasedHeadingToChangelog,
-        private readonly PlaceReleaseNotesAtTheTopAction               $addNewReleaseToChangelog
+        private readonly PlaceReleaseNotesAtTheTopAction $addNewReleaseToChangelog
     ) {
     }
 
@@ -60,6 +60,7 @@ class AddReleaseNotesToChangelogAction
 
     /**
      * Check if a second-level heading for the latestVersion already exists in the document.
+     *
      * @throws ReleaseAlreadyExistsInChangelogException|Throwable
      */
     private function checkIfVersionAlreadyExistsInChangelog(Document $changelog, string $latestVersion): void

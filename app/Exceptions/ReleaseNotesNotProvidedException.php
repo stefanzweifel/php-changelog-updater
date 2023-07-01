@@ -10,6 +10,6 @@ class ReleaseNotesNotProvidedException extends Exception
 {
     public function __construct()
     {
-        parent::__construct("Release Notes were not provided. Pass them through the `--release-notes`-option.");
+        parent::__construct('Release Notes were not provided. Pass them through the `--release-notes`-option.');
     }
 }

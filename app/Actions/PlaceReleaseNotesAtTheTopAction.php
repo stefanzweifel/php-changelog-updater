@@ -13,8 +13,8 @@ use Throwable;
 class PlaceReleaseNotesAtTheTopAction
 {
     public function __construct(
-        private readonly FindFirstSecondLevelHeading       $findFirstSecondLevelHeading,
-        private readonly CreateNewReleaseHeading           $createNewReleaseHeading,
+        private readonly FindFirstSecondLevelHeading $findFirstSecondLevelHeading,
+        private readonly CreateNewReleaseHeading $createNewReleaseHeading,
         private readonly InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
     ) {
     }
