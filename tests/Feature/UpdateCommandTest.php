@@ -493,7 +493,7 @@ it('parses github usernames and links to their github user profiles', function (
         '--release-notes' => <<<MD
         ### Added
         - New Feature A @stefanzweifel
-        - New Feature B
+        - New Feature B [@stefanzweifel](https://github.com/stefanzweifel)
 
         ### Changed
         - Update Feature C

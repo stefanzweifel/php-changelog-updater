@@ -15,7 +15,7 @@ Please do not update the unreleased notes.
 ### Added
 
 - New Feature A [@stefanzweifel](https://github.com/stefanzweifel)
-- New Feature B
+- New Feature B [@stefanzweifel](https://github.com/stefanzweifel)
 
 ### Changed
 

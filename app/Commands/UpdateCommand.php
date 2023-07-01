@@ -58,6 +58,8 @@ class UpdateCommand extends Command
 
         $changelog = $this->getChangelogContent($pathToChangelog);
 
+        $releaseNotes = $this->applyMiddlewaresToReleaseNotes($releaseNotes);
+
         try {
             $updatedChangelog = $addReleaseNotesToChangelog->execute(
                 originalChangelog: $changelog,
@@ -107,5 +109,23 @@ class UpdateCommand extends Command
         if ($this->option('write')) {
             file_put_contents($pathToChangelog, $updatedMarkdown->getContent());
         }
+    }
+
+    private function applyMiddlewaresToReleaseNotes(?string $releaseNotes): string
+    {
+        $parseGitHubUsernames = $this->option('parse-github-usernames');
+
+        if ($parseGitHubUsernames) {
+            // (?<!\[) and (?!\]) are negative lookbehind and lookahead assertions, respectively.
+            // They ensure that the GitHub username is not preceded or followed by a square
+            // bracket [ or ], which indicates that the username is already wrapped in a link.
+            // @([A-Za-z0-9_]+) matches the GitHub username itself. It starts with
+            // the @ symbol and consists of alphanumeric characters and underscores.
+            $pattern = '/(?<!\[)@([A-Za-z0-9_]+)(?!\])/';
+            $replacement = '[@$1](https://github.com/$1)';
+            $releaseNotes = preg_replace($pattern, $replacement, $releaseNotes);
+        }
+
+        return $releaseNotes;
     }
 }
