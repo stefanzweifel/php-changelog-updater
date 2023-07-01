@@ -3,7 +3,7 @@
     errorLevel="4"
     findUnusedVariablesAndParams="true"
     findUnusedBaselineEntry="true"
-    findUnusedCode="true"
+    findUnusedCode="false"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"

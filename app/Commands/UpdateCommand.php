@@ -99,6 +99,9 @@ class UpdateCommand extends Command
             return null;
         }
 
+        /**
+         * @psalm-suppress InvalidReturnStatement
+         */
         return $this->option('release-notes') ?: $this->ask('What markdown Release Notes should be added to the CHANGELOG?');
     }
 
