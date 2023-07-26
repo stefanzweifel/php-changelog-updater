@@ -93,7 +93,7 @@ class UpdateCommand extends Command
         }
     }
 
-    protected function getReleaseNotes(): null|string
+    protected function getReleaseNotes(): ?string
     {
         if ($this->option('parse-release-notes')) {
             return null;

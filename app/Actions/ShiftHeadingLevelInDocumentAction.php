@@ -47,11 +47,11 @@ class ShiftHeadingLevelInDocumentAction
     /**
      * @param  array<Heading>  $headings
      */
-    public function findLowestHeadingLevel(array $headings): int|null
+    public function findLowestHeadingLevel(array $headings): ?int
     {
         return array_reduce(
             $headings,
-            function (int|null $level, Heading $heading) {
+            function (?int $level, Heading $heading) {
                 if ($level === null) {
                     return $heading->getLevel();
                 }
