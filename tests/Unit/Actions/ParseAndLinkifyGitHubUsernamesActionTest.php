@@ -31,3 +31,10 @@ it('replaces GitHub usernames with links if it contains -', function () {
 
     expect($result)->toEqual('This is a string with a [@user-name](https://github.com/user-name) in it.');
 });
+
+it('replaces GitHub usernames with links if it contains _', function () {
+
+    $result = app(ParseAndLinkifyGitHubUsernamesAction::class)->execute('This is a string with a @user_name in it.');
+
+    expect($result)->toEqual('This is a string with a [@user_name](https://github.com/user_name) in it.');
+});
