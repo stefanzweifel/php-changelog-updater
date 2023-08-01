@@ -17,12 +17,6 @@ class GitHubActionsOutput extends MessageBag
             if ($this->hasGithubOutputEnvironment()) {
                 $this->setOutput($key, $value);
             }
-
-            // Set output variables using old syntax for compatibility with older versions of GitHub Actions runner.
-            // Stops working in 2023.
-            if (now()->year < 2023) {
-                $output->text(sprintf('::set-output name=%s::%s', $key, $value));
-            }
         }
     }
 
