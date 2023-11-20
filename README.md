@@ -38,7 +38,7 @@ php changelog-updater update \
 --latest-version="v1.0.0" \
 --release-date="2021-08-07" \
 --path-to-changelog="CHANGELOG.md" \
---compare-url-target-revision="1.x"
+--compare-url-target-revision="1.x" \
 --write
 ```
 
