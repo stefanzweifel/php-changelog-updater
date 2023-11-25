@@ -28,7 +28,7 @@ class UpdateCommand extends Command
         {--github-actions-output : Display GitHub Actions related output}
         {--hide-release-date : Hide release date in the new release heading.}
         {--parse-github-usernames : Experimental: Find GitHub usernames in release notes and link to their profile.}
-        {-w\--write : Write changes to file}
+        {--w|write : Write changes to file}
     ';
 
     protected $description = 'Update Changelog with the given release notes.';
