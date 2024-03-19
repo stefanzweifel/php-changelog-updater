@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-dom": "*",
         "league/commonmark": "^2.3.5",
         "webmozart/assert": "^1.11",
