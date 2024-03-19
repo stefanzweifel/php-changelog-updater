@@ -1,4 +1,4 @@
-name: php-cs-fixer
+name: Laravel Pint
 
 on:
   pull_request:
@@ -7,5 +7,5 @@ on:
       - main
 
 jobs:
-  php-cs-fixer:
-    uses: stefanzweifel/reusable-workflows/.github/workflows/php-cs-fixer.yml@main
+  pint:
+    uses: stefanzweifel/reusable-workflows/.github/workflows/laravel-pint-fixer.yml@main
