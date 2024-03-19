@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Block\Document;
-use LogicException;
 use Throwable;
 
 class PlaceReleaseNotesBelowUnreleasedHeadingAction
@@ -86,15 +85,10 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
             ->__toString();
     }
 
-    /**
-     * @throws Throwable
-     */
     private function getLinkNodeFromHeading(Heading $unreleasedHeading): Link
     {
         /** @var Link $linkNode */
         $linkNode = $unreleasedHeading->firstChild();
-
-        throw_if($linkNode === null, new LogicException('Can not find link node in unreleased heading.'));
 
         return $linkNode;
     }

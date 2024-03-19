@@ -95,11 +95,13 @@ class ExtractPermalinkFragmentFromHeadingAction
         $domDocument = new DOMDocument();
         $domDocument->loadHTML($html);
 
-        return $domDocument
+        /** @var \DOMAttr $hrefAttribute */
+        $hrefAttribute = $domDocument
             ->getElementsByTagName('a')
             ->item(0)
             ->attributes
-            ->getNamedItem('href')
-            ->value;
+            ->getNamedItem('href');
+
+        return $hrefAttribute->value;
     }
 }

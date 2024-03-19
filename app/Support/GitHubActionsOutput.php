@@ -20,7 +20,7 @@ class GitHubActionsOutput extends MessageBag
         }
     }
 
-    private function setOutput($name, $value): void
+    private function setOutput(string $name, string $value): void
     {
         $pathToGitHubOutput = getenv('GITHUB_OUTPUT');
         $gitHubOutput = file_get_contents($pathToGitHubOutput);

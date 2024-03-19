@@ -10,13 +10,16 @@ use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Block\Document;
 use League\CommonMark\Node\Inline\Text;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Node\Query;
 
 class FindUnreleasedHeading
 {
-    public function find(Document $document): ?Node
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function find(Document $document): ?Heading
     {
+        /**
+         * @phpstan-var Heading|null
+         */
         return (new Query())
             ->where(Query::type(Heading::class))
             ->andWhere(Query::hasChild(Query::type(Link::class)))
