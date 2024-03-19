@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 use Rector\CodeQuality\Rector\Class_\InlineConstructorDefaultToPropertyRector;
 use Rector\Config\RectorConfig;
-use Rector\Set\ValueObject\LevelSetList;
+use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([
+return RectorConfig::configure()
+    ->withPaths([
         __DIR__.'/app',
-        __DIR__.'/bootstrap',
-        __DIR__.'/config',
         __DIR__.'/tests',
+    ])
+    // uncomment to reach your current PHP version
+    ->withPhpSets(php81: true)
+    ->withPreparedSets(deadCode: true, codingStyle: true)
+    ->withRules([
+        AddVoidReturnTypeWhereNoReturnRector::class,
+        InlineConstructorDefaultToPropertyRector::class,
     ]);
-
-    // register a single rule
-    $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);
-
-    // define sets of rules
-    $rectorConfig->sets([
-        LevelSetList::UP_TO_PHP_81,
-    ]);
-};
