@@ -8,7 +8,6 @@ use App\QueryExpressions\HeadingLevel;
 use App\QueryExpressions\HeadingText;
 use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
 use League\CommonMark\Node\Block\Document;
-use League\CommonMark\Node\Node;
 use League\CommonMark\Node\Query;
 
 class FindSecondLevelHeadingWithText
