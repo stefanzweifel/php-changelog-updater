@@ -15,8 +15,12 @@ use League\CommonMark\Node\Query;
 
 class FindUnreleasedHeading
 {
-    public function find(Document $document): ?Node
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function find(Document $document): ?Heading
     {
+        /**
+         * @phpstan-var Heading|null
+         */
         return (new Query())
             ->where(Query::type(Heading::class))
             ->andWhere(Query::hasChild(Query::type(Link::class)))

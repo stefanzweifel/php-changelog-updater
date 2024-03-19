@@ -13,8 +13,12 @@ use League\CommonMark\Node\Query;
 
 class FindSecondLevelHeadingWithText
 {
-    public function find(Document $document, string $previousVersion): ?Node
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function find(Document $document, string $previousVersion): ?Heading
     {
+        /**
+         * @phpstan-var Heading|null
+         */
         return (new Query())
             ->where(Query::type(Heading::class))
             ->andWhere(new HeadingLevel(2))

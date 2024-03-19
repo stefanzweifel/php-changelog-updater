@@ -12,8 +12,12 @@ use League\CommonMark\Node\Query;
 
 class FindFirstSecondLevelHeading
 {
-    public function find(Document $document): ?Node
+    /** @noinspection PhpIncompatibleReturnTypeInspection */
+    public function find(Document $document): ?Heading
     {
+        /**
+         * @phpstan-var Heading|null
+         */
         return (new Query())
             ->where(Query::type(Heading::class))
             ->andWhere(new HeadingLevel(2))
