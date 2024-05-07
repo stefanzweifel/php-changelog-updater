@@ -2,4 +2,5 @@
 /.idea
 /.vscode
 /.vagrant
+/.phpunit.cache/
 .phpunit.result.cache

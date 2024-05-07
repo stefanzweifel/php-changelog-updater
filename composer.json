@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "larastan/larastan": "^2.0",
-        "laravel-zero/framework": "^10",
+        "laravel-zero/framework": "^11",
         "laravel/pint": "^1.10",
         "mockery/mockery": "^1.5.1",
         "pestphp/pest": "^2",
