@@ -187,6 +187,27 @@ it('uses compare-url-target option in unreleased heading url', function () {
         ->assertSuccessful();
 });
 
+it('uses previous release heading in changelog to build compare url of the most recent release', function () {
+    $this->artisan(UpdateCommand::class, [
+        '--release-notes' => <<<'MD'
+        ### Added
+        - New Feature A
+        - New Feature B
+
+        ### Changed
+        - Update Feature C
+
+        ### Removes
+        - Remove Feature D
+        MD,
+        '--latest-version' => 'v1.0.0',
+        '--path-to-changelog' => __DIR__.'/../Stubs/base-changelog-with-headings-with-compare-url.md',
+        '--release-date' => '2021-02-01',
+    ])
+        ->expectsOutput(file_get_contents(__DIR__.'/../Stubs/expected-changelog-with-headings-with-compare-url.md'))
+        ->assertSuccessful();
+});
+
 it('shows warning if version already exists in the changelog', function () {
     $this->artisan(UpdateCommand::class, [
         '--release-notes' => <<<'MD'
