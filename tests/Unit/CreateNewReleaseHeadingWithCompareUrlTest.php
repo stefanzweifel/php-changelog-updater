@@ -20,6 +20,7 @@ test('creates new release heading ast', function () {
 
     $environment = new Environment();
     $environment->addExtension(new MarkdownRendererExtension());
+
     $markdownRenderer = new MarkdownRenderer($environment);
 
     /** @var Document $result */
@@ -54,6 +55,7 @@ it('does not add date to release heading if hideDate is false', function () {
 
     $environment = new Environment();
     $environment->addExtension(new MarkdownRendererExtension());
+
     $markdownRenderer = new MarkdownRenderer($environment);
 
     /** @var Document $result */
