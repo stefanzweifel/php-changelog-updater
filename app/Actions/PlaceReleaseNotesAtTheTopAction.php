@@ -52,6 +52,14 @@ class PlaceReleaseNotesAtTheTopAction
 
             // Create new Heading containing the new version number
             $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create($repositoryUrl, $previousVersion, $headingText, $headingText, $releaseDate, $hideDate);
+
+
+            // Update Compare URL in Previous Version Heading to use `$headingText` as the target revision in the compare URL
+            $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($previousVersionHeading);
+            $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $previousVersion, $headingText);
+
+            $link = $this->getLinkNodeFromHeading($previousVersionHeading);
+            $link->setUrl($updatedUrl);
         } else {
             $newReleaseHeading = $this->createNewReleaseHeading->create($headingText, $releaseDate, $hideDate);
         }
