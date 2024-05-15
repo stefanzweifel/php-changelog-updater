@@ -46,12 +46,12 @@ class PlaceReleaseNotesAtTheTopAction
             $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($previousVersionHeading);
             $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $headingText, $compareUrlTargetRevision = 'HEAD');
 
-            $link = $this->getLinkNodeFromHeading($previousVersionHeading);
+            $link = clone $this->getLinkNodeFromHeading($previousVersionHeading);
             $link->setUrl($updatedUrl);
             $this->gitHubActionsOutput->add('UNRELEASED_COMPARE_URL', $updatedUrl);
 
             // Create new Heading containing the new version number
-            $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create($repositoryUrl, $previousVersion, $compareUrlTargetRevision, $headingText, $releaseDate, $hideDate);
+            $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create($repositoryUrl, $previousVersion, $headingText, $headingText, $releaseDate, $hideDate);
         } else {
             $newReleaseHeading = $this->createNewReleaseHeading->create($headingText, $releaseDate, $hideDate);
         }
