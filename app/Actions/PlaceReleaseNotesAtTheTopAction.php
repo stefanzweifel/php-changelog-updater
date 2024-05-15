@@ -42,7 +42,7 @@ class PlaceReleaseNotesAtTheTopAction
         // If the previous version does not contain a URL, don't add a URL to the new release heading
         if ($previousVersionHeading && $this->headingContainsLink($previousVersionHeading)) {
 
-            $previousVersion = $this->getPreviousVersionFromUnreleasedHeading($previousVersionHeading);
+            $previousVersion = $this->getPreviousVersionFromHeading($previousVersionHeading);
             $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($previousVersionHeading);
             $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $headingText, $compareUrlTargetRevision = 'HEAD');
 
@@ -52,14 +52,6 @@ class PlaceReleaseNotesAtTheTopAction
 
             // Create new Heading containing the new version number
             $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create($repositoryUrl, $previousVersion, $headingText, $headingText, $releaseDate, $hideDate);
-
-
-            // Update Compare URL in Previous Version Heading to use `$headingText` as the target revision in the compare URL
-            $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($previousVersionHeading);
-            $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $previousVersion, $headingText);
-
-            $link = $this->getLinkNodeFromHeading($previousVersionHeading);
-            $link->setUrl($updatedUrl);
         } else {
             $newReleaseHeading = $this->createNewReleaseHeading->create($headingText, $releaseDate, $hideDate);
         }
@@ -82,14 +74,14 @@ class PlaceReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    private function getPreviousVersionFromUnreleasedHeading(Heading $unreleasedHeading): ?string
+    private function getPreviousVersionFromHeading(Heading $heading): ?string
     {
-        $linkNode = $this->getLinkNodeFromHeading($unreleasedHeading);
+        $linkNode = $this->getLinkNodeFromHeading($heading);
 
         return Str::of($linkNode->getUrl())
             ->afterLast('/')
             ->explode('...')
-            ->first();
+            ->last();
     }
 
     /**
