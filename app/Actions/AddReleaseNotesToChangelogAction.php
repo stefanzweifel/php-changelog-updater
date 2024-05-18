@@ -51,6 +51,7 @@ class AddReleaseNotesToChangelogAction
                 headingText: $headingText,
                 releaseDate: $releaseDate,
                 releaseNotes: $releaseNotes,
+                compareUrlTargetRevision: $compareUrlTargetRevision,
                 hideDate: $hideDate,
             );
         }

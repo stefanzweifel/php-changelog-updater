@@ -31,7 +31,7 @@ class PlaceReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    public function execute(Document $changelog, string $headingText, string $releaseDate, ?string $releaseNotes, bool $hideDate = false): Document
+    public function execute(Document $changelog, string $headingText, string $releaseDate, ?string $releaseNotes, string $compareUrlTargetRevision, bool $hideDate = false): Document
     {
         throw_if(empty($releaseNotes), ReleaseNotesNotProvidedException::class);
 
@@ -44,7 +44,7 @@ class PlaceReleaseNotesAtTheTopAction
 
             $previousVersion = $this->getPreviousVersionFromHeading($previousVersionHeading);
             $repositoryUrl = $this->getRepositoryUrlFromHeading($previousVersionHeading);
-            $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $headingText, $compareUrlTargetRevision = 'HEAD');
+            $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $headingText, $compareUrlTargetRevision);
 
             $link = clone $this->getLinkNodeFromHeading($previousVersionHeading);
             $link->setUrl($updatedUrl);
