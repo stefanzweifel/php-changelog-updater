@@ -38,7 +38,7 @@ class PlaceReleaseNotesAtTheTopAction
         // Find the Heading of the previous Version
         $previousVersionHeading = $this->findFirstSecondLevelHeading->find($changelog);
 
-        // If the previous version heading contains a compare URL, we should use that to generate the new release heading
+        // If the previous version heading contains a URL, we should use that to generate the new release heading
         // If the previous version does not contain a URL, don't add a URL to the new release heading
         if ($previousVersionHeading && $this->headingContainsLink($previousVersionHeading)) {
 
@@ -51,7 +51,7 @@ class PlaceReleaseNotesAtTheTopAction
             $this->gitHubActionsOutput->add('UNRELEASED_COMPARE_URL', $updatedUrl);
 
             // Create new Heading containing the new version number
-            $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create($repositoryUrl, $previousVersion, $headingText, $headingText, $releaseDate, $hideDate);
+            $newReleaseHeading = $this->createNewReleaseHeadingWithCompareUrl->create(repositoryUrl: $repositoryUrl, previousVersion: $previousVersion, latestVersion: $headingText, headingText: $headingText, releaseDate: $releaseDate, hideDate: $hideDate);
         } else {
             $newReleaseHeading = $this->createNewReleaseHeading->create($headingText, $releaseDate, $hideDate);
         }
