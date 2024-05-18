@@ -43,7 +43,7 @@ class PlaceReleaseNotesAtTheTopAction
         if ($previousVersionHeading && $this->headingContainsLink($previousVersionHeading)) {
 
             $previousVersion = $this->getPreviousVersionFromHeading($previousVersionHeading);
-            $repositoryUrl = $this->getRepositoryUrlFromUnreleasedHeading($previousVersionHeading);
+            $repositoryUrl = $this->getRepositoryUrlFromHeading($previousVersionHeading);
             $updatedUrl = $this->generateCompareUrl->generate($repositoryUrl, $headingText, $compareUrlTargetRevision = 'HEAD');
 
             $link = clone $this->getLinkNodeFromHeading($previousVersionHeading);
@@ -87,19 +87,19 @@ class PlaceReleaseNotesAtTheTopAction
     /**
      * @throws Throwable
      */
-    private function getRepositoryUrlFromUnreleasedHeading(Heading $unreleasedHeading): string
+    private function getRepositoryUrlFromHeading(Heading $heading): string
     {
-        $linkNode = $this->getLinkNodeFromHeading($unreleasedHeading);
+        $linkNode = $this->getLinkNodeFromHeading($heading);
 
         return Str::of($linkNode->getUrl())
             ->before('/compare')
             ->__toString();
     }
 
-    private function getLinkNodeFromHeading(Heading $unreleasedHeading): Link
+    private function getLinkNodeFromHeading(Heading $heading): Link
     {
         /** @var Link $linkNode */
-        $linkNode = $unreleasedHeading->firstChild();
+        $linkNode = $heading->firstChild();
 
         return $linkNode;
     }
