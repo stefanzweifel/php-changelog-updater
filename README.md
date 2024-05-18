@@ -140,7 +140,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-If your changelog follows the ["Keep a Changelog"](https://keepachangelog.com/) format and contains an "Unreleased"-heading with a link to the repositories compare view, the CLI will automatically update the link in the Unreleased heading.
+If your changelog follows the ["Keep a Changelog"](https://keepachangelog.com/) format and contains an "Unreleased"-heading with a link to the repository compare view, the CLI will automatically update the link in the Unreleased heading.
 
 Here is an example of a changelog, before it is updated with the CLI.
 
@@ -185,6 +185,27 @@ Please do not update the unreleased notes.
 ```
 
 The content between the "Unreleased"-heading and the latest version will remain untouched by the CLI.
+
+---
+
+If you don't have a "Unreleased"-heading in your changelog, but the headings of your previous releases contain a link to the repository compare view, the CLI will add links to the compare view to the added release heading.
+
+```diff
+# Changelog
+
++## [v1.1.0](https://github.com/org/repo/compare/v1.0.0...v1.1.0) - 2021-02-01
++
++### Added
++
++* New Feature A
++* New Feature B
++
+
+## [v1.0.0](https://github.com/org/repo/compare/v0.1.0...v1.0.0) - 2021-01-01
+
+### Added
+* Initial Release
+```
 
 ## Testing
 
