@@ -5,7 +5,7 @@ A PHP CLI to update a changelog with the latest release notes.
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 [![Tests](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/run-tests.yml)
 [![Check & fix styling](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/php-cs-fixer.yml)
-[![Psalm](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/psalm.yml)
+[![phpstan](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/phpstan.yml/badge.svg)](https://github.com/stefanzweifel/php-changelog-updater/actions/workflows/phpstan.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/wnx/changelog-updater.svg?style=flat-square)](https://packagist.org/packages/wnx/changelog-updater)
 
 Want to automate the process of updating your changelog with GitHub Actions? Checkout the [stefanzweifel/changelog-updater-action](https://github.com/stefanzweifel/changelog-updater-action) which does exactly that.
