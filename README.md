@@ -85,7 +85,7 @@ Optional. Tell the CLI explicitly to use the content between an "Unreleased Head
 ### `--hide-release-date`
 Optional. Don't add the release date to the release heading.
 
-### `--parse-github-usernames` (experimental 🧪)
+### `--parse-github-usernames`
 Optional. Look for GitHub usernames in `--release-notes` and linkify them. Currently not supported for release notes that are located in the existing changelog.
 
 ```diff
