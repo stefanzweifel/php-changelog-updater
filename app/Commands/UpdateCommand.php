@@ -27,7 +27,7 @@ class UpdateCommand extends Command
         {--compare-url-target-revision=HEAD : Target revision used in the compare URL of possible "Unreleased" heading.}
         {--github-actions-output : Display GitHub Actions related output}
         {--hide-release-date : Hide release date in the new release heading.}
-        {--parse-github-usernames : Experimental: Find GitHub usernames in release notes and link to their profile.}
+        {--parse-github-usernames : Find GitHub usernames in release notes and link to their profile.}
         {--w|write : Write changes to file}
     ';
 
