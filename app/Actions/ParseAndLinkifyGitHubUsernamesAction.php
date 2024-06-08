@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Mention\MentionExtension;
+use League\CommonMark\Parser\MarkdownParser as CommonmarkMarkdownParser;
+use Wnx\CommonmarkMarkdownRenderer\MarkdownRendererExtension;
+use Wnx\CommonmarkMarkdownRenderer\Renderer\MarkdownRenderer as CommonmarkRenderer;
+
 class ParseAndLinkifyGitHubUsernamesAction
 {
     public function execute(?string $releaseNotes): ?string
@@ -12,16 +18,26 @@ class ParseAndLinkifyGitHubUsernamesAction
             return null;
         }
 
-        // Pattern explanation:
-        // - `(?<!\[)` and `(?!\])` are negative lookbehind and lookahead assertions, respectively.
-        //   They ensure that the GitHub username is not preceded or followed by a square
-        //   bracket [ or ], which indicates that the username is already wrapped in a link.
-        // - `@([A-Za-z0-9_-]+)` matches the GitHub username itself. It starts with
-        //   the @ symbol and consists of alphanumeric characters and underscores.
-        $pattern = '/(?<!\[)@([A-Za-z0-9_-]+)(?!\])/';
+        $config = [
+            'mentions' => [
+                // GitHub handler mention configuration.
+                'github_handle' => [
+                    'prefix' => '@',
+                    'pattern' => '[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}(?!\w)',
+                    'generator' => 'https://github.com/%s',
+                ],
+            ],
+        ];
 
-        $replacement = '[@$1](https://github.com/$1)';
+        $environment = new Environment($config);
+        $environment->addExtension(new MarkdownRendererExtension());
+        $environment->addExtension(new MentionExtension());
 
-        return preg_replace($pattern, $replacement, $releaseNotes);
+        $parser = new CommonmarkMarkdownParser($environment);
+        $renderer = new CommonmarkRenderer($environment);
+
+        $parsedReleaseNotes = $parser->parse($releaseNotes);
+
+        return trim($renderer->renderDocument($parsedReleaseNotes)->getContent());
     }
 }
