@@ -499,7 +499,7 @@ it('parses github usernames and links to their github user profiles', function (
         - Remove Feature D
         MD,
         '--latest-version' => 'v1.0.0',
-        '--path-to-changelog' => __DIR__.'/../Stubs/base-changelog.md',
+        '--path-to-changelog' => __DIR__.'/../Stubs/base-changelog-with-github-usernames.md',
         '--release-date' => '2021-02-01',
         '--parse-github-usernames' => true,
     ])
