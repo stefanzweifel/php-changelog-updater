@@ -18,8 +18,8 @@ test('creates new release heading ast', function () {
     $headingText = $latestVersion;
     $releaseDate = '2021-02-01';
 
-    $environment = new Environment();
-    $environment->addExtension(new MarkdownRendererExtension());
+    $environment = new Environment;
+    $environment->addExtension(new MarkdownRendererExtension);
 
     $markdownRenderer = new MarkdownRenderer($environment);
 
@@ -33,7 +33,7 @@ test('creates new release heading ast', function () {
         hideDate: false,
     );
 
-    $document = new Document();
+    $document = new Document;
     $document->appendChild($result);
 
     $this->assertInstanceOf(Heading::class, $result);
@@ -53,8 +53,8 @@ it('does not add date to release heading if hideDate is false', function () {
     $headingText = $latestVersion;
     $releaseDate = '2021-02-01';
 
-    $environment = new Environment();
-    $environment->addExtension(new MarkdownRendererExtension());
+    $environment = new Environment;
+    $environment->addExtension(new MarkdownRendererExtension);
 
     $markdownRenderer = new MarkdownRenderer($environment);
 
@@ -68,7 +68,7 @@ it('does not add date to release heading if hideDate is false', function () {
         hideDate: true,
     );
 
-    $document = new Document();
+    $document = new Document;
     $document->appendChild($result);
 
     $this->assertInstanceOf(Heading::class, $result);

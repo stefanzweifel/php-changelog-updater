@@ -10,9 +10,7 @@ use League\CommonMark\Node\Block\Document;
 
 class PrepareReleaseNotesAction
 {
-    public function __construct(private readonly Markdown $markdown, private readonly ShiftHeadingLevelInDocumentAction $shiftHeadingLevelInDocument)
-    {
-    }
+    public function __construct(private readonly Markdown $markdown, private readonly ShiftHeadingLevelInDocumentAction $shiftHeadingLevelInDocument) {}
 
     public function execute(string $releaseNotes, Heading $newReleaseHeading): Document
     {

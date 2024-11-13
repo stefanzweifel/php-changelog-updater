@@ -14,7 +14,7 @@ class ShiftHeadingLevelInDocumentAction
 
     public function execute(Document $document, int $baseHeadingLevel): Document
     {
-        $headings = (new Query())
+        $headings = (new Query)
             ->where(Query::type(Heading::class))
             ->findAll($document);
 

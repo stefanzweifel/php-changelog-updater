@@ -13,8 +13,8 @@ it('finds previous version heading in markdown ast', function () {
     ## [v1.0.0](http://example.com)
     MD;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -30,8 +30,8 @@ it('returns null if no previous version heading can be found in the markdown ast
     There is no heading here.
     MD;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);

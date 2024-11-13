@@ -30,8 +30,8 @@ class ParseAndLinkifyGitHubUsernamesAction
         ];
 
         $environment = new Environment($config);
-        $environment->addExtension(new MarkdownRendererExtension());
-        $environment->addExtension(new MentionExtension());
+        $environment->addExtension(new MarkdownRendererExtension);
+        $environment->addExtension(new MentionExtension);
 
         $parser = new CommonmarkMarkdownParser($environment);
         $renderer = new CommonmarkRenderer($environment);

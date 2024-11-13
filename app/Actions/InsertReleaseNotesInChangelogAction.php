@@ -10,9 +10,7 @@ use League\CommonMark\Node\Block\Document;
 
 class InsertReleaseNotesInChangelogAction
 {
-    public function __construct(private readonly PrepareReleaseNotesAction $prepareReleaseNotes)
-    {
-    }
+    public function __construct(private readonly PrepareReleaseNotesAction $prepareReleaseNotes) {}
 
     /**
      * @throws ReleaseNotesCanNotBeplacedException
@@ -40,6 +38,6 @@ class InsertReleaseNotesInChangelogAction
 
         // If the CHANGELOG doesn't have any children, we currently don't insert the release notes.
         // An exception is thrown and an error message is displayed to the user.
-        throw new ReleaseNotesCanNotBeplacedException();
+        throw new ReleaseNotesCanNotBeplacedException;
     }
 }

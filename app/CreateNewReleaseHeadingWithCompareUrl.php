@@ -16,8 +16,7 @@ class CreateNewReleaseHeadingWithCompareUrl
         private readonly GenerateCompareUrl $generateCompareUrl,
         private readonly GitHubActionsOutput $gitHubActionsOutput,
         private readonly ExtractPermalinkFragmentFromHeadingAction $extractPermalinkFragmentFromHeading
-    ) {
-    }
+    ) {}
 
     public function create(string $repositoryUrl, string $previousVersion, string $latestVersion, string $headingText, string $releaseDate, bool $hideDate = false): Heading
     {
