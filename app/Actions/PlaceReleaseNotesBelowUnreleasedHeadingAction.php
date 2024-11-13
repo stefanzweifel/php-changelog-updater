@@ -22,8 +22,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
         private readonly CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeading,
         private readonly GitHubActionsOutput $gitHubActionsOutput,
         private readonly InsertReleaseNotesInChangelogAction $insertReleaseNotesInChangelogAction
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable

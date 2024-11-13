@@ -20,7 +20,7 @@ class FindUnreleasedHeading
         /**
          * @phpstan-var Heading|null
          */
-        return (new Query())
+        return (new Query)
             ->where(Query::type(Heading::class))
             ->andWhere(Query::hasChild(Query::type(Link::class)))
             ->andWhere(Query::hasChild(Query::hasChild(Query::type(Text::class))))

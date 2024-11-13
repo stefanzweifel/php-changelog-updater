@@ -18,9 +18,7 @@ use League\CommonMark\Renderer\HtmlRenderer;
 
 class ExtractPermalinkFragmentFromHeadingAction
 {
-    public function __construct(private readonly GitHubActionsOutput $gitHubActionsOutput)
-    {
-    }
+    public function __construct(private readonly GitHubActionsOutput $gitHubActionsOutput) {}
 
     public function execute(Heading $releaseHeading): string
     {
@@ -62,8 +60,8 @@ class ExtractPermalinkFragmentFromHeadingAction
         ];
 
         $environment = new Environment($config);
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new HeadingPermalinkExtension());
+        $environment->addExtension(new CommonMarkCoreExtension);
+        $environment->addExtension(new HeadingPermalinkExtension);
 
         return $environment;
     }
@@ -74,12 +72,12 @@ class ExtractPermalinkFragmentFromHeadingAction
      */
     protected function attachPermalinkToHeading(Heading $releaseHeading, Environment $environment): Document
     {
-        $document = new Document();
+        $document = new Document;
         $document->appendChild($releaseHeading);
 
         $documentParsedEvent = new DocumentParsedEvent($document);
 
-        $processor = (new HeadingPermalinkProcessor());
+        $processor = (new HeadingPermalinkProcessor);
         $processor->setEnvironment($environment);
         $processor->__invoke($documentParsedEvent);
 
@@ -92,7 +90,7 @@ class ExtractPermalinkFragmentFromHeadingAction
      */
     protected function extractLinkFragmentFromRenderedHtml(string $html): ?string
     {
-        $domDocument = new DOMDocument();
+        $domDocument = new DOMDocument;
         $domDocument->loadHTML($html);
 
         /** @var \DOMAttr $hrefAttribute */

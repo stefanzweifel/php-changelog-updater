@@ -11,9 +11,7 @@ use League\CommonMark\Node\Query\ExpressionInterface;
 
 class HeadingText implements ExpressionInterface
 {
-    public function __construct(private readonly string $text)
-    {
-    }
+    public function __construct(private readonly string $text) {}
 
     public function __invoke(Node $node): bool
     {

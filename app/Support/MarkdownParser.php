@@ -15,7 +15,7 @@ class MarkdownParser
 
     public function __construct(Environment $environment)
     {
-        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new CommonMarkCoreExtension);
         $this->parser = new CommonmarkMarkdownParser($environment);
     }
 

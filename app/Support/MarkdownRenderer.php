@@ -16,7 +16,7 @@ class MarkdownRenderer
 
     public function __construct(Environment $environment)
     {
-        $environment->addExtension(new MarkdownRendererExtension());
+        $environment->addExtension(new MarkdownRendererExtension);
 
         $this->renderer = new CommonmarkRenderer($environment);
     }

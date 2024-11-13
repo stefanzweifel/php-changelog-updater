@@ -20,8 +20,7 @@ class AddReleaseNotesToChangelogAction
         private readonly FindSecondLevelHeadingWithText $findSecondLevelHeadingWithText,
         private readonly PlaceReleaseNotesBelowUnreleasedHeadingAction $addNewReleaseNotesWithUnreleasedHeadingToChangelog,
         private readonly PlaceReleaseNotesAtTheTopAction $addNewReleaseToChangelog
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable
