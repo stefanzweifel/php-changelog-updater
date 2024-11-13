@@ -13,8 +13,8 @@ test('find unreleased heading in markdown ast', function () {
     ## [Unreleased](http://example.com)
     TXT;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -30,8 +30,8 @@ test('returns null if unreleased heading is not level 2', function () {
     ### [Unreleased](http://example.com)
     TXT;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -46,8 +46,8 @@ test('returns null if unreleased heading is not a link', function () {
     ## Unreleased
     TXT;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -62,8 +62,8 @@ test('return null if no unreleased heading is found in markdown ast', function (
     # Wrong Header
     TXT;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);

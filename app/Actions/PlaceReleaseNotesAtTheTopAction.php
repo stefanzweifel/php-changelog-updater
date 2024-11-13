@@ -25,8 +25,7 @@ class PlaceReleaseNotesAtTheTopAction
         private readonly CreateNewReleaseHeadingWithCompareUrl $createNewReleaseHeadingWithCompareUrl,
         private readonly GenerateCompareUrl $generateCompareUrl,
         private readonly GitHubActionsOutput $gitHubActionsOutput,
-    ) {
-    }
+    ) {}
 
     /**
      * @throws Throwable

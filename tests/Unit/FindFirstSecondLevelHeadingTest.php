@@ -14,8 +14,8 @@ it('finds first second level heading in markdown ast', function () {
     ## v1.0.0
     MD;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -34,8 +34,8 @@ it('finds first second level heading in markdown ast if heading contains a link'
     ## [v1.0.0](http://example.com)
     MD;
 
-    $env = new Environment();
-    $env->addExtension(new CommonMarkCoreExtension());
+    $env = new Environment;
+    $env->addExtension(new CommonMarkCoreExtension);
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);

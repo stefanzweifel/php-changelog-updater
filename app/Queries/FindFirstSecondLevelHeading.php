@@ -17,7 +17,7 @@ class FindFirstSecondLevelHeading
         /**
          * @phpstan-var Heading|null
          */
-        return (new Query())
+        return (new Query)
             ->where(Query::type(Heading::class))
             ->andWhere(new HeadingLevel(2))
             ->findOne($document);

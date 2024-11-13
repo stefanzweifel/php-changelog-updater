@@ -12,8 +12,7 @@ class Markdown
     public function __construct(
         private readonly MarkdownParser $markdownParser,
         private readonly MarkdownRenderer $markdownRenderer
-    ) {
-    }
+    ) {}
 
     public function parse(string $markdown): Document
     {
