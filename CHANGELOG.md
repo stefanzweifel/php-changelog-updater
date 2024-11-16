@@ -5,9 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.11.0...HEAD)
+## [Unreleased](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.12.0...HEAD)
 
 <!-- New Release notes will be placed here automatically -->
+## [v1.12.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.11.0...v1.12.0) - 2024-11-16
+
+### Added
+
+- Run Tests on PHP 8.4 ([#55](https://github.com/stefanzweifel/php-changelog-updater/pull/55))
+
+### Changed
+
+- Use Commonmark Mention-Extension to parse GitHub usernames ([#54](https://github.com/stefanzweifel/php-changelog-updater/pull/54))
+- Update Dependencies and build for PHP 8.4 ([#56](https://github.com/stefanzweifel/php-changelog-updater/pull/56))
+
 ## [v1.11.0](https://github.com/stefanzweifel/php-changelog-updater/compare/v1.10.0...v1.11.0) - 2024-05-18
 
 ### Added
