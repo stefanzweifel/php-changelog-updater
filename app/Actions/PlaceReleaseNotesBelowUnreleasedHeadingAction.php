@@ -35,6 +35,7 @@ class PlaceReleaseNotesBelowUnreleasedHeadingAction
 
         $link = $this->getLinkNodeFromHeading($unreleasedHeading);
         $link->setUrl($updatedUrl);
+
         $this->gitHubActionsOutput->add('UNRELEASED_COMPARE_URL', $updatedUrl);
 
         // Create new Heading containing the new version number

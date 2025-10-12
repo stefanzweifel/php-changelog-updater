@@ -45,6 +45,6 @@ class CreateNewReleaseHeadingWithCompareUrl
 
     protected function createDateNode(string $releaseDate): Text
     {
-        return new Text(" - {$releaseDate}");
+        return new Text(' - '.$releaseDate);
     }
 }

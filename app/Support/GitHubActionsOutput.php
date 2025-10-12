@@ -25,7 +25,7 @@ class GitHubActionsOutput extends MessageBag
         $pathToGitHubOutput = getenv('GITHUB_OUTPUT');
         $gitHubOutput = file_get_contents($pathToGitHubOutput);
 
-        $gitHubOutput .= "$name=$value\n";
+        $gitHubOutput .= sprintf('%s=%s%s', $name, $value, PHP_EOL);
 
         file_put_contents($pathToGitHubOutput, $gitHubOutput, FILE_APPEND | LOCK_EX);
     }

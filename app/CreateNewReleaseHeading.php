@@ -18,7 +18,7 @@ class CreateNewReleaseHeading
             $heading->appendChild(new Text($text));
 
             if ($hideDate === false) {
-                $heading->appendChild(new Text(" - {$releaseDate}"));
+                $heading->appendChild(new Text(' - '.$releaseDate));
             }
 
             $this->extractPermalinkFragmentFromHeading->execute($heading);

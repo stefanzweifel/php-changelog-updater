@@ -15,6 +15,7 @@ test('find unreleased heading in markdown ast', function () {
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -32,6 +33,7 @@ test('returns null if unreleased heading is not level 2', function () {
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -48,6 +50,7 @@ test('returns null if unreleased heading is not a link', function () {
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -64,6 +67,7 @@ test('return null if no unreleased heading is found in markdown ast', function (
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);

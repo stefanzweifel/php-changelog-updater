@@ -12,6 +12,6 @@ class GenerateCompareUrl
     {
         $url = Str::finish($url, '/');
 
-        return "{$url}compare/{$from}...{$to}";
+        return sprintf('%scompare/%s...%s', $url, $from, $to);
     }
 }

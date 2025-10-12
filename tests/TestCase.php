@@ -17,13 +17,13 @@ abstract class TestCase extends BaseTestCase
         parent::tearDown();
     }
 
-    public function assertGitHubOutputContains($name, $value)
+    public function assertGitHubOutputContains($name, $value): void
     {
-        $this->assertStringContainsString("$name=$value", file_get_contents($this->gitHubOutputTestfile));
+        $this->assertStringContainsString(sprintf('%s=%s', $name, $value), file_get_contents($this->gitHubOutputTestfile));
     }
 
-    public function assertGitHubOutputDoesntContain($name, $value)
+    public function assertGitHubOutputDoesntContain($name, $value): void
     {
-        $this->assertStringNotContainsString("$name=$value", file_get_contents($this->gitHubOutputTestfile));
+        $this->assertStringNotContainsString(sprintf('%s=%s', $name, $value), file_get_contents($this->gitHubOutputTestfile));
     }
 }

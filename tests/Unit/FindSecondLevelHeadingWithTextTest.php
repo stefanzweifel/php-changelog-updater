@@ -15,6 +15,7 @@ it('finds previous version heading in markdown ast', function () {
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);
@@ -32,6 +33,7 @@ it('returns null if no previous version heading can be found in the markdown ast
 
     $env = new Environment;
     $env->addExtension(new CommonMarkCoreExtension);
+
     $parser = new MarkdownParser($env);
 
     $ast = $parser->parse($markdown);

@@ -21,7 +21,7 @@ trait CreatesApplication
 
         $this->gitHubOutputTestfile = base_path('tests/github_output.txt');
 
-        putenv("GITHUB_OUTPUT=$this->gitHubOutputTestfile");
+        putenv('GITHUB_OUTPUT='.$this->gitHubOutputTestfile);
 
         $app->make(Kernel::class)->bootstrap();
 
