@@ -17,6 +17,7 @@ it('creates new release heading ast', function () {
 
     $environment = new Environment;
     $environment->addExtension(new MarkdownRendererExtension);
+
     $markdownRenderer = new MarkdownRenderer($environment);
 
     /** @var Document $result */
@@ -43,6 +44,7 @@ it('creates new release heading ast without a date if hideDate boolean is true',
 
     $environment = new Environment;
     $environment->addExtension(new MarkdownRendererExtension);
+
     $markdownRenderer = new MarkdownRenderer($environment);
 
     /** @var Document $result */
