@@ -22,10 +22,10 @@
     },
     "require-dev": {
         "larastan/larastan": "^3.7",
-        "laravel-zero/framework": "^12",
+        "laravel-zero/framework": "^13",
         "laravel/pint": "^1.10",
         "mockery/mockery": "^1.5.1",
-        "pestphp/pest": "^4",
+        "pestphp/pest": "^5",
         "rector/rector": "^2.0"
     },
     "autoload": {
