@@ -701,16 +701,16 @@
         },
         {
             "name": "wnx/commonmark-markdown-renderer",
-            "version": "v1.7.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stefanzweifel/commonmark-markdown-renderer.git",
-                "reference": "9674a70459664459fd6bb1435891c76824ecfdb0"
+                "reference": "035733dc26f8ec9cf62cd1437315b8ab87f449df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stefanzweifel/commonmark-markdown-renderer/zipball/9674a70459664459fd6bb1435891c76824ecfdb0",
-                "reference": "9674a70459664459fd6bb1435891c76824ecfdb0",
+                "url": "https://api.github.com/repos/stefanzweifel/commonmark-markdown-renderer/zipball/035733dc26f8ec9cf62cd1437315b8ab87f449df",
+                "reference": "035733dc26f8ec9cf62cd1437315b8ab87f449df",
                 "shasum": ""
             },
             "require": {
@@ -750,7 +750,7 @@
             ],
             "support": {
                 "issues": "https://github.com/stefanzweifel/commonmark-markdown-renderer/issues",
-                "source": "https://github.com/stefanzweifel/commonmark-markdown-renderer/tree/v1.7.0"
+                "source": "https://github.com/stefanzweifel/commonmark-markdown-renderer/tree/v1.7.1"
             },
             "funding": [
                 {
@@ -758,7 +758,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-24T09:39:02+00:00"
+            "time": "2026-11-03T12:54:09+00:00"
         }
     ],
     "packages-dev": [
