@@ -5,11 +5,18 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: [8.5, 8.4]
+        php: [8.5]
+        experimental: [false]
+        include:
+          # PHP 8.6 is not released yet
+          - os: ubuntu-latest
+            php: 8.6
+            experimental: true
 
     name: P${{ matrix.php }} - ${{ matrix.os }}
 
