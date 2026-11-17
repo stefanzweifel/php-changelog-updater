@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 PHP CLI tool (Laravel Zero) that updates CHANGELOG files following the "Keep a Changelog" format. Published as `wnx/changelog-updater` and also used via `stefanzweifel/changelog-updater-action` GitHub Action.
 
-Requires PHP 8.4+.
+Requires PHP 8.5+.
 
 ## Common Commands
 
@@ -37,7 +37,7 @@ Built on Laravel Zero with a single command (`UpdateCommand`) as the entry point
 
 - **Pint:** Laravel preset with `declare_strict_types` enforced
 - **PHPStan:** Level 6 with Larastan extension
-- **CI:** Tests run on PHP 8.4 and 8.5 with 90% coverage minimum
+- **CI:** Tests run on PHP 8.5 (plus PHP 8.6 as an allowed-to-fail job) with 90% coverage minimum
 
 ## Testing
 
